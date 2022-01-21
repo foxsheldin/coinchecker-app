@@ -1,3 +1,6 @@
+Данное React приложение является системой персонального учета финансов.
+На текщий момент в приложении релизован небольшой функционал для php сервера (находится в папке server.cc.php), который еще будет дорабатываться, а также разработан UI и реализована возможность некоторым компонентам получать доступ к redux-store.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
