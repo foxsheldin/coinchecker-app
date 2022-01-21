@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+//import './App.css';
+import React from "react";
+import { Routes, Route} from "react-router-dom";
 
-function App() {
+import StartPageLayout from './StartPage/StartPageLayout';
+import ContentSP from './StartPage/Content/contentSP';
+import FooterSP from './StartPage/Footer/footerSP';
+import Auth from './StartPage/Auth/Auth';
+import SystemLayout from "./System/SystemLayout";
+import Browse from "./System/Browse/Browse";
+import AccountsContainer from "./System/Accounts/AccountsContainer";
+import Advisor from "./System/Advisor/Advisor";
+import Transaction from "./System/Transaction/Transaction";
+import TransactionsBlockContainer from "./System/Transaction/TransactionsBlock/TransactionsBlockContainer";
+import EditTransactionContainer from "./System/Transaction/EditTransaction/EditTransactionContainer";
+
+
+const App = (props) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route exact path='/' element={<StartPageLayout />}>
+          <Route exact path='/' element={[<ContentSP />, <FooterSP />]} />
+          <Route path='auth' element={<Auth />} />
+        </Route>
+        <Route path='system' element={<SystemLayout />}>
+          <Route path='browse' element={<Browse />} />
+          <Route exact path='transaction' element={<Transaction />} >
+            <Route path='/system/transaction' element={<TransactionsBlockContainer />} />
+            <Route path='/system/transaction/:transactionid' element={<EditTransactionContainer />} />
+          </Route>
+          {/* <Route path='reminder' element={<Auth />} />
+          <Route path='reports' element={<Auth />} />
+          <Route path='goals' element={<Auth />} /> */}
+          <Route path='advisor' element={<Advisor />} />
+          <Route path='accounts' element={<AccountsContainer />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
