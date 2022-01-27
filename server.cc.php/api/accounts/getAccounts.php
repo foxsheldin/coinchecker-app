@@ -1,8 +1,6 @@
 <?php
-    header('Access-Control-Allow-Origin: http://localhost:3000');
-    header("Access-Control-Allow-Credentials: true");
-    header('Access-Control-Allow-Methods: GET, POST');
-    header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
+    include_once('../header.php');
+    include_once('../configDB.php');
     $userid=$_GET['userID'];
     $cashData=array();
     $cardData=array();
@@ -11,7 +9,6 @@
     $depositData=array();
     $sumArr=array();
 
-    include_once('../configDB.php');
     $result=mysqli_query($connectDB, 
         "select userCashID, name, amountMoney from users_cash where userID=".$userid);
     if (mysqli_num_rows($result)){

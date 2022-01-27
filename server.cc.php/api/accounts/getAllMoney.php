@@ -1,10 +1,7 @@
 <?php
-    header('Access-Control-Allow-Origin: http://localhost:3000');
-    header("Access-Control-Allow-Credentials: true");
-    header('Access-Control-Allow-Methods: GET, POST');
-    header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
-    $userid=$_GET['userid'];
+    include_once('../header.php');
     include_once('../configDB.php');
+    $userid=$_GET['userid'];
     
     $allmoney=mysqli_query($connectDB, "select sum(sum) as 'total' from(
         (select sum(amountMoney) as 'sum' from users_cash where userid=$userid and isTotalBalance=true and isArchive=false) union all
