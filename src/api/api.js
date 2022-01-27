@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const transactionsAPI = {
     getEditTransaction(transactionid) {
-        return instance.get(`transactions/getTransaction.php?userID=1&transactionid=${transactionid}`)
+        return instance.get(`transactions/transaction.php?userID=1&transactionid=${transactionid}`)
         .then(response => {
             return response.data;
         })

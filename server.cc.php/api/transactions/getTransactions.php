@@ -1,24 +1,19 @@
 <?php
-    header('Access-Control-Allow-Origin: http://localhost:3000');
-    header("Access-Control-Allow-Credentials: true");
-    header('Access-Control-Allow-Methods: GET, POST');
-    header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
+    include_once("../header.php");
+    include_once("../configDB.php");
     $userID = $_GET['userID'];
     $page = $_GET['page']-1;
     // количество записей, выводимых на странице
     $count = $_GET['count'];
 
     $start = abs($page*$count);
-    
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    include_once("../configDB.php");
 
     $totalCount = mysqli_query($connectDB, "select count(*) from users_transaction where userID=".$userID);
     $totalCount = mysqli_fetch_row($totalCount);
 
     $query = "select transactionID, userID, firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID,
-     amountMoney, categoryID, dateTransaction, payer, commentID, repeatOperation, repeatTransactionID, isIncome, isOutcome, isTransfer
-     from users_transaction where userID=".$userID." order by dateTransaction desc LIMIT $start, $count";
+        amountMoney, categoryID, dateTransaction, payer, commentID, repeatOperation, repeatTransactionID, isIncome, isOutcome, isTransfer
+        from users_transaction where userID=".$userID." order by dateTransaction desc LIMIT $start, $count";
     $result=mysqli_query($connectDB, $query);
 
     if (mysqli_num_rows($result)) {
