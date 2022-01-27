@@ -11,7 +11,7 @@
     $start = abs($page*$count);
     
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    include_once("configDB.php");
+    include_once("../configDB.php");
 
     $totalCount = mysqli_query($connectDB, "select count(*) from users_transaction where userID=".$userID);
     $totalCount = mysqli_fetch_row($totalCount);

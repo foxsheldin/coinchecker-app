@@ -8,13 +8,13 @@ const instance = axios.create({
 
 export const transactionsAPI = {
     getEditTransaction(transactionid) {
-        return instance.get(`getTransaction.php?userID=1&transactionid=${transactionid}`)
+        return instance.get(`transactions/getTransaction.php?userID=1&transactionid=${transactionid}`)
         .then(response => {
             return response.data;
         })
     },
     getTransactions(currentPage, pageSize){
-        return instance.get(`getTransactions.php?userID=1&page=${currentPage}&count=${pageSize}`)
+        return instance.get(`transactions/getTransactions.php?userID=1&page=${currentPage}&count=${pageSize}`)
         .then(response => {
             return response.data;
         })
@@ -23,7 +23,7 @@ export const transactionsAPI = {
 
 export const accountsAPI = {
     getAccounts() {
-        return instance.get('getAccounts.php?userID=1')
+        return instance.get('accounts/getAccounts.php?userID=1')
         .then(response => {
             return response.data;
         })

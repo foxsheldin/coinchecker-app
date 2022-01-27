@@ -11,7 +11,7 @@
     $depositData=array();
     $sumArr=array();
 
-    include_once('configDB.php');
+    include_once('../configDB.php');
     $result=mysqli_query($connectDB, 
         "select userCashID, name, amountMoney from users_cash where userID=".$userid);
     if (mysqli_num_rows($result)){

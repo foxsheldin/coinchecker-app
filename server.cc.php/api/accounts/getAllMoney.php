@@ -4,6 +4,8 @@
     header('Access-Control-Allow-Methods: GET, POST');
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
     $userid=$_GET['userid'];
+    include_once('../configDB.php');
+    
     $allmoney=mysqli_query($connectDB, "select sum(sum) as 'total' from(
         (select sum(amountMoney) as 'sum' from users_cash where userid=$userid and isTotalBalance=true and isArchive=false) union all
         (select sum(amountMoney) as 'sum' from users_Card where userid=$userid and isTotalBalance=true and isArchive=false) union all
