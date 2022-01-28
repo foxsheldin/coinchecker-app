@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
+import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 
 ChartJS.register(
     CategoryScale,
@@ -155,7 +156,7 @@ const Browse = (props) => {
                             </div>
                         </div>
                         <div className="allBalance row">
-                            <h3>1&nbsp;416&nbsp;001.00&nbsp;руб.</h3>
+                            <h3><AllMoneyComponent /></h3>
                             <h6 className="fst-italic">
                                 Баланс
                             </h6>

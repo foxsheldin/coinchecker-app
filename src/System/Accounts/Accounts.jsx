@@ -1,4 +1,5 @@
 import React from 'react';
+import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import ModalWindow from './ModalWindow/ModalWindow';
 
 const deleteBtnOnClick = () => {
@@ -88,7 +89,7 @@ const Accounts = (props) => {
                                 Всего средств
                             </div>
                             <div className="money mx-2">
-                                <h3>1&nbsp;416&nbsp;001.00&nbsp;руб.</h3>
+                                <h3><AllMoneyComponent /></h3>
                             </div>
                         </div>
                         <div className="addAction my-4">

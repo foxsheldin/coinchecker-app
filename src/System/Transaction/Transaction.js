@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
 import ModalWindow from './ModalWindow/ModalWindow';
 
@@ -38,7 +39,7 @@ const Transaction = (props) => {
                                     Всего средств
                                 </div>
                                 <div className="money mx-2">
-                                    <h4>1&nbsp;416&nbsp;001.00&nbsp;руб.</h4>
+                                    <h4><AllMoneyComponent /></h4>
                                 </div>
                             </div>
 

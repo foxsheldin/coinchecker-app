@@ -2,6 +2,7 @@ import { accountsAPI } from "../api/api";
 
 const ADD_ACCOUNT = "ADD_ACCOUNT";
 const SET_ACCOUNTS_DATA = "SET_ACCOUNTS_DATA";
+const SET_ALL_MONEY = "SET_ALL_MONEY";
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
         bankAccountData: [],
         depositData: [],
     },
+    allMoney: 0,
     isFetching: false,
 }
 
@@ -62,8 +64,13 @@ const accountReducer = (state = initialState, action) => {
                 default:
                     return state;
             }
+        
         case SET_ACCOUNTS_DATA:
             return { ...state, accountsInfo: action.accountsInfo }
+        
+        case SET_ALL_MONEY:
+            return {...state, allMoney: action.allMoney}
+
         case TOGGLE_IS_FETCHING:
             return { ...state, isFetching: action.isFetching }
 
@@ -74,14 +81,25 @@ const accountReducer = (state = initialState, action) => {
 
 export const addAccount = (typeAccount, newAccount) => ({ type: ADD_ACCOUNT, data: { typeAccount, newAccount } });
 const setAccountsData = (accountsInfo) => ({type: SET_ACCOUNTS_DATA, accountsInfo})
+const setAllMoney = (allMoney) => ({type: SET_ALL_MONEY, allMoney})
 const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 
 
-export const getAccounts = () => {
+export const getAccounts = (userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
-        accountsAPI.getAccounts().then(data => {
+        accountsAPI.getAccounts(userid).then(data => {
             dispatch(setAccountsData(data.accountsInfo))
+            dispatch(toggleIsFetching(false))
+        })
+    }
+}
+
+export const getAllMoney = (userid) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        accountsAPI.getAllMoney(userid).then(data => {
+            dispatch(setAllMoney(parseFloat(data.allMoney)))
             dispatch(toggleIsFetching(false))
         })
     }

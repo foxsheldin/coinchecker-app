@@ -7,14 +7,16 @@ const instance = axios.create({
 })
 
 export const transactionsAPI = {
-    getEditTransaction(transactionid) {
-        return instance.get(`transactions/transaction.php?userID=1&transactionid=${transactionid}`)
+    getEditTransaction(transactionid, userid) {
+        userid=1
+        return instance.get(`transactions/transaction.php?userID=${userid}&transactionid=${transactionid}`)
         .then(response => {
             return response.data;
         })
     },
-    getTransactions(currentPage, pageSize){
-        return instance.get(`transactions/getTransactions.php?userID=1&page=${currentPage}&count=${pageSize}`)
+    getTransactions(currentPage, pageSize, userid){
+        userid=1
+        return instance.get(`transactions/getTransactions.php?userID=${userid}&page=${currentPage}&count=${pageSize}`)
         .then(response => {
             return response.data;
         })
@@ -22,12 +24,20 @@ export const transactionsAPI = {
 }
 
 export const accountsAPI = {
-    getAccounts() {
-        return instance.get('accounts/getAccounts.php?userID=1')
+    getAccounts(userid) {
+        userid=1
+        return instance.get(`accounts/getAccounts.php?userID=${userid}`)
         .then(response => {
             return response.data;
         })
-    }
+    },
+    getAllMoney(userid) {
+        userid=1
+        return instance.get(`accounts/getAllMoney.php?userID=${userid}`)
+        .then(response=>{
+            return response.data;
+        })
+    },
 }
 
 export const authAPI = {
