@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { getAccounts } from '../../redux/account-reducer';
+import { withUserID } from '../../hoc/withUserID'
 import PreLoader from '../common/PreLoader/PreLoader';
 import Accounts from './Accounts';
 
 class AccountsContainer extends React.Component {
     componentDidMount() {
-        this.props.getAccounts();
+        this.props.getAccounts(this.props.userid);
     }
 
     render() {
@@ -23,4 +25,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { getAccounts })(AccountsContainer);
+export default compose(
+    connect(mapStateToProps, { getAccounts }),
+    withUserID
+)(AccountsContainer);

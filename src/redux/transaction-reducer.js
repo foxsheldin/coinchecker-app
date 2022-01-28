@@ -39,11 +39,11 @@ const setTotalTransactionsCount = (totalCount) => ({type:SET_TOTAL_COUNT, totalC
 const setCurrentPage = (currentPage) => ({type:SET_CURRENT_PAGE, currentPage})
 const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 
-export const getTransactions = (currentPage, pageSize) => {
+export const getTransactions = (currentPage, pageSize, userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         dispatch(setCurrentPage(currentPage));
-        transactionsAPI.getTransactions(currentPage, pageSize).then(data => {
+        transactionsAPI.getTransactions(currentPage, pageSize, userid).then(data => {
             dispatch(setTransactions(data.items));
             dispatch(setTotalTransactionsCount(data.totalCount));
             dispatch(toggleIsFetching(false));
@@ -51,10 +51,10 @@ export const getTransactions = (currentPage, pageSize) => {
     }
 }
 
-export const getEditTransaction = (transactionid) => {
+export const getEditTransaction = (transactionid, userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
-        transactionsAPI.getEditTransaction(transactionid).then(data => {
+        transactionsAPI.getEditTransaction(transactionid, userid).then(data => {
             dispatch(setEditTransaction(data.items));
             dispatch(toggleIsFetching(false));
         });

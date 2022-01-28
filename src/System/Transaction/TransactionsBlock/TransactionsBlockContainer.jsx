@@ -1,16 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withUserID } from '../../../hoc/withUserID';
 import { getTransactions } from '../../../redux/transaction-reducer';
 import PreLoader from '../../common/PreLoader/PreLoader';
 import TransactionsBlock from './TransactionsBlock';
 
 class TransactionsBlockContainer extends React.Component {
     componentDidMount() {
-        this.props.getTransactions(this.props.currentPage, this.props.pageSize);
+        this.props.getTransactions(this.props.currentPage, this.props.pageSize, this.props.userid);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getTransactions(pageNumber, this.props.pageSize)
+        this.props.getTransactions(pageNumber, this.props.pageSize, this.props.userid)
     }
 
     render() {
@@ -37,4 +39,7 @@ const mapStateToProps = (state) => {
     }
 } 
 
-export default connect(mapStateToProps, { getTransactions })(TransactionsBlockContainer)
+export default compose(
+    connect(mapStateToProps, { getTransactions }),
+    withUserID
+)(TransactionsBlockContainer)

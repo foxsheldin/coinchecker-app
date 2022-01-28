@@ -26,7 +26,7 @@ export const login = (email, password) => (dispatch) => {
         .then(response => {
             if (response.resultCode === 0) {
                 let { userid, email } = response.data;
-                dispatch(setAuthUserData(userid, email, true))
+                dispatch(setAuthUserData(parseInt(userid), email, true))
             }
         })
 }

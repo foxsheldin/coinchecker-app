@@ -5,10 +5,11 @@ import { getEditTransaction } from '../../../redux/transaction-reducer'
 import PreLoader from '../../common/PreLoader/PreLoader';
 import { withTransactionID } from '../../../hoc/withTransactionID';
 import EditTransaction from './EditTransaction'
+import { withUserID } from '../../../hoc/withUserID';
 
 class EditTransactionContainer extends Component {
     componentDidMount() {
-        this.props.getEditTransaction(this.props.transactionid)
+        this.props.getEditTransaction(this.props.transactionid, this.props.userid)
     }
 
     render() {
@@ -29,5 +30,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps, { getEditTransaction }),
+    withUserID,
     withTransactionID,
 )(EditTransactionContainer)
