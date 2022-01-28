@@ -12,6 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
+import { Link } from 'react-router-dom';
 
 ChartJS.register(
     CategoryScale,
@@ -134,15 +135,15 @@ const Browse = (props) => {
         <div className="container">
             <div className="actionBlock row my-2">
                 <div className="col-2">
-                    <a href="transaction.php" className="link">
+                    <Link to="../transaction" className='link'>
                         Внести транзакции
-                    </a>
+                    </Link>
                 </div>
-                <div className="col-3">
+                {/* <div className="col-3">
                     <a href="reminder.html?addReminder" className="link">
                         Добавить регулярный платеж(тест)
                     </a>
-                </div>
+                </div> */}
             </div>
             <div className="row">
                 <div className="col-3" style={{ marginTop: '1.1em' }}>
@@ -152,7 +153,9 @@ const Browse = (props) => {
                                 <h5>Мои счета</h5>
                             </div>
                             <div className="col">
-                                <a href="accounts.php" className="link">Добавить счет</a>
+                                <Link to="../accounts" className='link'>
+                                    Добавить счет
+                                </Link>
                             </div>
                         </div>
                         <div className="allBalance row">

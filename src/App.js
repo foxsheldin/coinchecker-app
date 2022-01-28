@@ -1,7 +1,6 @@
 //import './App.css';
 import React from "react";
-import { Routes, Route} from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
 import StartPageLayout from './StartPage/StartPageLayout';
 import ContentSP from './StartPage/Content/contentSP';
 import FooterSP from './StartPage/Footer/footerSP';
