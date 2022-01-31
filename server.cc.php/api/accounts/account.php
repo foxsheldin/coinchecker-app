@@ -83,18 +83,18 @@
                 }; 
                 break;
                 default: {
-                    echo json_encode(array('resultCode'=>1, 'message'=>'При добавлении используется неизвестный тип счета'));
+                    echo json_encode(array('resultCode'=>1, 'message'=>'При добавлении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     exit;
                 }
             }
 
             if ($result)
             {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'));
+                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
             }
             else
             {
-                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'));
+                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -185,18 +185,18 @@
                 }; 
                 break;
                 default: {
-                    echo json_encode(array('resultCode'=>1, 'message'=>'При изменении используется неизвестный тип счета'));
+                    echo json_encode(array('resultCode'=>1, 'message'=>'При изменении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     exit;
                 }
             }
 
             if ($result)
             {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'));
+                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
             }
             else
             {
-                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'));
+                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -238,18 +238,18 @@
                 }; 
                 break;
                 default: {
-                    echo json_encode(array('resultCode'=>1, 'message'=>'При удалении используется неизвестный тип счета'));
+                    echo json_encode(array('resultCode'=>1, 'message'=>'При удалении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     exit;
                 }
             }
 
             if ($result)
             {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'));
+                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
             }
             else
             {
-                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'));
+                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -258,7 +258,7 @@
 
         
         default: {
-            echo json_encode(array('resultCode'=>1, 'message'=>'Неизвестный метод запроса'));
+            echo json_encode(array('resultCode'=>1, 'message'=>'Неизвестный метод запроса'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         }
     }
 ?>

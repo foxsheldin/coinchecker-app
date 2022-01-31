@@ -13,5 +13,5 @@
     $allmoney=mysqli_fetch_array($allmoney);
     $allmoney=$allmoney['total'];
 
-    echo json_encode(array('allMoney'=>$allmoney, 'resultCode'=>0));
+    echo json_encode(array('allMoney'=>$allmoney, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
 ?>

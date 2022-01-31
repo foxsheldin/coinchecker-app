@@ -110,6 +110,6 @@
             'nameAccount1'=>$account1, 'nameAccount2'=>$account2, 'comment'=>$comment); */
             array_push($sumArr,$arr);
         }
-        echo json_encode(array("items"=>$sumArr, "totalCount"=>$totalCount, "resultCode"=>0));
+        echo json_encode(array("items"=>$sumArr, "totalCount"=>$totalCount, "resultCode"=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
     }
 ?>

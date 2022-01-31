@@ -54,5 +54,5 @@
     $sumArr = array('cashData'=>$cashData,'cardData'=>$cardData,'creditData'=>$creditData,
         'bankAccountData'=>$bankAccountData,'depositData'=>$depositData);
     $sumArr = array('accountsInfo'=>$sumArr, 'resultCode'=>0);
-    echo json_encode($sumArr);
+    echo json_encode($sumArr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
 ?>
