@@ -1,7 +1,7 @@
 import React from 'react';
 import TransactionItem from './TransactionItem/TransactionItem'
 
-function TransactionsBlock(props) {
+const TransactionsBlock = (props) => {
 
 
     let pagesCount = Math.ceil(props.totalTransactionsCount / props.pageSize);
@@ -10,14 +10,7 @@ function TransactionsBlock(props) {
         paginator.push(i);
     }
     const transactionElements = props.transactions
-        .map(t => <TransactionItem transactionID={t.transactionID}
-            firstTypeAccountID={t.firstTypeAccountID} firstAccountID={t.firstAccountID}
-            secondTypeAccountID={t.secondTypeAccountID} secondAccountID={t.secondAccountID}
-            amountMoney={t.amountMoney} nameCategory={t.nameCategory}
-            dateTransaction={t.dateTransaction} payer={t.payer} comment={t.comment}
-            isIncome={t.isIncome} isOutcome={t.isOutcome} isTransfer={t.isTransfer}
-            nameAccount1={t.nameAccount1} nameAccount2={t.nameAccount2}
-        />);
+        .map(t => <TransactionItem {...t} />);
 
     return (
         <div className="transactionBlock row">
@@ -35,12 +28,6 @@ function TransactionsBlock(props) {
             </div>
         </div>
     );
-
-    /* return (
-        <div className='editTransaction row'>
-                <EditTransaction onEditTransactionClick={props.onEditTransactionClick}/>
-            </div>
-    ); */
 }
 
 export default TransactionsBlock;
