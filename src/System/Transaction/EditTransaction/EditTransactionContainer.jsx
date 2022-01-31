@@ -2,22 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getEditTransaction, updateEditTransaction, getTransactions } from '../../../redux/transaction-reducer';
-import { getAccounts } from '../../../redux/account-reducer';
+import { getAccounts, getAllMoney } from '../../../redux/account-reducer';
 import PreLoader from '../../common/PreLoader/PreLoader';
 import { withTransactionID } from '../../../hoc/withTransactionID';
 import EditTransaction from './EditTransaction';
 import { withUserID } from '../../../hoc/withUserID';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 
 const EditTransactionContainer = (props) => {
     const navigate = useNavigate();
 
-    const onSubmit = (formData) => {
-        props.updateEditTransaction(formData);
-        props.getTransactions(props.userid);
-        props.getAccounts(props.userid);
-        navigate("../../transaction");
+    const onSubmit = async (formData) => {
+        await props.updateEditTransaction(formData);
+        await props.getTransactions(props.userid);
+        await props.getAccounts(props.userid);
+        await props.getAllMoney(props.userid);
+        await navigate("../../transaction", {replace: true});
     }
 
     let [transaction, setTransaction] = useState({});
@@ -54,7 +55,8 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps, 
-        { getEditTransaction, getAccounts, updateEditTransaction, getTransactions }),
+        { getEditTransaction, getAccounts, getAllMoney,
+            updateEditTransaction, getTransactions }),
     withUserID,
     withTransactionID,
 )(EditTransactionContainer)
