@@ -1,35 +1,60 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getEditTransaction } from '../../../redux/transaction-reducer'
+import { getEditTransaction, updateEditTransaction, getTransactions } from '../../../redux/transaction-reducer';
+import { getAccounts } from '../../../redux/account-reducer';
 import PreLoader from '../../common/PreLoader/PreLoader';
 import { withTransactionID } from '../../../hoc/withTransactionID';
-import EditTransaction from './EditTransaction'
+import EditTransaction from './EditTransaction';
 import { withUserID } from '../../../hoc/withUserID';
+import { useNavigate } from 'react-router-dom';
 
-class EditTransactionContainer extends Component {
-    componentDidMount() {
-        this.props.getEditTransaction(this.props.transactionid, this.props.userid)
+
+const EditTransactionContainer = (props) => {
+    const navigate = useNavigate();
+
+    const onSubmit = (formData) => {
+        props.updateEditTransaction(formData);
+        props.getTransactions(props.userid);
+        props.getAccounts(props.userid);
+        navigate("../../transaction");
     }
 
-    render() {
-        return (
-            <>
-                {this.props.isFetching ? <PreLoader /> : null}
-                <EditTransaction transaction={this.props.editTransaction} />
-            </>
-        );
-    }
-}
+    let [transaction, setTransaction] = useState({});
+    
+    useEffect(()=>{
+        props.getEditTransaction(props.transactionid, props.userid);
+        props.getAccounts(props.userid);
+    }, []);
+
+    useEffect(()=>{
+        setTransaction(props.editTransaction)
+    }, [props.editTransaction]);
+
+    return (
+        <>
+            {props.isFetching ? <PreLoader /> : null}
+            <EditTransaction 
+                transaction={transaction} 
+                categories={props.categories}
+                accounts={props.accounts}
+                onSubmit={onSubmit}
+            />
+        </>
+    );
+};
 
 const mapStateToProps = (state) => {
     return {
-        editTransaction: state.transactionPage.editTransaction
+        accounts: state.account.accountsInfo,
+        editTransaction: state.transactionPage.editTransaction,
+        categories: state.transactionPage.categories
     }
 }
 
 export default compose(
-    connect(mapStateToProps, { getEditTransaction }),
+    connect(mapStateToProps, 
+        { getEditTransaction, getAccounts, updateEditTransaction, getTransactions }),
     withUserID,
     withTransactionID,
 )(EditTransactionContainer)

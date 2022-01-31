@@ -14,9 +14,22 @@ export const transactionsAPI = {
             return response.data;
         })
     },
+    updateEditTransaction(data) {
+        debugger
+        return instance.put(`transactions/transaction.php`, {data})
+        .then(response => {
+            return response.data;
+        })
+    },
     getTransactions(currentPage, pageSize, userid){
         userid=1
         return instance.get(`transactions/getTransactions.php?userID=${userid}&page=${currentPage}&count=${pageSize}`)
+        .then(response => {
+            return response.data;
+        })
+    },
+    getCategories(type) {
+        return instance.get(`transactions/getCategories.php?type=${type}`)
         .then(response => {
             return response.data;
         })
