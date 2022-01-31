@@ -28,30 +28,35 @@
                         case 1:{
                             $account1=mysqli_query($connectDB, "select name from users_Cash where userCashID=".$row['firstAccountID']);
                             $account1=mysqli_fetch_row($account1);
+                            $firstAccountSelect="cash, ".$row['firstAccountID'];
                         }; 
                         break;
                         case 2:{
                             $account1=mysqli_query($connectDB, "select name from users_Card where userCardID=".$row['firstAccountID']);
                             $account1=mysqli_fetch_row($account1);
+                            $firstAccountSelect="card, ".$row['firstAccountID'];
                         }; 
                         break;
                         case 3:{
                             $account1=mysqli_query($connectDB, "select name from users_Credit_Card where userCreditCardID=".$row['firstAccountID']);
                             $account1=mysqli_fetch_row($account1);
+                            $firstAccountSelect="creditCard, ".$row['firstAccountID'];
                         }; 
                         break;
                         case 4:{
                             $account1=mysqli_query($connectDB, "select name from users_bank_account where userBankAccountID=".$row['firstAccountID']);
                             $account1=mysqli_fetch_row($account1);
+                            $firstAccountSelect="bankAccount, ".$row['firstAccountID'];
                         }; 
                         break;
                         case 5:{
                             $account1=mysqli_query($connectDB, "select name from users_deposit where userDepositID=".$row['firstAccountID']);
                             $account1=mysqli_fetch_row($account1);
+                            $firstAccountSelect="deposit, ".$row['firstAccountID'];
                         }; 
                         break;
                         default:{
-                            echo json_encode(array('resultCode'=>1, 'message'=>'Использование неизвестного счета(1)'));
+                            echo json_encode(array('resultCode'=>1, 'message'=>'Использование неизвестного счета(1)'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                             exit;
                         }
                     }
@@ -62,44 +67,53 @@
                             case 1:{
                                 $account2=mysqli_query($connectDB, "select name from users_Cash where userCashID=".$row['secondAccountID']);
                                 $account2=mysqli_fetch_row($account2);
+                                $secondAccountSelect="cash, ".$row['secondAccountID'];
                             }; 
                             break;
                             case 2:{
                                 $account2=mysqli_query($connectDB, "select name from users_Card where userCardID=".$row['secondAccountID']);
                                 $account2=mysqli_fetch_row($account2);
+                                $secondAccountSelect="card, ".$row['secondAccountID'];
                             }; 
                             break;
                             case 3:{
                                 $account2=mysqli_query($connectDB, "select name from users_Credit_Card where userCreditCardID=".$row['secondAccountID']);
                                 $account2=mysqli_fetch_row($account2);
+                                $secondAccountSelect="creditCard, ".$row['secondAccountID'];
                             }; 
                             break;
                             case 4:{
                                 $account2=mysqli_query($connectDB, "select name from users_bank_account where userBankAccountID=".$row['secondAccountID']);
                                 $account2=mysqli_fetch_row($account2);
+                                $secondAccountSelect="bankAccount, ".$row['secondAccountID'];
                             }; 
                             break;
                             case 5:{
                                 $account2=mysqli_query($connectDB, "select name from users_deposit where userDepositID=".$row['secondAccountID']);
                                 $account2=mysqli_fetch_row($account2);
+                                $secondAccountSelect="deposit, ".$row['secondAccountID'];
                             }; 
                             break;
                             default:{
-                                echo json_encode(array('resultCode'=>2, 'message'=>'Использование неизвестного счета(2)'));
+                                echo json_encode(array('resultCode'=>2, 'message'=>'Использование неизвестного счета(2)'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                                 exit;
                             }
                         }
                     }
+                    else {
+                        $secondAccountSelect=null;
+                    }
                     $arr = array('transactionID'=>$row['transactionID'], 'userID'=>$row['userID'], 
                     'firstTypeAccountID'=>$row['firstTypeAccountID'], 'firstAccountID'=>$row['firstAccountID'],
                     'secondTypeAccountID'=>$row['secondTypeAccountID'], 'secondAccountID'=>$row['secondAccountID'],
+                    'firstAccountSelect'=>$firstAccountSelect, 'secondAccountSelect'=>$secondAccountSelect,
                     'amountMoney'=>$row['amountMoney'], 'categoryID'=>$row['categoryID'], 'dateTransaction'=>$row['dateTransaction'], 'payer'=>$row['payer'],
                     'commentID'=>$row['commentID'], 'repeatOperation'=>$row['repeatOperation'], 'repeatTransactionID'=>$row['repeatTransactionID'],
                     'isIncome'=>$row['isIncome'], 'isOutcome'=>$row['isOutcome'], 'isTransfer'=>$row['isTransfer'], 
                     'date'=>$date, 'nameCategory'=>$nameCategory, 'nameAccount1'=>$account1, 'nameAccount2'=>$account2, 'comment'=>$comment);
                     /* $arr = array('array'=>$row, 'date'=>$date, 'nameCategory'=>$nameCategory, 
                     'nameAccount1'=>$account1, 'nameAccount2'=>$account2, 'comment'=>$comment); */
-                    echo json_encode(array("items"=>$arr, "resultCode"=>0));
+                    echo json_encode(array("items"=>$arr, "resultCode"=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 }
             }
         };
@@ -157,12 +171,12 @@
                     if (($firstTypeAccountID == $secondTypeAccountID) && ($firstAccountID == $secondAccountID))
                     {
                         /* Обработка одинаковых счетов в переводе*/
-                        echo json_encode(array('resultCode'=>2, 'message'=>'Использование одинаковых счетов для перевода средств'));
+                        echo json_encode(array('resultCode'=>2, 'message'=>'Использование одинаковых счетов для перевода средств'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                         exit;
                     }
                 }; break;
                 default:{
-                    echo json_encode(array('resultCode'=>3, 'message'=>'При добавлении используется неизвестный тип транзакции'));
+                    echo json_encode(array('resultCode'=>3, 'message'=>'При добавлении используется неизвестный тип транзакции'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     exit;
                 }
             }
@@ -184,7 +198,7 @@
                     }
                     else
                     {
-                        echo json_encode(array('resultCode'=>4, 'message'=>'Ошибка запроса данных с сервера'));
+                        echo json_encode(array('resultCode'=>4, 'message'=>'Ошибка запроса данных с сервера'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                         exit;
                     }
                 }
@@ -223,17 +237,17 @@
                 }
             } 
             catch (Exception $e) {
-                echo json_encode(array('resultCode'=>5, 'message'=>'Поймано исключение: '+$e->getMessage()));
+                echo json_encode(array('resultCode'=>5, 'message'=>'Поймано исключение: '.$e->getMessage()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
             
             if ($result)
             {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'));
+                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
             }
             else
             {
-                echo json_encode(array('resultCode'=>6, 'message'=>'ОШИБКА СЕРВЕРА'));
+                echo json_encode(array('resultCode'=>6, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -243,20 +257,40 @@
         /* Этот метод запроса используется для обновления информации на сервере */
         case "PUT":{
             $_PUT = json_decode(file_get_contents('php://input'), true);
-            $userID = $_PUT['userID'];
-            $transactionID = $_PUT['transactionID'];
-            $typeTransaction = $_PUT['type'];
-            $date = $_PUT['date'];
-            $amountMoney = $_PUT['money'];
+            /* print_r($_PUT['data']['comment'][0]); */
+            $amountMoney = $_PUT['data']['amountMoney'];
+            $categoryID = $_PUT['data']['categoryID'];
+            if (empty($_PUT['data']['comment'])) {
+                $comment = null;
+            }
+            else {
+                $comment = $_PUT['data']['comment'];
+                if (is_array($comment)) {
+                    $comment = $_PUT['data']['comment'][0];
+                }
+            }
+            $oldCommentID = $_PUT['data']['commentID'];
+            $date = $_PUT['data']['dateTransaction'];
+            $firstAccountID = $_PUT['data']['firstAccountSelect'];
+            $firstAccountID = explode(', ', $firstAccountID);
+            $firstTypeAccountID = $firstAccountID[0];
+            $firstAccountID = $firstAccountID[1];
             $secondTypeAccountID = 'null';
             $secondAccountID = 'null';
+            $isIncome = $_PUT['data']['isIncome'];
+            $isOutcome = $_PUT['data']['isOutcome'];
+            $isTransfer = $_PUT['data']['isTransfer'];
             $payer = 'null';
-            $categoryID = '1';
-            $oldCommentID = $_PUT['commentid'];
-            $comment = $_PUT['comment'];
-            $isIncome = 'false';
-            $isOutcome = 'false';
-            $isTransfer = 'false';
+            $typeTransaction = 'null';
+            $transactionID = $_PUT['data']['transactionID'];
+            $userID = $_PUT['data']['userID'];
+
+            if ($isIncome) 
+                $typeTransaction = "income";
+            else if ($isOutcome)
+                $typeTransaction = "outcome";
+            else if ($isTransfer)
+                $typeTransaction = "transfer";
             //$commentID = mysqli_query($connectDB, "insert into comments value (null, ");
 
             $oldTransaction = mysqli_query($connectDB, "select firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID, amountMoney from users_transaction where transactionID=$transactionID");
@@ -264,54 +298,63 @@
 
             switch ($typeTransaction){
                 case 'outcome':{
-                    $firstAccountID = $_PUT['account'];
-                    $firstAccountID = explode(', ', $firstAccountID);
-                    $firstTypeAccountID = $firstAccountID[0];
-                    $firstAccountID = $firstAccountID[1];
-                    $payer = $_PUT['payer'];
-                    $categoryID = $_PUT['category'];
                     $amountMoney = $amountMoney * (-1);
-                    $isOutcome = 'true';
+                    $categoryID = $_PUT['data']['categoryID'];
+                    $payer = $_PUT['data']['payer'];
                 }; break;
                 case 'income':{
-                    $firstAccountID = $_PUT['account'];
-                    $firstAccountID = explode(', ', $firstAccountID);
-                    $firstTypeAccountID = $firstAccountID[0];
-                    $firstAccountID = $firstAccountID[1];
-                    $categoryID = $_PUT['category'];
-                    $payer = $_PUT['payer'];
-                    $isIncome = 'true';
+                    $categoryID = $_PUT['data']['categoryID'];
+                    $payer = $_PUT['data']['payer'];
                 }; break;
                 case 'transfer':{
-                    $firstAccountID = $_PUT['firstAccount'];
-                    $firstAccountID = explode(', ', $firstAccountID);
-                    $firstTypeAccountID = $firstAccountID[0];
-                    $firstAccountID = $firstAccountID[1];
-                    $secondAccountID = $_PUT['secondAccount'];
+                    $secondAccountID = $_PUT['data']['secondAccountSelect'];
                     $secondAccountID = explode(', ', $secondAccountID);
                     $secondTypeAccountID = $secondAccountID[0];
                     $secondAccountID = $secondAccountID[1];
-                    $isTransfer = 'true';
                     if (($firstTypeAccountID == $secondTypeAccountID) && ($firstAccountID == $secondAccountID))
                     {
                         /* Обработка одинаковых счетов в переводе*/
-                        echo json_encode(array('resultCode'=>2, 'message'=>'Использование одинаковых счетов для перевода средств'));
+                        echo json_encode(array('resultCode'=>2, 'message'=>'Использование одинаковых счетов для перевода средств'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                         exit;
                     }
                 }; break;
                 default:{
-                    echo json_encode(array('resultCode'=>3, 'message'=>'При добавлении используется неизвестный тип транзакции'));
+                    echo json_encode(array('resultCode'=>3, 'message'=>'При добавлении используется неизвестный тип транзакции'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     exit;
                 }
             }
             
             try
             {
+                switch ($firstTypeAccountID) {
+                    case "cash": $firstTypeAccountID = 1;break;
+                    case "card": $firstTypeAccountID = 2;break;
+                    case "creditCard": $firstTypeAccountID = 3;break;
+                    case "bankAccount": $firstTypeAccountID = 4;break;
+                    case "deposit": $firstTypeAccountID = 5;break;
 
+                    default: {
+                        echo json_encode(array('resultCode'=>4, 'message'=>'При добавлении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                        exit;
+                    }
+                }
+                switch ($secondTypeAccountID) {
+                    case "cash": $secondTypeAccountID = 1;break;
+                    case "card": $secondTypeAccountID = 2;break;
+                    case "creditCard": $secondTypeAccountID = 3;break;
+                    case "bankAccount": $secondTypeAccountID = 4;break;
+                    case "deposit": $secondTypeAccountID = 5;break;
+                    case 'null': $secondTypeAccountID = 'null'; break;
+
+                    default: {
+                        echo json_encode(array('resultCode'=>4, 'message'=>'При добавлении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                        exit;
+                    }
+                }
                 if ($oldCommentID != null)
                 {
-                    if ($comment != null)
-                    {
+                    if (!empty($comment))
+                    {   
                         $comment = mysqli_query($connectDB, "update comments set comment='$comment' where commentID=$oldCommentID and transactionID=$transactionID");
                         $commentID = $oldCommentID;
                     }
@@ -328,7 +371,7 @@
                 }
                 else
                 {
-                    if ($comment != null)
+                    if (!empty($comment))
                     {
                         $comment = mysqli_query($connectDB, "insert into comments value (null, $transactionID, '$comment')");
                         if ($comment)
@@ -350,7 +393,11 @@
                     }
                 }
 
-                $transaction = mysqli_query($connectDB, "update users_transaction set firstTypeAccountID=$firstTypeAccountID, firstAccountID=$firstAccountID, secondTypeAccountID=$secondTypeAccountID, secondAccountID=$secondAccountID, amountMoney=$amountMoney, categoryID=$categoryID, dateTransaction='$date', payer='$payer', commentID=$commentID where transactionID=$transactionID and userID=$userID");
+                $transaction = mysqli_query($connectDB, "update users_transaction set firstTypeAccountID=$firstTypeAccountID, firstAccountID=$firstAccountID,
+                    secondTypeAccountID=$secondTypeAccountID, secondAccountID=$secondAccountID, amountMoney=$amountMoney, 
+                    categoryID=$categoryID, dateTransaction='$date', payer='$payer', commentID=$commentID 
+                    where transactionID=$transactionID and userID=$userID");
+                
                 if ($transaction)
                 {
                     $oldAmountMoney = $oldTransaction['amountMoney'];
@@ -364,6 +411,8 @@
                             $firstTypeAccountTableID = $firstTypeAccountTable[1];
                             $firstTypeAccountTable = $firstTypeAccountTable[0];
                             $result = mysqli_query($connectDB, "update $firstTypeAccountTable set amountMoney=amountMoney-$oldAmountMoney+$amountMoney where $firstTypeAccountTableID=$firstAccountID");
+
+                            echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                         }
                         else
                         {
@@ -381,6 +430,8 @@
                                 $firstTypeAccountTableID = $firstTypeAccountTable[1];
                                 $firstTypeAccountTable = $firstTypeAccountTable[0];
                                 $result = mysqli_query($connectDB, "update $firstTypeAccountTable set amountMoney=amountMoney+$amountMoney where $firstTypeAccountTableID=$firstAccountID");
+
+                                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                             }
                         }
                     }
@@ -400,6 +451,8 @@
                             if ($firstResult)
                             {
                                 $result = mysqli_query($connectDB, "update $secondTypeAccountTable set amountMoney=amountMoney-$oldAmountMoney+$amountMoney where $secondTypeAccountTableID=$secondAccountID");
+
+                                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                             }
                         }
                         else
@@ -427,6 +480,8 @@
                                         $secondTypeAccountTableID = $secondTypeAccountTable[1];
                                         $secondTypeAccountTable = $secondTypeAccountTable[0];
                                         $result = mysqli_query($connectDB, "update $secondTypeAccountTable set amountMoney=amountMoney+$amountMoney where $secondTypeAccountTableID=$secondAccountID");
+
+                                        echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                                     }
                                 }
                             }
@@ -453,6 +508,8 @@
                                         $secondTypeAccountTableID = $secondTypeAccountTable[1];
                                         $secondTypeAccountTable = $secondTypeAccountTable[0];
                                         $result = mysqli_query($connectDB, "update $secondTypeAccountTable set amountMoney=amountMoney-$oldAmountMoney+$amountMoney where $secondTypeAccountTableID=$secondAccountID");
+
+                                        echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                                     }
                                 }
                             }
@@ -488,6 +545,8 @@
                                             $secondTypeAccountTableID = $secondTypeAccountTable[1];
                                             $secondTypeAccountTable = $secondTypeAccountTable[0];
                                             $result = mysqli_query($connectDB, "update $secondTypeAccountTable set amountMoney=amountMoney+$amountMoney where $secondTypeAccountTableID=$secondAccountID");
+                                            
+                                            echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                                         }
                                     }
                                 }
@@ -497,7 +556,7 @@
                 }
             } 
             catch (Exception $e) {
-                echo json_encode(array('resultCode'=>4, 'message'=>'Поймано исключение: '+$e->getMessage()));
+                echo json_encode(array('resultCode'=>4, 'message'=>'Поймано исключение: '.$e->getMessage()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -549,11 +608,11 @@
 
             if ($result)
             {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'));
+                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
             }
             else
             {
-                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'));
+                echo json_encode(array('resultCode'=>2, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
             }
         };
@@ -562,7 +621,7 @@
 
         
         default: {
-            echo json_encode(array('resultCode'=>1, 'message'=>'Неизвестный метод запроса'));
+            echo json_encode(array('resultCode'=>1, 'message'=>'Неизвестный метод запроса'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         }
     }
 ?>
