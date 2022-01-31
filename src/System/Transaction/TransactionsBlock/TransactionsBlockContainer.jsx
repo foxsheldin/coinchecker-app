@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withUserID } from '../../../hoc/withUserID';
@@ -6,38 +6,49 @@ import { getTransactions } from '../../../redux/transaction-reducer';
 import PreLoader from '../../common/PreLoader/PreLoader';
 import TransactionsBlock from './TransactionsBlock';
 
-class TransactionsBlockContainer extends React.Component {
-    componentDidMount() {
-        this.props.getTransactions(this.props.currentPage, this.props.pageSize, this.props.userid);
+const TransactionsBlockContainer = (props) => {
+    let [currentPage, setCurrentPage] = useState(1);
+    let [pageSize, setPageSize] = useState(10);
+
+    useEffect(() => {
+        props.getTransactions(currentPage, pageSize, props.userid);
+    }, []);
+
+    useEffect(() => {
+        setCurrentPage(props.currentPage);
+    }, [props.currentPage]);
+
+    useEffect(() => {
+        setPageSize(props.pageSize);
+    }, [props.pageSize]);
+
+    const onPageChanged = (pageNumber) => {
+        props.getTransactions(pageNumber, props.pageSize, props.userid)
     }
 
-    onPageChanged = (pageNumber) => {
-        this.props.getTransactions(pageNumber, this.props.pageSize, this.props.userid)
-    }
-
-    render() {
-        return <>
-            {this.props.isFetching ? <PreLoader /> : 
+    console.log(props);
+    return <>
+        {!props.transactions ? <PreLoader /> :
             <TransactionsBlock
-                currentPage={this.props.currentPage}
-                onPageChanged={this.onPageChanged}
-                pageSize={this.props.pageSize}
-                transactions={this.props.transactions}
-                totalTransactionsCount={this.props.totalTransactionsCount}
+                currentPage={props.currentPage}
+                onPageChanged={onPageChanged}
+                pageSize={props.pageSize}
+                transactions={props.transactions}
+                totalTransactionsCount={props.totalTransactionsCount}
             />}
-            
-        </>
-    }
-}
+
+    </>
+};
 
 const mapStateToProps = (state) => {
     return {
         transactions: state.transactionPage.transactions,
         pageSize: state.transactionPage.pageSize,
         totalTransactionsCount: state.transactionPage.totalTransactionsCount,
-        currentPage: state.transactionPage.currentPage
+        currentPage: state.transactionPage.currentPage,
+        isFetching: state.transactionPage.isFetching
     }
-} 
+}
 
 export default compose(
     connect(mapStateToProps, { getTransactions }),
