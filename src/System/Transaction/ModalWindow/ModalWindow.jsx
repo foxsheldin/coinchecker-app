@@ -18,12 +18,12 @@ const ModalWindow = () => {
                             <div className="modal-body">
                                 <input type="hidden" name="type" value="outcome" />
                                 <label htmlFor="date">Дата транзакции</label>
-                                <input type="date" className="form-control" name="date" value="2021-12-25" required="" />
-                               {/*  <!-- */} <div className="btn-group my-2">
+                                <input type="date" className="form-control" name="date" value={Date.now()} required="" />
+                               {/*  <!-- <div className="btn-group my-2">
                                     <button className="btn btn-sm btn-outline-primary active" onClick={transactionBtnClick('outcome')}>Расход</button>
                                     <button className="btn btn-sm btn-outline-primary" onClick={transactionBtnClick('income')}>Доход</button>
                                     <button className="btn btn-sm btn-outline-primary" onClick={transactionBtnClick('transfer')}>Перевод</button>
-                                </div> {/* --> */}
+                                </div> --> */}
                                 <label htmlFor="money">Потрачено</label>
                                 <input className="form-control" type="number" step="any" name="money" id="money" min="0" />
                                 <div className="formaddOutcome">

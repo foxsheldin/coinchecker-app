@@ -30,8 +30,8 @@ const AccountItem = (props) => {
 const Accounts = (props) => {
     
     const accountElements = (nameAccount) => {
-        return nameAccount.map(na => <AccountItem name={na.name} amountMoney={na.amountMoney}
-            typeAccount={na.typeAccount} AccountId={na.id} />)
+        return nameAccount.map(each => <AccountItem name={each.name} amountMoney={each.amountMoney}
+            typeAccount={each.typeAccount} AccountId={each.id} />)
     }
 
     return (

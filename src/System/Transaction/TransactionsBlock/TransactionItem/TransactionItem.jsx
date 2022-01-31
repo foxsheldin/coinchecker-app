@@ -6,23 +6,23 @@ const TransactionItem = (props) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
 
-    let colorBalance="black";
+    let colorBalance = "black";
     let date = new Date(props.dateTransaction);
-    date = date.getDate()+"."+(date.getMonth()+1)+"."+ date.getFullYear();
-    if (props.isTransfer === "1") {
+    date = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    if (props.isTransfer) {
         return (
             <div className="transaction" id={"transaction_" + props.transactionID}>
                 <div className="transactionDatas row my-1">
-                <div className="date col-2">{date}</div>
+                    <div className="date col-2">{date}</div>
                     <div className="info col-5">
                         <div className="titlle row">Перевод со счета "{props.nameAccount1}" на счет "{props.nameAccount2}"</div>
-                        <div className="comment row">&nbsp;</div>
+                        <div className="comment row">{props.comment}</div>
                     </div>
                     <div className="balance col-2">{numberWithSpaces(props.amountMoney)}&nbsp;руб.</div>
                     <div className="account col-3">{props.nameAccount1} -&gt; {props.nameAccount2}</div>
                     <div className="action col-12">
                         <div className="act1 row">
-                            <div className="clear col-2">{props.comment}</div>
+                            <div className="clear col-2">&nbsp;</div>
                             <NavLink to={'../' + props.transactionID} className="link col-2">Редактировать</NavLink>
                             <a href={"/system/php/deltransaction.php?transactionID=" + props.transactionID} className="delete col-3" onclick="return confirm('Точно удалить?');">Удалить</a>
                         </div>
@@ -32,11 +32,11 @@ const TransactionItem = (props) => {
         );
     }
     else {
-        if (props.isIncome==="1")
+        if (props.isIncome)
             colorBalance = "green";
-        else if(props.isOutcome==="1")
+        else if (props.isOutcome)
             colorBalance = "red";
-        
+
         return (
             <div className="transaction" id={"transaction_" + props.transactionID}>
                 <div className="transactionDatas row my-1">
