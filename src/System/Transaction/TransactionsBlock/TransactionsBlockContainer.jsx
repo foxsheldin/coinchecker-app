@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { compose } from 'redux';
 import { withUserID } from '../../../hoc/withUserID';
-import { getTransactions } from '../../../redux/transaction-reducer';
+import { getAccounts } from '../../../redux/account-reducer';
+import { getTransactions, deleteTransaction } from '../../../redux/transaction-reducer';
 import PreLoader from '../../common/PreLoader/PreLoader';
 import TransactionsBlock from './TransactionsBlock';
 
 const TransactionsBlockContainer = (props) => {
-    let [currentPage, setCurrentPage] = useState(1);
+    let {page} = useParams();
     let [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        props.getTransactions(currentPage, pageSize, props.userid);
-    }, []);
-
-    useEffect(() => {
-        setCurrentPage(props.currentPage);
-    }, [props.currentPage]);
+        props.getTransactions(page??1, pageSize, props.userid);
+    }, [page]);
 
     useEffect(() => {
         setPageSize(props.pageSize);
     }, [props.pageSize]);
 
-    const onPageChanged = (pageNumber) => {
-        props.getTransactions(pageNumber, props.pageSize, props.userid)
+    const onDeleteTransactionClick = async (transactionid) => {
+        const conf = window.confirm(`Точно удалить?`);
+        
+        if (conf)
+        {
+            alert("Удалено "+transactionid);
+            /* props.deleteTransaction(transactionid, props.userid);
+            props.getTransactions(props.userid);
+            props.getAccounts(props.userid); */
+        }
     }
-
-    console.log(props);
+    
     return <>
         {!props.transactions ? <PreLoader /> :
             <TransactionsBlock
-                currentPage={props.currentPage}
-                onPageChanged={onPageChanged}
+                currentPage={page}
                 pageSize={props.pageSize}
                 transactions={props.transactions}
                 totalTransactionsCount={props.totalTransactionsCount}
+                onDeleteTransactionClick={onDeleteTransactionClick}
             />}
 
     </>
@@ -51,6 +56,6 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, { getTransactions }),
+    connect(mapStateToProps, { getTransactions, getAccounts, deleteTransaction }),
     withUserID
 )(TransactionsBlockContainer)

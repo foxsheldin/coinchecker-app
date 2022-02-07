@@ -14,11 +14,11 @@ const EditTransactionContainer = (props) => {
     const navigate = useNavigate();
 
     const onSubmit = async (formData) => {
-        await props.updateEditTransaction(formData);
+        await props.updateEditTransaction(formData, props.userid);
         await props.getTransactions(props.userid);
         await props.getAccounts(props.userid);
         await props.getAllMoney(props.userid);
-        await navigate("../../transaction", {replace: true});
+        await navigate(-1, {replace: true});
     }
 
     let [transaction, setTransaction] = useState({});
@@ -49,7 +49,9 @@ const mapStateToProps = (state) => {
     return {
         accounts: state.account.accountsInfo,
         editTransaction: state.transactionPage.editTransaction,
-        categories: state.transactionPage.categories
+        categories: state.transactionPage.categories,
+        transactions: state.transactionPage.transactions,
+        allMoney: state.account.allMoney
     }
 }
 

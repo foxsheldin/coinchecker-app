@@ -3,8 +3,9 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
 import ModalWindow from './ModalWindow/ModalWindow';
+import TransactionsBlockContainer from './TransactionsBlock/TransactionsBlockContainer';
 
-const Transaction = (props) => {
+const TransactionPage = (props) => {
 
     return (
         <div>
@@ -26,8 +27,7 @@ const Transaction = (props) => {
                                 <a href="#">Актуализировать счета</a>
                             </div> --> */}
                         </div>
-
-                        <Outlet />
+                        <TransactionsBlockContainer />
                         
                     </div>
 
@@ -173,4 +173,4 @@ const Transaction = (props) => {
     );
 }
 
-export default Transaction;
+export default TransactionPage;

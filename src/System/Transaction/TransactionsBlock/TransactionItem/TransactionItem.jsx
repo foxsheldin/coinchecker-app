@@ -23,8 +23,9 @@ const TransactionItem = (props) => {
                     <div className="action col-12">
                         <div className="act1 row">
                             <div className="clear col-2">&nbsp;</div>
-                            <NavLink to={'../' + props.transactionID} className="link col-2">Редактировать</NavLink>
-                            <a href={"/system/php/deltransaction.php?transactionID=" + props.transactionID} className="delete col-3" onclick="return confirm('Точно удалить?');">Удалить</a>
+                            <NavLink to={'/system/transaction/edit/' + props.transactionID} className="link col-2">Редактировать</NavLink>
+                            {/* <a href={"/system/php/deltransaction.php?transactionID=" + props.transactionID} className="delete col-3" onclick="return confirm('Точно удалить?');">Удалить</a> */}
+                            <a className="delete col-3" onClick={() => props.onDeleteTransactionClick(props.transactionID)}>Удалить</a>
                         </div>
                     </div>
                 </div>
@@ -50,8 +51,9 @@ const TransactionItem = (props) => {
                     <div className="action col-12">
                         <div className="act1 row">
                             <div className="clear col-2">&nbsp;</div>
-                            <NavLink to={'../' + props.transactionID} className="link col-2">Редактировать</NavLink>
-                            <a href={"/system/php/deltransaction.php?transactionID=" + props.transactionID} className="delete col-3" onclick="return confirm('Точно удалить?');">Удалить</a>
+                            <NavLink to={'/system/transaction/edit/' + props.transactionID} className="link col-2">Редактировать</NavLink>
+                            {/* <a href={"/system/php/deltransaction.php?transactionID=" + props.transactionID} className="delete col-3" onclick="return confirm('Точно удалить?');">Удалить</a> */}
+                            <a className="delete col-3" onClick={() => props.onDeleteTransactionClick(props.transactionID)}>Удалить</a>
                         </div>
                     </div>
                 </div>

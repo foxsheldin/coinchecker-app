@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TransactionItem from './TransactionItem/TransactionItem'
 
-const TransactionsBlock = (props) => {
+const TransactionsBlock = React.memo((props) => {
 
 
     let pagesCount = Math.ceil(props.totalTransactionsCount / props.pageSize);
@@ -10,7 +11,7 @@ const TransactionsBlock = (props) => {
         paginator.push(i);
     }
     const transactionElements = props.transactions
-        .map(t => <TransactionItem {...t} />);
+        .map(t => <TransactionItem {...t} onDeleteTransactionClick={props.onDeleteTransactionClick}/>);
 
     return (
         <div className="transactionBlock row">
@@ -23,11 +24,11 @@ const TransactionsBlock = (props) => {
                     if (props.currentPage === p) {
                         stylePaginator = "fs-6 link-dark";
                     }
-                    return <a className={stylePaginator} onClick={() => props.onPageChanged(p)}>&nbsp;{p}&nbsp;</a>
+                    return <Link to={`/system/transaction/${p}`} className={stylePaginator}>&nbsp;{p}&nbsp;</Link>
                 })}
             </div>
         </div>
     );
-}
+})
 
 export default TransactionsBlock;

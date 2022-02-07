@@ -9,9 +9,8 @@ import SystemLayout from "./System/SystemLayout";
 import Browse from "./System/Browse/Browse";
 import AccountsContainer from "./System/Accounts/AccountsContainer";
 import Advisor from "./System/Advisor/Advisor";
-import Transaction from "./System/Transaction/Transaction";
-import TransactionsBlockContainer from "./System/Transaction/TransactionsBlock/TransactionsBlockContainer";
-import EditTransactionContainer from "./System/Transaction/EditTransaction/EditTransactionContainer";
+import TransactionPage from "./System/Transaction/TransactionPage";
+import EditTransactionPage from "./System/EditTransactionPage/EditTransactionPage";
 
 
 const App = (props) => {
@@ -24,10 +23,8 @@ const App = (props) => {
         </Route>
         <Route path='system' element={<SystemLayout />}>
           <Route path='browse' element={<Browse />} />
-          <Route exact path='transaction' element={<Transaction />} >
-            <Route path='/system/transaction' element={<TransactionsBlockContainer />} />
-            <Route path='/system/transaction/:transactionid' element={<EditTransactionContainer />} />
-          </Route>
+          <Route path='/system/transaction/:page' element={<TransactionPage />} />
+          <Route path='/system/transaction/edit/:transactionid' element={<EditTransactionPage />} />
           {/* <Route path='reminder' element={<Auth />} />
           <Route path='reports' element={<Auth />} />
           <Route path='goals' element={<Auth />} /> */}
