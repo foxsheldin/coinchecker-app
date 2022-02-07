@@ -15,7 +15,7 @@ const AccountItem = (props) => {
     );
 }
 
-const BalanceForm = (props) => {
+const BalanceForm = React.memo((props) => {
     const accountElements = (nameAccount) => {
         return nameAccount.map(each => <AccountItem name={each.name} amountMoney={each.amountMoney}
             typeAccount={each.typeAccount} AccountId={each.id} />)
@@ -77,6 +77,6 @@ const BalanceForm = (props) => {
             </div> --> */}
         </div>
     );
-}
+})
 
 export default BalanceForm;

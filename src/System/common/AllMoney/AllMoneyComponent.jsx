@@ -8,7 +8,7 @@ const numberWithSpaces = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
-const AllMoneyComponent = (props) => {
+const AllMoneyComponent = React.memo((props) => {
     let [allMoney, setAllmoney] = useState(0);
     
     useEffect(()=>{
@@ -22,7 +22,7 @@ const AllMoneyComponent = (props) => {
     return <>
         {numberWithSpaces(allMoney)}&nbsp;руб.
     </>;
-};
+});
 
 const mapStateToProps = (state) => {
     return {
