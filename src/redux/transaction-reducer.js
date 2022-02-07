@@ -82,11 +82,10 @@ export const getEditTransaction = (transactionid, userid) => {
     }
 }
 
-export const updateEditTransaction = (data) => {
+export const updateEditTransaction = (data, userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         transactionsAPI.updateEditTransaction(data).then(data => {
-            debugger
             if (!data.resultCode) {
                 dispatch(setMessageError(data.message))
             }
