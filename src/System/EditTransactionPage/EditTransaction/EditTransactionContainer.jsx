@@ -21,6 +21,10 @@ const EditTransactionContainer = (props) => {
         await navigate(-1, {replace: true});
     }
 
+    const onCancel = () => {
+        navigate(-1, {replace: true});
+    }
+
     let [transaction, setTransaction] = useState({});
     
     useEffect(()=>{
@@ -40,6 +44,7 @@ const EditTransactionContainer = (props) => {
                 categories={props.categories}
                 accounts={props.accounts}
                 onSubmit={onSubmit}
+                onCancel={onCancel}
             />
         </>
     );

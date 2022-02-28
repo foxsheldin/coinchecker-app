@@ -1,6 +1,5 @@
 import React from 'react'
 import { Field, Form } from 'react-final-form'
-import { Link } from 'react-router-dom'
 
 const numberWithSpaces = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -12,7 +11,8 @@ const accountElements = (nameAccount) => {
 }
 
 const TransferForm = (props) => {
-    return <Form onSubmit={props.onSubmit} initialValues={props.transaction} accounts={props.accounts}>
+    return <Form onSubmit={props.onSubmit} initialValues={props.transaction} 
+        accounts={props.accounts} onCancel={props.onCancel}>
         {props => (
             <form onSubmit={props.handleSubmit}>
                 <div class="modal-body">
@@ -108,7 +108,7 @@ const TransferForm = (props) => {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <Link to={"/system/transaction"} class="btn btn-secondary" >Отменить</Link>
+                    <button type='button' class="btn btn-secondary" onClick={props.onCancel}>Отменить</button>
                     <button type="submit" class="btn btn-primary">Изменить</button>
                 </div>
             </form>
@@ -122,7 +122,8 @@ const IncomeOutcomeForm = (props) => {
         <option value={each.id}>{each.nameCategory}</option>
     ));
 
-    return <Form onSubmit={props.onSubmit} initialValues={props.transaction} accounts={props.accounts}>
+    return <Form onSubmit={props.onSubmit} initialValues={props.transaction} 
+        accounts={props.accounts} onCancel={props.onCancel}>
         {props => (
             <form onSubmit={props.handleSubmit}>
                 <label for="date">Дата транзакции</label>
@@ -200,7 +201,7 @@ const IncomeOutcomeForm = (props) => {
                     />
                 </div>
                 <div class="modal-footer">
-                    <Link to={"/system/transaction"} class="btn btn-secondary" >Отменить</Link>
+                    <button type='button' class="btn btn-secondary" onClick={props.onCancel}>Отменить</button>
                     <button type="submit" class="btn btn-primary">Изменить</button>
                 </div>
             </form>
@@ -213,11 +214,11 @@ const EditTransaction = (props) => {
         <div class="container">
             <div class="modal-header">
                 <h5 class="modal-title" id="addIncomeLabel">Изменение транзакции</h5>
-                <Link to={"/system/transaction"} class="btn-close"></Link>
+                <a class="btn-close" onClick={props.onCancel}></a>
             </div>
             {props.transaction.isTransfer ?
-                <TransferForm {...props} onSubmit={props.onSubmit} /> :
-                <IncomeOutcomeForm {...props} onSubmit={props.onSubmit} />}
+                <TransferForm {...props} onSubmit={props.onSubmit} onCancel={props.onCancel}/> :
+                <IncomeOutcomeForm {...props} onSubmit={props.onSubmit} onCancel={props.onCancel}/>}
         </div>
     );
 }
