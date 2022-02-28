@@ -61,6 +61,19 @@ export const getTransactions = (currentPage, pageSize, userid) => {
     }
 }
 
+export const deleteTransaction = (transactionid, userid) => {
+    return async (dispatch, getState) => {
+        let response = await transactionsAPI.deleteTransaction(transactionid, userid);
+        let transactions = getState().transactionPage.transactions;
+
+        if (!response.data.resultCode) {
+            dispatch(toggleIsFetching(true));
+            dispatch(setTransactions(transactions.filter(transaction => transaction.transactionID != transactionid)))
+            dispatch(toggleIsFetching(false));
+        }
+    }
+}
+
 export const getEditTransaction = (transactionid, userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));

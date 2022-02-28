@@ -15,7 +15,6 @@ export const transactionsAPI = {
         })
     },
     updateEditTransaction(data) {
-        debugger
         return instance.put(`transactions/transaction.php`, {data})
         .then(response => {
             return response.data;
@@ -27,6 +26,10 @@ export const transactionsAPI = {
         .then(response => {
             return response.data;
         })
+    },
+    deleteTransaction(transactionid, userid) {
+        userid=1
+        return instance.delete(`transactions/transaction.php?userID=${userid}&transactionid=${transactionid}`)
     },
     getCategories(type) {
         return instance.get(`transactions/getCategories.php?type=${type}`)

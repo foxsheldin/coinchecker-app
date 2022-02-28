@@ -565,9 +565,8 @@
 
         /* Этот метод запроса используется для удаления информации на сервере */
         case "DELETE":{
-            $_DELETE = json_decode(file_get_contents('php://input'), true);
-            $transactionID = $_DELETE['transactionID'];
-            $userID = $_DELETE['userID'];
+            $transactionID = $_GET['transactionid'];
+            $userID = $_GET['userID'];
 
             $transaction = mysqli_query($connectDB, 
                 "select firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID, amountMoney, commentID, isIncome, isOutcome, isTransfer from users_transaction where transactionID=$transactionID and userID=$userID");

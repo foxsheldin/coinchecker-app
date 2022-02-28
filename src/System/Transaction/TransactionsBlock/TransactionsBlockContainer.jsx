@@ -20,15 +20,12 @@ const TransactionsBlockContainer = (props) => {
         setPageSize(props.pageSize);
     }, [props.pageSize]);
 
-    const onDeleteTransactionClick = async (transactionid) => {
+    const onDeleteTransactionClick = (transactionid) => {
         const conf = window.confirm(`Точно удалить?`);
         
         if (conf)
         {
-            alert("Удалено "+transactionid);
-            /* props.deleteTransaction(transactionid, props.userid);
-            props.getTransactions(props.userid);
-            props.getAccounts(props.userid); */
+            props.deleteTransaction(transactionid, props.userid);
         }
     }
     
