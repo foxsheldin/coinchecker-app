@@ -124,46 +124,45 @@
         /* Этот метод запроса добавляет транзакцию в базу данных */
         case "POST": {
             $_POST = json_decode(file_get_contents('php://input'), true);
-            $userid = $_POST['userID'];
-            $typeTransaction = $_POST['type'];
-            $date = $_POST['date'];
-            $money = $_POST['money'];
+            $userid = $_POST['data']['userID'];
+            $typeTransaction = $_POST['data']['typeTransaction'];
+            $date = $_POST['data']['date'];
+            $money = $_POST['data']['money'];
             $secondTypeAccountID = 'null';
             $secondAccountID = 'null';
             $payer = 'null';
             $categoryID = '1';
-            $comment = $_POST['comment'];
+            $comment = $_POST['data']['comment'];
             $isIncome = 'false';
             $isOutcome = 'false';
             $isTransfer = 'false';
-            //$commentID = mysqli_query($connectDB, "insert into comments value (null, ");
 
             switch ($typeTransaction){
                 case 'outcome':{
-                    $firstAccountID = $_POST['account'];
+                    $firstAccountID = $_POST['data']['account'];
                     $firstAccountID = explode(', ', $firstAccountID);
                     $firstTypeAccountID = $firstAccountID[0];
                     $firstAccountID = $firstAccountID[1];
-                    $payer = $_POST['payer'];
-                    $categoryID = $_POST['category'];
+                    $payer = $_POST['data']['payer'];
+                    $categoryID = $_POST['data']['category'];
                     $money = $money * (-1);
                     $isOutcome = 'true';
                 }; break;
                 case 'income':{
-                    $firstAccountID = $_POST['account'];
+                    $firstAccountID = $_POST['data']['account'];
                     $firstAccountID = explode(', ', $firstAccountID);
                     $firstTypeAccountID = $firstAccountID[0];
                     $firstAccountID = $firstAccountID[1];
-                    $categoryID = $_POST['category'];
-                    $payer = $_POST['payer'];
+                    $categoryID = $_POST['data']['category'];
+                    $payer = $_POST['data']['payer'];
                     $isIncome = 'true';
                 }; break;
                 case 'transfer':{
-                    $firstAccountID = $_POST['firstAccount'];
+                    $firstAccountID = $_POST['data']['firstAccount'];
                     $firstAccountID = explode(', ', $firstAccountID);
                     $firstTypeAccountID = $firstAccountID[0];
                     $firstAccountID = $firstAccountID[1];
-                    $secondAccountID = $_POST['secondAccount'];
+                    $secondAccountID = $_POST['data']['secondAccount'];
                     $secondAccountID = explode(', ', $secondAccountID);
                     $secondTypeAccountID = $secondAccountID[0];
                     $secondAccountID = $secondAccountID[1];
@@ -181,12 +180,38 @@
                 }
             }
 
+            switch ($firstTypeAccountID) {
+                case "cash": $firstTypeAccountID = 1;break;
+                case "card": $firstTypeAccountID = 2;break;
+                case "creditCard": $firstTypeAccountID = 3;break;
+                case "bankAccount": $firstTypeAccountID = 4;break;
+                case "deposit": $firstTypeAccountID = 5;break;
+
+                default: {
+                    echo json_encode(array('resultCode'=>4, 'message'=>'При добавлении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }
+            }
+            switch ($secondTypeAccountID) {
+                case "cash": $secondTypeAccountID = 1;break;
+                case "card": $secondTypeAccountID = 2;break;
+                case "creditCard": $secondTypeAccountID = 3;break;
+                case "bankAccount": $secondTypeAccountID = 4;break;
+                case "deposit": $secondTypeAccountID = 5;break;
+                case 'null': $secondTypeAccountID = 'null'; break;
+
+                default: {
+                    echo json_encode(array('resultCode'=>5, 'message'=>'При добавлении используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }
+            }
+
             $transactionID = mysqli_query($connectDB, "select MAX(transactionID) from users_transaction");
             $transactionID = mysqli_fetch_array($transactionID);
             $transactionID = $transactionID[0]+1;
             
-            try
-            {
+            /* try
+            { */
                 if ($comment != null)
                 {
                     $comment = mysqli_query($connectDB, "insert into comments value (null, $transactionID, '$comment')");
@@ -198,7 +223,7 @@
                     }
                     else
                     {
-                        echo json_encode(array('resultCode'=>4, 'message'=>'Ошибка запроса данных с сервера'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                        echo json_encode(array('resultCode'=>6, 'message'=>'Ошибка запроса данных с сервера'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                         exit;
                     }
                 }
@@ -207,6 +232,7 @@
                     //echo 'Пустой коммент';
                     $commentID = 'null';
                 }
+                echo ($firstTypeAccountID.' '.$secondTypeAccountID);
                 $transaction = mysqli_query($connectDB, "insert into users_transaction value ($transactionID, $userid, $firstTypeAccountID, $firstAccountID, $secondTypeAccountID, $secondAccountID, $money, $categoryID, '$date', '$payer', $commentID, false, null, $isIncome, $isOutcome, $isTransfer)");
                 if ($transaction)
                 {
@@ -235,21 +261,21 @@
                         }
                     }  
                 }
-            } 
+
+                if ($result)
+                {
+                    echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                }
+                else
+                {
+                    echo json_encode(array('resultCode'=>7, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }
+           /*  } 
             catch (Exception $e) {
-                echo json_encode(array('resultCode'=>5, 'message'=>'Поймано исключение: '.$e->getMessage()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                echo json_encode(array('resultCode'=>8, 'message'=>'Поймано исключение: '.$e->getMessage()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 exit;
-            }
-            
-            if ($result)
-            {
-                echo json_encode(array('resultCode'=>0, 'message'=>'Операция выполнена успешно'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-            }
-            else
-            {
-                echo json_encode(array('resultCode'=>6, 'message'=>'ОШИБКА СЕРВЕРА'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-                exit;
-            }
+            } */
         };
         break;
 

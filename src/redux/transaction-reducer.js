@@ -120,6 +120,18 @@ export const updateEditTransaction = (data, userid) => {
     }
 }
 
+export const addNewTransaction = (data) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        transactionsAPI.addNewTransaction(data).then(data => {
+            if (data.resultCode) {
+                dispatch(setMessageError(data.message))
+            }
+            dispatch(toggleIsFetching(false));
+        });
+    }
+}
+
 export const getCategories = (type) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));

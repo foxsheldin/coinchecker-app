@@ -26,6 +26,7 @@ const selectAccount = (accounts, name) => {
         className="form-control my-2"
         name={name}
         required="required">
+        <option selected="selected"/>
         {accounts.cashData.length ?
             <optgroup label="Наличные">
                 {accountElements(accounts.cashData)}
@@ -56,7 +57,8 @@ const selectAccount = (accounts, name) => {
 
 const FormAddTransaction = (props) => {
     return (
-        <Form onSubmit={props.handleSubmit} accounts={props.accounts} categories={props.categories}>
+        <Form onSubmit={props.handleSubmit} accounts={props.accounts} 
+            categories={props.categories} initialValues={props.initialValues}>  
             {props => (
                 <form onSubmit={props.handleSubmit}>
                     <div className="modal-body">

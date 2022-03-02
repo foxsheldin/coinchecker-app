@@ -27,6 +27,12 @@ export const transactionsAPI = {
             return response.data;
         })
     },
+    addNewTransaction(data){
+        return instance.post(`transactions/transaction.php`, {data})
+        .then(response => {
+            return response.data;
+        })
+    },
     deleteTransaction(transactionid, userid) {
         userid=1
         return instance.delete(`transactions/transaction.php?userID=${userid}&transactionid=${transactionid}`)
