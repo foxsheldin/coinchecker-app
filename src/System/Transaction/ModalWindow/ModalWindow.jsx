@@ -1,205 +1,232 @@
 import React from 'react'
+import { Field, Form } from 'react-final-form';
 
-const ModalWindow = () => {
-    const transactionBtnClick = (transactionName) => {
-        
-    }
+const numberWithSpaces = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+const accountElements = (nameAccount) => {
+    return nameAccount.map(each => (
+        <option value={each.typeAccount + ", " + each.id}>{each.name} - {numberWithSpaces(each.amountMoney)}&nbsp;руб.</option>)
+    )
+}
 
+const categoriesElement = (categories) => categories.map(each => (
+    <option value={each.id}>{each.nameCategory}</option>
+));
+
+const Condition = ({ when, is, children }) => (
+    <Field name={when} subscription={{ value: true }}>
+        {({ input: { value } }) => (value === is ? children : null)}
+    </Field>
+)
+
+const selectAccount = (accounts, name) => {
+    return <Field
+        component='select'
+        className="form-control my-2"
+        name={name}
+        required="required">
+        {accounts.cashData.length ?
+            <optgroup label="Наличные">
+                {accountElements(accounts.cashData)}
+            </optgroup>
+            : null}
+        {accounts.cardData.length ?
+            <optgroup label="Карты">
+                {accountElements(accounts.cardData)}
+            </optgroup>
+            : null}
+        {accounts.creditData.length ?
+            <optgroup label="Кредиты">
+                {accountElements(accounts.creditData)}
+            </optgroup>
+            : null}
+        {accounts.bankAccountData.length ?
+            <optgroup label="Банковские счета">
+                {accountElements(accounts.bankAccountData)}
+            </optgroup>
+            : null}
+        {accounts.depositData.length ?
+            <optgroup label="Вклады">
+                {accountElements(accounts.depositData)}
+            </optgroup>
+            : null}
+    </Field>
+}
+
+const FormAddTransaction = (props) => {
     return (
-        <div>
-            <div className="modal fade" id="addOutcome" tabIndex="-1" aria-labelledby="addOutcomeLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="addOutcomeLabel">Добавление расхода</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <Form onSubmit={props.handleSubmit} accounts={props.accounts} categories={props.categories}>
+            {props => (
+                <form onSubmit={props.handleSubmit}>
+                    <div className="modal-body">
+                        <label htmlFor="date">Дата транзакции</label>
+                        <Field
+                            component='input'
+                            type='date'
+                            name='date'
+                            className='form-control'
+                            required="required"
+                        />
+                        <div className="btn-group my-2">
+                            <label className="btn btn-sm btn-outline-primary">
+                                <Field
+                                    component='input'
+                                    type='radio'
+                                    name='typeTransaction'
+                                    value='outcome'
+                                />
+                                Расход
+                            </label>
+                            <label className="btn btn-sm btn-outline-primary">
+                                <Field
+                                    component='input'
+                                    type='radio'
+                                    name='typeTransaction'
+                                    value='income'
+                                />
+                                Доход
+                            </label>
+                            <label className="btn btn-sm btn-outline-primary">
+                                <Field
+                                    component='input'
+                                    type='radio'
+                                    name='typeTransaction'
+                                    value='transfer'
+                                />
+                                Перевод
+                            </label>
                         </div>
-                        <form action="/system/php/addTransaction.php" method="GET">
-                            <div className="modal-body">
-                                <input type="hidden" name="type" value="outcome" />
-                                <label htmlFor="date">Дата транзакции</label>
-                                <input type="date" className="form-control" name="date" value={Date.now()} required="" />
-                               {/*  <!-- <div className="btn-group my-2">
-                                    <button className="btn btn-sm btn-outline-primary active" onClick={transactionBtnClick('outcome')}>Расход</button>
-                                    <button className="btn btn-sm btn-outline-primary" onClick={transactionBtnClick('income')}>Доход</button>
-                                    <button className="btn btn-sm btn-outline-primary" onClick={transactionBtnClick('transfer')}>Перевод</button>
-                                </div> --> */}
+                        <Condition when='typeTransaction' is='outcome'>
+                            <div>
                                 <label htmlFor="money">Потрачено</label>
-                                <input className="form-control" type="number" step="any" name="money" id="money" min="0" />
-                                <div className="formaddOutcome">
-                                    <label htmlFor="category">Категория</label>
-                                    <select className="form-control my-2" name="category" id="category">
-                                        <option value="1">Без категории</option>
-                                        <option value="2">Дети</option>
-                                        <option value="3">Забота о себе</option>
-                                        <option value="5">Здоровье и фитнес</option>
-                                        <option value="6">Кафе и рестораны</option>
-                                        <option value="7">Корректировка</option>
-                                        <option value="8">Машина</option>
-                                        <option value="9">Образование</option>
-                                        <option value="10">Отдых и развлечения</option>
-                                        <option value="11">Платежи, комиссии</option>
-                                        <option value="12">Подарки</option>
-                                        <option value="13">Покупки: одежда, техника</option>
-                                        <option value="14">Продукты</option>
-                                        <option value="15">Проезд</option>
-                                    </select>
-                                    <label htmlFor="account">Счет</label>
-                                    <select className="form-control my-2" name="account" id="account">
-                                        <optgroup label="Наличные">
-                                            <option value="1, 1">Наличный счёт 1&nbsp;-&nbsp;1&nbsp;000.00&nbsp;руб.</option>
-                                            <option value="1, 2">Наличный счёт 2&nbsp;-&nbsp;300&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Карты">
-                                            <option value="2, 1">Карта 1&nbsp;-&nbsp;15&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Кредиты">
-                                            <option value="3, 1">Кредит&nbsp;-&nbsp;1.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Банковские счета">
-                                            <option value="4, 1">Банковский счёт&nbsp;-&nbsp;1&nbsp;000&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Вклады">
-                                            <option value="5, 1">Вклад 1&nbsp;-&nbsp;100&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                    </select>
-                                    <label htmlFor="payer">Получатель</label>
-                                    <input className="form-control my-2" type="text" name="payer" id="payer" placeholder="Получатель" />
-                                    <label htmlFor="comment">Комментарий</label>
-                                    <input className="form-control my-2" type="text" name="comment" id="comment" placeholder="Комментарий" />
-                                </div>
-
+                                <Field
+                                    component='input'
+                                    type='number'
+                                    step="any"
+                                    name="money"
+                                    min="0"
+                                    className="form-control"
+                                    required="required"
+                                />
+                                <label htmlFor="category">Категория</label>
+                                <Field
+                                    component='select'
+                                    name='category'
+                                    className="form-control my-2"
+                                    required="required"
+                                >
+                                    {categoriesElement(props.categories.outcome)}
+                                </Field>
+                                <label htmlFor="account">Счет</label>
+                                {selectAccount(props.accounts, 'account')}
+                                <label htmlFor="payer">Получатель</label>
+                                <Field
+                                    component='input'
+                                    type='text'
+                                    name="payer"
+                                    placeholder="Получатель"
+                                    className="form-control my-2"
+                                />
+                                <label htmlFor="comment">Комментарий</label>
+                                <Field
+                                    component='input'
+                                    type='text'
+                                    name="comment"
+                                    placeholder="Комментарий"
+                                    className="form-control my-2"
+                                />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <button type="submit" className="btn btn-primary">Добавить расход</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className="modal fade" id="addIncome" tabIndex="-1" aria-labelledby="addIncomeLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="addIncomeLabel">Добавление дохода</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="/system/php/addTransaction.php" method="GET">
-                            <div className="modal-body">
-                                <input type="hidden" name="type" value="income" />
-                                <label htmlFor="date">Дата транзакции</label>
-                                <input type="date" className="form-control" name="date" value="2021-12-25" required="" />
+                        </Condition>
+                        <Condition when='typeTransaction' is='income'>
+                            <div>
                                 <label htmlFor="money">Получено</label>
-                                <input className="form-control" type="number" step="any" name="money" id="money" min="0" />
-                                <div className="formaddIncome">
-                                    <label htmlFor="category">Категория</label>
-                                    <select className="form-control my-2" name="category" id="category">
-                                        <option value="1">Без категории</option>
-                                        <option value="4">Зарплата</option>
-                                        <option value="7">Корректировка</option>
-                                        <option value="12">Подарки</option>
-                                    </select>
-                                    <label htmlFor="account">Счет</label>
-                                    <select className="form-control my-2" name="account" id="account">
-                                        <optgroup label="Наличные">
-                                            <option value="1, 1">Наличный счёт 1&nbsp;-&nbsp;1&nbsp;000.00&nbsp;руб.</option>
-                                            <option value="1, 2">Наличный счёт 2&nbsp;-&nbsp;300&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Карты">
-                                            <option value="2, 1">Карта 1&nbsp;-&nbsp;15&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Кредиты">
-                                            <option value="3, 1">Кредит&nbsp;-&nbsp;1.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Банковские счета">
-                                            <option value="4, 1">Банковский счёт&nbsp;-&nbsp;1&nbsp;000&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Вклады">
-                                            <option value="5, 1">Вклад 1&nbsp;-&nbsp;100&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                    </select>
-                                    <label htmlFor="payer">Плательщик</label>
-                                    <input className="form-control my-2" type="text" name="payer" id="payer" placeholder="Плательщик" />
-                                    <label htmlFor="comment">Комментарий</label>
-                                    <input className="form-control my-2" type="text" name="comment" id="comment" placeholder="Комментарий" />
-                                </div>
+                                <Field
+                                    component='input'
+                                    type='number'
+                                    step="any"
+                                    name="money"
+                                    min="0"
+                                    className="form-control"
+                                    required="required"
+                                />
+                                <label htmlFor="category">Категория</label>
+                                <Field
+                                    component='select'
+                                    name='category'
+                                    className="form-control my-2"
+                                    required="required"
+                                >
+                                    {categoriesElement(props.categories.income)}
+                                </Field>
+                                <label htmlFor="account">Счет</label>
+                                {selectAccount(props.accounts, 'account')}
+                                <label htmlFor="payer">Плательщик</label>
+                                <Field
+                                    component='input'
+                                    type='text'
+                                    name="payer"
+                                    placeholder="Плательщик"
+                                    className="form-control my-2"
+                                />
+                                <label htmlFor="comment">Комментарий</label>
+                                <Field
+                                    component='input'
+                                    type='text'
+                                    name="comment"
+                                    placeholder="Комментарий"
+                                    className="form-control my-2"
+                                />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <button type="submit" className="btn btn-primary">Добавить доход</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className="modal fade" id="addTransfer" tabIndex="-1" aria-labelledby="addTransferLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="addTransferLabel">Добавление перевода</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="/system/php/addTransaction.php" method="GET">
-                            <div className="modal-body">
-                                <input type="hidden" name="type" value="transfer" />
-                                <label htmlFor="date">Дата транзакции</label>
-                                <input type="date" className="form-control" name="date" value="2021-12-25" required="" />
+                        </Condition>
+                        <Condition when='typeTransaction' is='transfer'>
+                            <div>
                                 <label htmlFor="money">Сумма перевода</label>
-                                <input className="form-control" type="number" step="any" name="money" id="money" min="0" />
-                                <div className="formaddTransfer">
-                                    <label htmlFor="firstAccount">Со счета</label>
-                                    <select className="form-control my-2" name="firstAccount" id="account">
-                                        <optgroup label="Наличные">
-                                            <option value="1, 1">Наличный счёт 1&nbsp;-&nbsp;1&nbsp;000.00&nbsp;руб.</option>
-                                            <option value="1, 2">Наличный счёт 2&nbsp;-&nbsp;300&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Карты">
-                                            <option value="2, 1">Карта 1&nbsp;-&nbsp;15&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Кредиты">
-                                            <option value="3, 1">Кредит&nbsp;-&nbsp;1.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Банковские счета">
-                                            <option value="4, 1">Банковский счёт&nbsp;-&nbsp;1&nbsp;000&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Вклады">
-                                            <option value="5, 1">Вклад 1&nbsp;-&nbsp;100&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                    </select>
-                                    <label htmlFor="secondAccount">На счет</label>
-                                    <select className="form-control my-2" name="secondAccount" id="account">
-                                        <optgroup label="Наличные">
-                                            <option value="1, 1">Наличный счёт 1&nbsp;-&nbsp;1&nbsp;000.00&nbsp;руб.</option>
-                                            <option value="1, 2">Наличный счёт 2&nbsp;-&nbsp;300&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Карты">
-                                            <option value="2, 1">Карта 1&nbsp;-&nbsp;15&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Кредиты">
-                                            <option value="3, 1">Кредит&nbsp;-&nbsp;1.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Банковские счета">
-                                            <option value="4, 1">Банковский счёт&nbsp;-&nbsp;1&nbsp;000&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                        <optgroup label="Вклады">
-                                            <option value="5, 1">Вклад 1&nbsp;-&nbsp;100&nbsp;000.00&nbsp;руб.</option>
-                                        </optgroup>
-                                    </select>
-                                    <label htmlFor="comment">Комментарий</label>
-                                    <input className="form-control my-2" type="text" name="comment" id="comment" placeholder="Комментарий" />
-                                </div>
+                                <Field
+                                    component='input'
+                                    type='number'
+                                    step="any"
+                                    name="money"
+                                    min="0"
+                                    className="form-control"
+                                    required="required"
+                                />
+                                <label htmlFor="firstAccount">Со счета</label>
+                                {selectAccount(props.accounts, 'firstAccount')}
+                                <label htmlFor="secondAccount">На счет</label>
+                                {selectAccount(props.accounts, 'secondAccount')}
+                                <label htmlFor="comment">Комментарий</label>
+                                <Field
+                                    component='input'
+                                    type='text'
+                                    name="comment"
+                                    placeholder="Комментарий"
+                                    className="form-control my-2"
+                                />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <button type="submit" className="btn btn-primary">Добавить перевод</button>
-                            </div>
-                        </form>
+                        </Condition>
                     </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" className="btn btn-primary">Добавить транзакцию</button>
+                    </div>
+                </form>
+            )}
+        </Form>
+    );
+}
+
+
+const ModalWindow = (props) => {
+    return (
+        <div className="modal fade" id="addTransaction" tabIndex="-1" aria-labelledby="addTransactionLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="addTransactionLabel">Добавление транзакции</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <FormAddTransaction {...props} />
                 </div>
             </div>
         </div>

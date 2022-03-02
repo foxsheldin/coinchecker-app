@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
-import ModalWindow from './ModalWindow/ModalWindow';
+import ModalWindowContainer from './ModalWindow/ModalWindowContainer';
 import TransactionsBlockContainer from './TransactionsBlock/TransactionsBlockContainer';
 
 const TransactionPage = (props) => {
@@ -18,7 +18,7 @@ const TransactionPage = (props) => {
                     <div className="col-8">
                         <div className="transactionForm row border border-primary p-2">
                             <div className="col">
-                                Добавить <a className="link" data-bs-toggle="modal" data-bs-target="#addOutcome">расход</a>,&nbsp;<a className="link" data-bs-toggle="modal" data-bs-target="#addIncome">доход</a>&nbsp;или&nbsp;<a className="link" data-bs-toggle="modal" data-bs-target="#addTransfer">перевод</a>
+                                Добавить <a className="link" data-bs-toggle="modal" data-bs-target="#addTransaction">одну транзакцию</a>
                             </div>
                             {/* <!-- <div className="col">
                                 Добавить <a href="#">одну транзакцию</a> или <a href="#">несколько транзакций</a>
@@ -28,9 +28,7 @@ const TransactionPage = (props) => {
                             </div> --> */}
                         </div>
                         <TransactionsBlockContainer />
-                        
                     </div>
-
 
                     <div className="col-4">
                         <div className="accountForm row my-2 p-3">
@@ -168,7 +166,7 @@ const TransactionPage = (props) => {
                     </div>
                 </div>
             </div>
-            <ModalWindow />
+            <ModalWindowContainer />
         </div>
     );
 }
