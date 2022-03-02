@@ -118,12 +118,12 @@ const TransferForm = (props) => {
 
 
 const IncomeOutcomeForm = (props) => {
-    const categoriesElement = props.categories.map(each => (
+    const categoriesElement = (categories) => categories.map(each => (
         <option value={each.id}>{each.nameCategory}</option>
     ));
 
     return <Form onSubmit={props.onSubmit} initialValues={props.transaction} 
-        accounts={props.accounts} onCancel={props.onCancel}>
+        accounts={props.accounts} categories={props.categories} onCancel={props.onCancel}>
         {props => (
             <form onSubmit={props.handleSubmit}>
                 <label for="date">Дата транзакции</label>
@@ -150,7 +150,7 @@ const IncomeOutcomeForm = (props) => {
                         className="form-control my-2"
                         name="categoryID"
                         component="select">
-                        {categoriesElement}
+                        {categoriesElement(props.initialValues.isIncome ? props.categories.income : props.categories.outcome)}
                     </Field>
                     <label for="firstAccountSelect">Счет</label>
                     <Field

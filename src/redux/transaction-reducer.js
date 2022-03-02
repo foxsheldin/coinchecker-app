@@ -11,7 +11,10 @@ const SET_MESSAGE_ERROR ='SET_MESSAGE_ERROR'
 const initialState = {
     transactions: [],
     editTransaction: {},
-    categories: [],
+    categories: {
+        outcome: [],
+        income: [],
+    },
     pageSize: 10,
     totalTransactionsCount: 0,
     currentPage: 1,
@@ -27,7 +30,14 @@ const transactionReducer = (state = initialState, action) => {
         case SET_EDIT_TRANSACTION:
             return {...state, editTransaction: action.editTransaction}
         case SET_CATEGORIES:
-            return {...state, categories: action.categories} 
+            switch (action.typeCategories) {
+                case 'income':
+                    return {...state, categories: { ...state.categories, income: action.categories}};
+                case 'outcome':
+                    return {...state, categories: { ...state.categories, outcome: action.categories}}; 
+                default: 
+                    return state;
+            }
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage}
         case SET_TOTAL_COUNT:
@@ -43,7 +53,7 @@ const transactionReducer = (state = initialState, action) => {
 
 const setTransactions = (transactions) => ({type:SET_TRANSACTIONS, transactions})
 const setEditTransaction = (editTransaction) => ({type:SET_EDIT_TRANSACTION, editTransaction})
-const setCategories = (categories) => ({type:SET_CATEGORIES, categories})
+const setCategories = (categories, typeCategories) => ({type:SET_CATEGORIES, categories, typeCategories})
 const setTotalTransactionsCount = (totalCount) => ({type:SET_TOTAL_COUNT, totalCount})
 const setCurrentPage = (currentPage) => ({type:SET_CURRENT_PAGE, currentPage})
 const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
@@ -82,12 +92,12 @@ export const getEditTransaction = (transactionid, userid) => {
             dispatch(setEditTransaction(data.items));
             if (data.items.isIncome) {    
                 transactionsAPI.getCategories("income").then(data => {
-                    dispatch(setCategories(data.categories));
+                    dispatch(setCategories(data.categories, 'income'));
                 });
             }
             if (data.items.isOutcome) {
                 transactionsAPI.getCategories("outcome").then(data => {
-                    dispatch(setCategories(data.categories));
+                    dispatch(setCategories(data.categories, 'outcome'));
                 });
             }
             dispatch(toggleIsFetching(false));
@@ -107,6 +117,19 @@ export const updateEditTransaction = (data, userid) => {
             }
             dispatch(toggleIsFetching(false));
         });
+    }
+}
+
+export const getCategories = (type) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        transactionsAPI.getCategories("income").then(data => {
+            dispatch(setCategories(data.categories, 'income'));
+        });
+        transactionsAPI.getCategories("outcome").then(data => {
+            dispatch(setCategories(data.categories, 'outcome'));
+        });
+        dispatch(toggleIsFetching(false));
     }
 }
 
