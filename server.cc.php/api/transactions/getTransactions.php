@@ -5,15 +5,44 @@
     $page = $_GET['page']-1;
     // количество записей, выводимых на странице
     $count = $_GET['count'];
-
     $start = abs($page*$count);
+    
 
-    $totalCount = mysqli_query($connectDB, "select count(*) from users_transaction where userID=".$userID);
-    $totalCount = mysqli_fetch_row($totalCount);
+    if (isset($_GET['typeAccount']) && isset($_GET['accountID'])) {
+        switch($_GET['typeAccount']) {
+            case "cash": $typeAccountID = 1;break;
+            case "card": $typeAccountID = 2;break;
+            case "creditCard": $typeAccountID = 3;break;
+            case "bankAccount": $typeAccountID = 4;break;
+            case "deposit": $typeAccountID = 5;break;
 
-    $query = "select transactionID, userID, firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID,
-        amountMoney, categoryID, dateTransaction, payer, commentID, repeatOperation, repeatTransactionID, isIncome, isOutcome, isTransfer
-        from users_transaction where userID=".$userID." order by dateTransaction desc LIMIT $start, $count";
+            default: {
+                echo json_encode(array('resultCode'=>4, 'message'=>'При поиске транзакций по типу счета используется неизвестный тип счета'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                exit;
+            }
+        }
+        $accountID=$_GET['accountID'];
+
+        $totalCount = mysqli_query($connectDB, "select count(*) from users_transaction 
+            where userID=".$userID." and ((firstTypeAccountID=".$typeAccountID." and firstAccountID=".$accountID.") 
+            or (secondTypeAccountID=".$typeAccountID." and secondAccountID=".$accountID."))");
+        $totalCount = mysqli_fetch_row($totalCount);
+
+        $query = "select transactionID, userID, firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID,
+            amountMoney, categoryID, dateTransaction, payer, commentID, repeatOperation, repeatTransactionID, isIncome, isOutcome, isTransfer
+            from users_transaction where userID=".$userID." and ((firstTypeAccountID=".$typeAccountID." and firstAccountID=".$accountID.") 
+            or (secondTypeAccountID=".$typeAccountID." and secondAccountID=".$accountID."))
+            order by dateTransaction desc LIMIT $start, $count";
+    } else {
+        $totalCount = mysqli_query($connectDB, "select count(*) from users_transaction where userID=".$userID);
+        $totalCount = mysqli_fetch_row($totalCount);
+
+        $query = "select transactionID, userID, firstTypeAccountID, firstAccountID, secondTypeAccountID, secondAccountID,
+            amountMoney, categoryID, dateTransaction, payer, commentID, repeatOperation, repeatTransactionID, isIncome, isOutcome, isTransfer
+            from users_transaction where userID=".$userID." order by dateTransaction desc LIMIT $start, $count";
+    }
+
+    
     $result=mysqli_query($connectDB, $query);
 
     if (mysqli_num_rows($result)) {

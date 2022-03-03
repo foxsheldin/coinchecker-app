@@ -13,6 +13,13 @@ const TransactionsBlock = React.memo((props) => {
     const transactionElements = props.transactions
         .map(t => <TransactionItem {...t} onDeleteTransactionClick={props.onDeleteTransactionClick}/>);
 
+    let linkPagination='';
+    
+    if (props.typeAccount&&props.accountID) 
+        linkPagination = `/system/transaction/filter/${props.typeAccount}/${props.accountID}`
+    else 
+        linkPagination = '/system/transaction'
+
     return (
         <div className="transactionBlock row">
             <div className="data">
@@ -24,7 +31,7 @@ const TransactionsBlock = React.memo((props) => {
                     if (props.currentPage === p) {
                         stylePaginator = "fs-6 link-dark";
                     }
-                    return <Link to={`/system/transaction/${p}`} className={stylePaginator}>&nbsp;{p}&nbsp;</Link>
+                    return <Link to={`${linkPagination}/${p}`} className={stylePaginator}>&nbsp;{p}&nbsp;</Link>
                 })}
             </div>
         </div>

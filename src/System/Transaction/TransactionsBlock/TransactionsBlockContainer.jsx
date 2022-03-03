@@ -9,11 +9,11 @@ import PreLoader from '../../common/PreLoader/PreLoader';
 import TransactionsBlock from './TransactionsBlock';
 
 const TransactionsBlockContainer = (props) => {
-    let {page} = useParams();
+    let {typeAccount, accountID, page} = useParams();
     let [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        props.getTransactions(page??1, pageSize, props.userid);
+        props.getTransactions(page??1, pageSize, props.userid, typeAccount, accountID);
     }, [page]);
 
     useEffect(() => {
@@ -30,13 +30,15 @@ const TransactionsBlockContainer = (props) => {
     }
     
     return <>
-        {!props.transactions ? <PreLoader /> :
+        {!props.transactions && !props.totalTransactionsCount ? <PreLoader /> :
             <TransactionsBlock
                 currentPage={page}
                 pageSize={props.pageSize}
                 transactions={props.transactions}
                 totalTransactionsCount={props.totalTransactionsCount}
                 onDeleteTransactionClick={onDeleteTransactionClick}
+                typeAccount={typeAccount}
+                accountID={accountID}
             />}
 
     </>

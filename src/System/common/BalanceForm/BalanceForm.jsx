@@ -5,20 +5,35 @@ const AccountItem = (props) => {
     const numberWithSpaces = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
-    return (
-        <a href={"transaction/" + props.typeAccount + "id=" + props.AccountId} className="btn btn-sm btn-outline-primary">
-            <div className="row">
-                <div className="accountTitle col">{props.name}</div>
-                <div className="amount col">{numberWithSpaces(props.amountMoney)}&nbsp;руб.</div>
-            </div>
-        </a>
-    );
+    
+    if (props.AccountId===parseInt(props.currentAccountID) && props.typeAccount===props.currentTypeAccount) {
+        return (
+            <a href={"/system/transaction/1"} className="btn btn-sm btn-outline-primary active">
+                <div className="row">
+                    <div className="accountTitle col">{props.name}</div>
+                    <div className="amount col">{numberWithSpaces(props.amountMoney)}&nbsp;руб.</div>
+                </div>
+            </a>
+        );
+    } else {
+        return (
+            <a href={"/system/transaction/filter/" + props.typeAccount + "/" + props.AccountId + "/1"} className="btn btn-sm btn-outline-primary">
+                <div className="row">
+                    <div className="accountTitle col">{props.name}</div>
+                    <div className="amount col">{numberWithSpaces(props.amountMoney)}&nbsp;руб.</div>
+                </div>
+            </a>
+        );
+    }
+    
 }
 
 const BalanceForm = React.memo((props) => {
     const accountElements = (nameAccount) => {
         return nameAccount.map(each => <AccountItem name={each.name} amountMoney={each.amountMoney}
-            typeAccount={each.typeAccount} AccountId={each.id} />)
+            typeAccount={each.typeAccount} AccountId={each.id} currentTypeAccount={props.typeAccount}
+            currentAccountID={props.accountID}
+            />)
     }
 
     return (

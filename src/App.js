@@ -25,6 +25,7 @@ const App = (props) => {
         <Route path='system' element={<SystemLayout />}>
           <Route path='browse' element={<Browse />} />
           <Route path='/system/transaction/:page' element={<TransactionPage />} />
+          <Route path='/system/transaction/filter/:typeAccount/:accountID/:page' element={<TransactionPage />} />
           <Route path='/system/transaction/edit/:transactionid' element={<EditTransactionPage />} />
           {/* <Route path='reminder' element={<Auth />} />
           <Route path='reports' element={<Auth />} />

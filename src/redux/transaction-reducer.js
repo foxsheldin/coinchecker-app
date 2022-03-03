@@ -59,11 +59,11 @@ const setCurrentPage = (currentPage) => ({type:SET_CURRENT_PAGE, currentPage})
 const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 const setMessageError = (messageError) => ({type:SET_CURRENT_PAGE, messageError})
 
-export const getTransactions = (currentPage, pageSize, userid) => {
+export const getTransactions = (currentPage, pageSize, userid, typeAccount=null, accountID=null) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         dispatch(setCurrentPage(currentPage));
-        transactionsAPI.getTransactions(currentPage, pageSize, userid).then(data => {
+        transactionsAPI.getTransactions(currentPage, pageSize, userid, typeAccount, accountID).then(data => {
             dispatch(setTransactions(data.items));
             dispatch(setTotalTransactionsCount(data.totalCount));
             dispatch(toggleIsFetching(false));

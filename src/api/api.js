@@ -20,12 +20,19 @@ export const transactionsAPI = {
             return response.data;
         })
     },
-    getTransactions(currentPage, pageSize, userid){
+    getTransactions(currentPage, pageSize, userid, typeAccount=null, accountID=null){
         userid=1
-        return instance.get(`transactions/getTransactions.php?userID=${userid}&page=${currentPage}&count=${pageSize}`)
-        .then(response => {
-            return response.data;
-        })
+        if (typeAccount && accountID) {
+            return instance.get(`transactions/getTransactions.php?userID=${userid}&page=${currentPage}&count=${pageSize}&typeAccount=${typeAccount}&accountID=${accountID}`)
+            .then(response => {
+                return response.data;
+            })
+        } else {
+            return instance.get(`transactions/getTransactions.php?userID=${userid}&page=${currentPage}&count=${pageSize}`)
+            .then(response => {
+                return response.data;
+            })
+        }
     },
     addNewTransaction(data){
         return instance.post(`transactions/transaction.php`, {data})
