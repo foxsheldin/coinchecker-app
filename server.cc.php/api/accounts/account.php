@@ -3,6 +3,80 @@
     include_once("../configDB.php");
 
     switch ($_SERVER['REQUEST_METHOD']) {
+        /* Этот метод запроса получает счет из базы данных */
+        case "GET": {
+            $changeid=$_GET['changeID'];
+            $userid=$_GET['userID'];
+            switch ($_GET['typeAccount']){
+                case 'cash':{
+                    $result = mysqli_query($connectDB, "select name, amountMoney, isSavingsAccount, isTotalBalance, isArchive from users_cash 
+                        where userCashID=$changeid and userID=".$userid);
+                    $result = mysqli_fetch_array($result);
+
+                    $arr=array('name'=>$result['name'],'amountMoney'=>$result['amountMoney'],'isSavingsAccount'=>$result['isSavingsAccount'],
+                        'isTotalBalance'=>$result['isTotalBalance'],'isArchive'=>$result['isArchive']);
+                    echo json_encode(array('accountData'=>$arr, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }; 
+                break;
+
+                case 'card':{
+                    $result = mysqli_query($connectDB, "select name, bankName, creditLimit, amountMoney, isSavingsAccount, isTotalBalance, isArchive from users_Card
+                        where userCardID=$changeid and userID=".$userid);
+                    $result = mysqli_fetch_array($result);
+
+                    $arr=array('name'=>$result['name'],'bankName'=>$result['bankName'],'creditLimit'=>$result['creditLimit'],'amountMoney'=>$result['amountMoney'],
+                        'isSavingsAccount'=>$result['isSavingsAccount'],'isTotalBalance'=>$result['isTotalBalance'],'isArchive'=>$result['isArchive']);
+                    echo json_encode(array('accountData'=>$arr, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }; 
+                break;
+
+                case 'creditCard':{
+                    $result = mysqli_query($connectDB, "select name, bankName, amountMoney, dateOfReceipt, creditPeriod, interestRate, paymentsCreditCardID, isTotalBalance, isArchive 
+                        from users_Credit_Card where userCreditCardID=$changeid and userID=".$userid);
+                    $result = mysqli_fetch_array($result);
+
+                    $arr=array('name'=>$result['name'],'bankName'=>$result['bankName'],'amountMoney'=>$result['amountMoney'],'dateOfReceipt'=>$result['dateOfReceipt'],
+                        'creditPeriod'=>$result['creditPeriod'],'interestRate'=>$result['interestRate'],'paymentsCreditCardID'=>$result['paymentsCreditCardID'],
+                        'isTotalBalance'=>$result['isTotalBalance'],'isArchive'=>$result['isArchive']);
+                    echo json_encode(array('accountData'=>$arr, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }; 
+                break;
+
+                case 'bankAccount':{
+                    $result = mysqli_query($connectDB, "select name, bankName, creditLimit, amountMoney, isSavingsAccount, isTotalBalance, isArchive from users_bank_account 
+                        where userBankAccountID=$changeid and userID=".$userid);
+                    $result = mysqli_fetch_array($result);
+
+                    $arr=array('name'=>$result['name'],'bankName'=>$result['bankName'],'creditLimit'=>$result['creditLimit'],'amountMoney'=>$result['amountMoney'],
+                        'isSavingsAccount'=>$result['isSavingsAccount'],'isTotalBalance'=>$result['isTotalBalance'],'isArchive'=>$result['isArchive']);
+                    echo json_encode(array('accountData'=>$arr, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }; 
+                break;
+
+                case 'deposit':{
+                    $result = mysqli_query($connectDB, "select name, bankName, openingDate, amountMoney, periodDeposit, interestRate, capitalizationOfInterest, isTotalBalance, isArchive 
+                        from users_deposit where userDepositID=$changeid and userID=".$userid);
+                    $result = mysqli_fetch_array($result);
+
+                    $arr=array('name'=>$result['name'],'bankName'=>$result['bankName'],'openingDate'=>$result['openingDate'],'amountMoney'=>$result['amountMoney'],
+                        'periodDeposit'=>$result['periodDeposit'],'interestRate'=>$result['interestRate'],'capitalizationOfInterest'=>$result['capitalizationOfInterest'],
+                        'isTotalBalance'=>$result['isTotalBalance'],'isArchive'=>$result['isArchive']);
+                    echo json_encode(array('accountData'=>$arr, 'resultCode'=>0), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                    exit;
+                }; 
+                break;
+
+                default:{
+                    echo json_encode(array('message'=>'Неизвестный тип счета', 'resultCode'=>1), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                }
+            }
+        };
+        break;
+
         /* Этот метод запроса добавляет счет в базу данных */
         case "POST": {
             $_POST = json_decode(file_get_contents('php://input'), true);

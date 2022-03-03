@@ -11,6 +11,7 @@ import AccountsContainer from "./System/Accounts/AccountsContainer";
 import Advisor from "./System/Advisor/Advisor";
 import TransactionPage from "./System/Transaction/TransactionPage";
 import EditTransactionPage from "./System/EditTransactionPage/EditTransactionPage";
+import EditAccountContainer from "./System/Accounts/EditAccount/EditAccountContainer";
 
 
 const App = (props) => {
@@ -30,6 +31,7 @@ const App = (props) => {
           <Route path='goals' element={<Auth />} /> */}
           <Route path='advisor' element={<Advisor />} />
           <Route path='accounts' element={<AccountsContainer />} />
+          <Route path="/system/accounts/edit/:typeAccount/:accountID" element={<EditAccountContainer />} />
         </Route>
       </Routes>
     </div>

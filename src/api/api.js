@@ -60,6 +60,11 @@ export const accountsAPI = {
             return response.data;
         })
     },
+    getAccount(typeAccount, accountID, userid){
+        userid=1
+        return instance.get(`accounts/account.php?typeAccount=${typeAccount}&changeID=${accountID}&userID=${userid}`)
+        .then(response => (response.data))
+    }
 }
 
 export const authAPI = {

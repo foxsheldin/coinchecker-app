@@ -16,7 +16,7 @@ const AccountItem = (props) => {
                 <div className="accountTitle col-4 text-center fs-6">{props.name}</div>
                 <div className="amount col-4 text-center fs-6">{numberWithSpaces(props.amountMoney)}&nbsp;руб.</div>
                 <div className="col-4">
-                    <a href={"?change=" + props.AccountId + "&type=" + props.typeAccount} 
+                    <a href={"/system/accounts/edit/" + props.typeAccount + "/" + props.AccountId} 
                         className="btn btn-sm btn-outline-primary">Изменить</a>
                     <a href={"php/deleteAccount.php?type=" + props.typeAccount + "&deleteid=" + props.AccountId} 
                         className="btn btn-sm btn-outline-danger" 
