@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
 import { logout } from "../../../redux/auth-reducer";
@@ -15,25 +15,25 @@ const NavBarSystem = (props) => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link to="/system/browse" className="nav-link">Обзор</Link>
+                            <NavLink to="/system/browse" className="nav-link">Обзор</NavLink>
                         </li>
                         <li className="nav-item">
-                            <Link to="/system/transaction" className="nav-link">Транзакции</Link>
+                            <NavLink to="/system/transaction/1" className="nav-link">Транзакции</NavLink>
                         </li>
                         {/* <li className="nav-item">
-                            <Link to="/system/reminder" className="nav-link">Планируемые транзакции (т)</Link>
+                            <NavLink to="/system/reminder" className="nav-link">Планируемые транзакции (т)</NavLink>
                         </li>
                         <li className="nav-item">
-                            <Link to="/system/reports" className="nav-link">Отчёты (т)</Link>
+                            <NavLink to="/system/reports" className="nav-link">Отчёты (т)</NavLink>
                         </li>
                         <li className="nav-item">
-                            <Link to="/system/goals" className="nav-link">Цели (т)</Link>
+                            <NavLink to="/system/goals" className="nav-link">Цели (т)</NavLink>
                         </li> */}
                         <li className="nav-item">
-                            <Link to="/system/advisor" className="nav-link">Советник (т)</Link>
+                            <NavLink to="/system/advisor" className="nav-link">Советник (т)</NavLink>
                         </li>
                         <li className="nav-item">
-                            <Link to="/system/accounts" className="nav-link">Счета</Link>
+                            <NavLink to="/system/accounts" className="nav-link">Счета</NavLink>
                         </li>
                         {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,7 +41,7 @@ const NavBarSystem = (props) => {
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <Link to="/system/accounts" className="dropdown-item">Счета</Link>
+                                    <NavLink to="/system/accounts" className="dropdown-item">Счета</NavLink>
                                 </li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><hr className="dropdown-divider" /></li>

@@ -27,7 +27,6 @@ const ModalWindowContainer = (props) => {
     }, [])
 
     const handleSubmit = (formData) => {
-        console.log(formData);
         props.addNewTransaction(formData);
         window.location.reload();
     }

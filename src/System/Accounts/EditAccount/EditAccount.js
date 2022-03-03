@@ -197,6 +197,7 @@ const EditCreditCard = (props) => {
                     type='radio'
                     name='paymentsCreditCardID'
                     value={1}
+                    className='form-check-input'
                     id='paymentsAnnuitant'
                 />
                 <label class="form-check-label" for="paymentsAnnuitant">
@@ -209,6 +210,7 @@ const EditCreditCard = (props) => {
                     type='radio'
                     name='paymentsCreditCardID'
                     value={2}
+                    className='form-check-input'
                     id='paymentsDiff'
                 />
                 <label class="form-check-label" for="paymentsDiff">
