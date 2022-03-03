@@ -121,4 +121,13 @@ export const getAccount = (typeAccount, accountID, userid) => {
     }
 }
 
+export const updateAccount = (data, typeAccount, accountID, userid) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        accountsAPI.updateAccount(data, typeAccount, accountID, userid).then(data => {
+            dispatch(toggleIsFetching(false))
+        })
+    }
+}
+
 export default accountReducer;

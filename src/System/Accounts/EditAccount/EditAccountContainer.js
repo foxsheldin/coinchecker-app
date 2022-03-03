@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import EditAccount from './EditAccount'
-import { getAccount } from '../../../redux/account-reducer';
+import { getAccount, updateAccount } from '../../../redux/account-reducer';
 import { compose } from 'redux';
 import { withUserID } from '../../../hoc/withUserID';
 import { withAuthRedirect } from '../../../hoc/withAuthRedirect';
@@ -16,7 +16,8 @@ const EditAccountContainer = (props) => {
     },[typeAccount, accountID]);
 
     const onSubmit = (formData) => {
-        console.log(formData)
+        props.updateAccount(formData, typeAccount, accountID, props.userid)
+        navigate('/system/accounts', {replace: true})
     }
 
     const onCancel = () => {
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, { getAccount }),
+    connect(mapStateToProps, { getAccount, updateAccount }),
     withUserID,
     withAuthRedirect
 )

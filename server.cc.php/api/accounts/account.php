@@ -178,83 +178,73 @@
         /* Этот метод запроса используется для обновления информации на сервере */
         case "PUT":{
             $_PUT = json_decode(file_get_contents('php://input'), true);
+            print_r($_PUT);
             $typeAccount = $_PUT['typeAccount'];
+            $userID = $_PUT['userid'];
             $accountID = $_PUT['accountID'];
-            $userID = $_PUT['userID'];
-            $nameAccount = $_PUT['name'];
-            $amountMoney = $_PUT['amountMoney'];
-            include_once("configDB.php");
+            $nameAccount = $_PUT['data']['name'];
+            $amountMoney = $_PUT['data']['amountMoney'];
+
             /* Если checkbox отключен, то он не появится в параметрах GET*/
             switch ($typeAccount)
             {
                 case "cash":{
-                    /* $nameAccount = $_PUT['nameCashAccount']; */
-                    /* $amountMoney = $_PUT['amountMoney']; */
                     $isSavingsAccount = 'false';
                     $isTotalBalance = 'true';
-                    $isArchive = $_PUT['isArchive'];
-                    /*$result=mysqli_query($connectDB, "update users_cash set (NULL, $userID, '$nameAccount', $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)");*/
+                    $isArchive = $_PUT['data']['isArchive'];
                     $result=mysqli_query($connectDB, "update users_cash set name='$nameAccount', amountMoney=$amountMoney, isSavingsAccount=$isSavingsAccount, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userCashID=$accountID");
                 }; 
                 break;
                 case "card":{
-                    /* $nameAccount = $_PUT['nameCardAccount']; */
-                    $bankName = $_PUT['bankCardAccount'];
-                    $numAccount = $_PUT['numCardAccount'];
-                    $creditLimit = $_PUT['limitCardAccount'];
-                    /* $amountMoney = $_PUT['amountMoney']; */
-                    $isArchive = $_PUT['isArchive'];
+                    $bankName = $_PUT['data']['bankName'];
+                    /* $numAccount = $_PUT['data']['numCardAccount']; */
+                    $creditLimit = $_PUT['data']['creditLimit'];
+                    $isArchive = $_PUT['data']['isArchive'];
                     $isSavingsAccount = 'false';
                     $isTotalBalance = 'true';
                     $result=mysqli_query($connectDB, "update users_Card set name='$nameAccount', bankName='$bankName', creditLimit=$creditLimit, amountMoney=$amountMoney, isSavingsAccount=$isSavingsAccount, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userCardID=$accountID");
                 }; 
                 break;
-                case "credit":{
-                    /* $nameAccount = $_PUT['nameCreditAccount']; */
-                    $bankName = $_PUT['bankCreditAccount'];
-                    $numAccount = $_PUT['numCreditAccount'];
-                    /* $amountMoney = $_PUT['amountMoney']; */
-                    $dateOfReceipt = $_PUT['dateOfReceiptCreditAccount'];
-                    $creditPeriod = $_PUT['creditPeriodCreditAccount'];
-                    //$typeCreditPeriod = $_PUT['typeCreditPeriod'];
-                    $interestRate = $_PUT['interestRateCreditAccount'];
-                    $paymentsCreditCardID = $_PUT['payments'];
+                case "creditCard":{
+                    $bankName = $_PUT['data']['bankName'];
+                    /* $numAccount = $_PUT['data']['numCreditAccount']; */
+                    $dateOfReceipt = $_PUT['data']['dateOfReceipt'];
+                    $creditPeriod = $_PUT['data']['creditPeriod'];
+                    //$typeCreditPeriod = $_PUT['data']['typeCreditPeriod'];
+                    $interestRate = $_PUT['data']['interestRate'];
+                    $paymentsCreditCardID = $_PUT['data']['paymentsCreditCardID'];
                     $isTotalBalance = 'true';
-                    $isArchive = $_PUT['isArchive'];
+                    $isArchive = $_PUT['data']['isArchive'];
                     $result=mysqli_query($connectDB, "update users_Credit_Card set name='$nameAccount', bankName='$bankName', amountMoney=$amountMoney, dateOfReceipt='$dateOfReceipt', creditPeriod='$creditPeriod', interestRate=$interestRate, paymentsCreditCardID=$paymentsCreditCardID, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userCreditCardID=$accountID");
                 }; 
                 break;
                 case "bankAccount":{
-                    /* $nameAccount = $_PUT['name']; */
-                    $bankName = $_PUT['bankBankAccount'];
-                    $numAccount = $_PUT['numBankAccount'];
-                    $creditLimit = $_PUT['creditLimitBankAccount'];
-                    /* $amountMoney = $_PUT['amountMoney']; */
+                    $bankName = $_PUT['data']['bankName'];
+                    /* $numAccount = $_PUT['data']['numBankAccount']; */
+                    $creditLimit = $_PUT['data']['creditLimit'];
                     $isSavingsAccount = 'true';
                     $isTotalBalance = 'true';
-                    $isArchive = $_PUT['isArchive'];
+                    $isArchive = $_PUT['data']['isArchive'];
                     /* isSavingAccount - пока что нет такого пункта*/
                     $result=mysqli_query($connectDB, "update users_bank_account set name='$nameAccount', bankName='$bankName', creditLimit=$creditLimit, amountMoney=$amountMoney, isSavingsAccount=$isSavingsAccount, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userBankAccountID=$accountID");
                 }; 
                 break;
                 case "deposit":{
-                    /* $nameAccount = $_PUT['nameDepositAccount']; */
-                    $bankName = $_PUT['bankDepositAccount'];
-                    $numAccount = $_PUT['numDepositAccount'];
-                    $openingDate = $_PUT['dateOfReceiptDepositAccount'];
-                    /* $amountMoney = $_PUT['amountMoney']; */
-                    $periodDeposit = $_PUT['periodDepositAccount'];
-                    $interestRate = $_PUT['interestRateDepositAccount'];
-                    if (isset($_PUT['capitalizationDepositAccount']))
+                    $bankName = $_PUT['data']['bankName'];
+                    /* $numAccount = $_PUT['data']['numDepositAccount']; */
+                    $openingDate = $_PUT['data']['openingDate'];
+                    $periodDeposit = $_PUT['data']['periodDeposit'];
+                    $interestRate = $_PUT['data']['interestRate'];
+                    if ($_PUT['data']['capitalizationOfInterest']==1)
                         $capitalizationOfInterest = 'true';
                     else
                         $capitalizationOfInterest = 'false';
                     $isTotalBalance = 'true';
-                    $isArchive = $_PUT['isArchive'];
-                    if (isset($_PUT['addTransactionDepositAccount']))
+                    $isArchive = $_PUT['data']['isArchive'];
+                    /* if (isset($_PUT['data']['addTransactionDepositAccount']))
                         $addTransactionDepositAccount = true;
                     else
-                        $addTransactionDepositAccount = false;
+                        $addTransactionDepositAccount = false; */
                     $result=mysqli_query($connectDB, "update users_deposit set name='$nameAccount', bankName='$bankName', openingDate='$openingDate', amountMoney=$amountMoney, periodDeposit='$periodDeposit', interestRate=$interestRate, capitalizationOfInterest=$capitalizationOfInterest, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userDepositID=$accountID");
                 }; 
                 break;
