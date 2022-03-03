@@ -268,36 +268,35 @@
 
         /* Этот метод запроса используется для удаления информации на сервере */
         case "DELETE":{
-            $_DELETE = json_decode(file_get_contents('php://input'), true);
-            $typeAccount = $_DELETE['type'];
-            $accountID = $_DELETE['deleteid'];
-            include_once("configDB.php");
+            $typeAccount = $_GET['typeAccount'];
+            $accountID = $_GET['accountID'];
+            $userID = $_GET['userID'];
 
             switch ($typeAccount)
             {
                 case "cash":{
-                    $deleteAcc=mysqli_query($connectDB, "delete from users_cash where userCashID=$accountID");
-                    $result=mysqli_query($connectDB,"delete from users_transaction where (firstTypeAccountID=1 and firstAccountID=$accountID) or (secondTypeAccountID=1 and secondAccountID=$accountID)");
+                    $deleteAcc=mysqli_query($connectDB, "delete from users_cash where userCashID=$accountID and userID=$userID");
+                    $result=mysqli_query($connectDB,"delete from users_transaction where ((firstTypeAccountID=1 and firstAccountID=$accountID) or (secondTypeAccountID=1 and secondAccountID=$accountID)) and userID=$userID");
                 }; 
                 break;
                 case "card":{
-                    $deleteAcc=mysqli_query($connectDB, "delete from users_Card where userCardID=$accountID");
-                    $result=mysqli_query($connectDB,"delete from users_transaction where (firstTypeAccountID=2 and firstAccountID=$accountID) or (secondTypeAccountID=2 and secondAccountID=$accountID)");
+                    $deleteAcc=mysqli_query($connectDB, "delete from users_Card where userCardID=$accountID and userID=$userID");
+                    $result=mysqli_query($connectDB,"delete from users_transaction where ((firstTypeAccountID=2 and firstAccountID=$accountID) or (secondTypeAccountID=2 and secondAccountID=$accountID)) and userID=$userID");
                 }; 
                 break;
-                case "credit":{
-                    $deleteAcc=mysqli_query($connectDB, "delete from users_Credit_Card where userCreditCardID=$accountID");
-                    $result=mysqli_query($connectDB,"delete from users_transaction where (firstTypeAccountID=3 and firstAccountID=$accountID) or (secondTypeAccountID=3 and secondAccountID=$accountID)");
+                case "creditCard":{
+                    $deleteAcc=mysqli_query($connectDB, "delete from users_Credit_Card where userCreditCardID=$accountID and userID=$userID");
+                    $result=mysqli_query($connectDB,"delete from users_transaction where ((firstTypeAccountID=3 and firstAccountID=$accountID) or (secondTypeAccountID=3 and secondAccountID=$accountID)) and userID=$userID");
                 }; 
                 break;
                 case "bankAccount":{
-                    $deleteAcc=mysqli_query($connectDB, "delete from users_bank_account where userBankAccountID=$accountID");
-                    $result=mysqli_query($connectDB,"delete from users_transaction where (firstTypeAccountID=4 and firstAccountID=$accountID) or (secondTypeAccountID=4 and secondAccountID=$accountID)");
+                    $deleteAcc=mysqli_query($connectDB, "delete from users_bank_account where userBankAccountID=$accountID and userID=$userID");
+                    $result=mysqli_query($connectDB,"delete from users_transaction where ((firstTypeAccountID=4 and firstAccountID=$accountID) or (secondTypeAccountID=4 and secondAccountID=$accountID)) and userID=$userID");
                 }; 
                 break;
                 case "deposit":{
-                    $deleteAcc=mysqli_query($connectDB, "delete from users_deposit where userDepositID=$accountID");
-                    $result=mysqli_query($connectDB,"delete from users_transaction where (firstTypeAccountID=5 and firstAccountID=$accountID) or (secondTypeAccountID=5 and secondAccountID=$accountID)");
+                    $deleteAcc=mysqli_query($connectDB, "delete from users_deposit where userDepositID=$accountID and userID=$userID");
+                    $result=mysqli_query($connectDB,"delete from users_transaction where ((firstTypeAccountID=5 and firstAccountID=$accountID) or (secondTypeAccountID=5 and secondAccountID=$accountID)) and userID=$userID");
                 }; 
                 break;
                 default: {
@@ -317,9 +316,8 @@
             }
         };
         break;
-
-
         
+
         default: {
             echo json_encode(array('resultCode'=>1, 'message'=>'Неизвестный метод запроса'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         }

@@ -2,10 +2,6 @@ import React from 'react';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import ModalWindowContainer from './ModalWindow/ModalWindowContainer';
 
-const deleteBtnOnClick = () => {
-    return confirm('При удалении счета будут удалены фактические и планируемые транзакции по этому счету.\n\nЧтобы сохранить транзакции, но \'спрятать\' счет, измените статус счета на \'Закрытый\'.\n\nУдалить счет вместе с транзакциями?');
-}
-
 const AccountItem = (props) => {
     const numberWithSpaces = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -18,9 +14,8 @@ const AccountItem = (props) => {
                 <div className="col-4">
                     <a href={"/system/accounts/edit/" + props.typeAccount + "/" + props.AccountId} 
                         className="btn btn-sm btn-outline-primary">Изменить</a>
-                    <a href={"php/deleteAccount.php?type=" + props.typeAccount + "&deleteid=" + props.AccountId} 
-                        className="btn btn-sm btn-outline-danger" 
-                        onClick={deleteBtnOnClick}>Удалить</a>
+                    <a className="btn btn-sm btn-outline-danger" 
+                        onClick={() => props.deleteBtnOnClick(props.typeAccount, props.AccountId)}>Удалить</a>
                 </div>
             </div>
         </div>
@@ -28,10 +23,9 @@ const AccountItem = (props) => {
 }
 
 const Accounts = (props) => {
-    
     const accountElements = (nameAccount) => {
         return nameAccount.map(each => <AccountItem name={each.name} amountMoney={each.amountMoney}
-            typeAccount={each.typeAccount} AccountId={each.id} />)
+            typeAccount={each.typeAccount} AccountId={each.id} deleteBtnOnClick={props.deleteBtnOnClick}/>)
     }
 
     return (

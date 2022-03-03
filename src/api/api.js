@@ -74,6 +74,10 @@ export const accountsAPI = {
         userid=1
         return instance.put(`accounts/account.php`, {data, typeAccount, accountID, userid})
         .then(response => (response.data))
+    },
+    deleteAccount(typeAccount, accountID, userid) {
+        userid=1
+        return instance.delete(`accounts/account.php?typeAccount=${typeAccount}&accountID=${accountID}&userID=${userid}`)
     }
 }
 

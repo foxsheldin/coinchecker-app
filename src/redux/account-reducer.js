@@ -138,4 +138,13 @@ export const updateAccount = (data, typeAccount, accountID, userid) => {
     }
 }
 
+export const deleteAccount = (typeAccount, accountID, userid) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        accountsAPI.deleteAccount(typeAccount, accountID, userid).then(data => {
+            dispatch(toggleIsFetching(false))
+        })
+    }
+}
+
 export default accountReducer;
