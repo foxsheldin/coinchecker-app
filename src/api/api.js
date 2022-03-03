@@ -65,6 +65,11 @@ export const accountsAPI = {
         return instance.get(`accounts/account.php?typeAccount=${typeAccount}&changeID=${accountID}&userID=${userid}`)
         .then(response => (response.data))
     },
+    addAccount(data, userid){
+        userid=1
+        return instance.post(`accounts/account.php`, {data, userid})
+        .then(response => (response.data))
+    },
     updateAccount(data, typeAccount, accountID, userid) {
         userid=1
         return instance.put(`accounts/account.php`, {data, typeAccount, accountID, userid})

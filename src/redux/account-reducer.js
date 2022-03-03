@@ -84,7 +84,6 @@ const accountReducer = (state = initialState, action) => {
     }
 }
 
-export const addAccount = (typeAccount, newAccount) => ({ type: ADD_ACCOUNT, data: { typeAccount, newAccount } });
 const setAccountsInfo = (accountsInfo) => ({type: SET_ACCOUNTS_INFO, accountsInfo})
 const setAccountData = (accountData) => ({type: SET_ACCOUNT_DATA, accountData})
 const setAllMoney = (allMoney) => ({type: SET_ALL_MONEY, allMoney})
@@ -116,6 +115,15 @@ export const getAccount = (typeAccount, accountID, userid) => {
         dispatch(toggleIsFetching(true));
         accountsAPI.getAccount(typeAccount, accountID, userid).then(data => {
             dispatch(setAccountData(data.accountData))
+            dispatch(toggleIsFetching(false))
+        })
+    }
+}
+
+export const addAccount = (data, userid) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        accountsAPI.addAccount(data, userid).then(data => {
             dispatch(toggleIsFetching(false))
         })
     }

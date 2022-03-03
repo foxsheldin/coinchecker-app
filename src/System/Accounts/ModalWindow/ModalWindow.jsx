@@ -1,20 +1,20 @@
 import React from "react";
 import AddBankAccount from "./AddBankAccount/AddBankAccount";
 import AddCard from "./AddCard/AddCard";
-import AddCashContainer from "./AddCash/AddCashContainer";
+import AddCash from "./AddCash/AddCash";
 import AddCredit from "./AddCredit/AddCredit";
 import AddDeposit from "./AddDeposit/AddDeposit";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
 
-const ModalWindow = () => {
+const ModalWindow = (props) => {
     return (
         <div>
-            <AddCashContainer />
-            <AddCard />
-            <AddCredit />
-            <AddBankAccount />
-            <AddDeposit />
-            <DeleteAccount />
+            <AddCash {...props} />
+            <AddCard {...props} />
+            <AddCredit {...props} />
+            <AddBankAccount {...props} />
+            <AddDeposit {...props} />
+            <DeleteAccount {...props} />
         </div>
     );
 }

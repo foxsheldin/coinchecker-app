@@ -80,44 +80,44 @@
         /* Этот метод запроса добавляет счет в базу данных */
         case "POST": {
             $_POST = json_decode(file_get_contents('php://input'), true);
-            $typeAccount = $_POST['typeAccount'];
-            $userID = $_POST['userID'];
-            $nameAccount = $_POST['name'];
-            include_once("configDB.php");
-            /* Если checkbox отключен, то он не появится в параметрах GET*/
+            print_r($_POST);
+            $typeAccount = $_POST['data']['typeAccount'];
+            $userID = $_POST['userid'];
+            $nameAccount = $_POST['data']['name'];
+            
             switch ($typeAccount)
             {
                 case "cash":{
-                    $amountMoney = $_POST['amountMoney'];
+                    $amountMoney = $_POST['data']['amountMoney'];
                     $isSavingsAccount = 'false';
                     $isTotalBalance = 'true';
-                    $isArchive = $_POST['isArchive'];
+                    $isArchive = $_POST['data']['isArchive'];
                     $result=mysqli_query($connectDB, "insert into users_cash value (NULL, $userID, '$nameAccount', $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)");
                 }; 
                 break;
                 case "card":{
-                    $bankName = $_POST['bankCardAccount'];
-                    $numAccount = $_POST['numCardAccount'];
-                    $creditLimit = $_POST['limitCardAccount'];
-                    $amountMoney = $_POST['amountMoney'];
-                    $isArchive = $_POST['isArchive'];
+                    $bankName = $_POST['data']['bankName'];
+                    $numAccount = $_POST['data']['numCardAccount'];
+                    $creditLimit = $_POST['data']['creditLimit'];
+                    $amountMoney = $_POST['data']['amountMoney'];
+                    $isArchive = $_POST['data']['isArchive'];
                     $isSavingsAccount = 'false';
                     $isTotalBalance = 'true';
                     $result=mysqli_query($connectDB, "insert into users_Card value (NULL, $userID, '$nameAccount', '$bankName', $creditLimit, $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)");
                 }; 
                 break;
-                case "credit":{
-                    $bankName = $_POST['bankCreditAccount'];
-                    $numAccount = $_POST['numCreditAccount'];
-                    $amountMoney = $_POST['amountMoney']*(-1);
-                    $dateOfReceipt = $_POST['dateOfReceiptCreditAccount'];
-                    $creditPeriod = $_POST['creditPeriodCreditAccount'];
-                    //$typeCreditPeriod = $_POST['typeCreditPeriod'];
-                    $interestRate = $_POST['interestRateCreditAccount'];
-                    $paymentsCreditCardID = $_POST['payments'];
+                case "creditCard":{
+                    $bankName = $_POST['data']['bankName'];
+                    $numAccount = $_POST['data']['numCardAccount'];
+                    $amountMoney = $_POST['data']['amountMoney']*(-1);
+                    $dateOfReceipt = $_POST['data']['dateOfReceipt'];
+                    $creditPeriod = $_POST['data']['creditPeriod'];
+                    //$typeCreditPeriod = $_POST['data']['typeCreditPeriod'];
+                    $interestRate = $_POST['data']['interestRate'];
+                    $paymentsCreditCardID = $_POST['data']['paymentsCreditCardID'];
                     $isTotalBalance = 'true';
-                    $isArchive = $_POST['isArchive'];
-                    if (isset($_POST['addTransactionCreditAccount']))
+                    $isArchive = $_POST['data']['isArchive'];
+                    if (isset($_POST['data']['addTransaction']))
                         $addTransactionCreditAccount = true;
                     else
                         $addTransactionCreditAccount = false;
@@ -125,31 +125,31 @@
                 }; 
                 break;
                 case "bankAccount":{
-                    $bankName = $_POST['bankBankAccount'];
-                    $numAccount = $_POST['numBankAccount'];
-                    $creditLimit = $_POST['creditLimitBankAccount'];
-                    $amountMoney = $_POST['amountMoney'];
+                    $bankName = $_POST['data']['bankName'];
+                    $numAccount = $_POST['data']['numCardAccount'];
+                    $creditLimit = $_POST['data']['creditLimit'];
+                    $amountMoney = $_POST['data']['amountMoney'];
                     $isSavingsAccount = 'true';
                     $isTotalBalance = 'true';
-                    $isArchive = $_POST['isArchive'];
+                    $isArchive = $_POST['data']['isArchive'];
                     /* isSavingAccount - пока что нет такого пункта*/
                     $result=mysqli_query($connectDB, "insert into users_bank_account value (NULL, $userID, '$nameAccount', '$bankName', $creditLimit, $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)");
                 }; 
                 break;
                 case "deposit":{
-                    $bankName = $_POST['bankDepositAccount'];
-                    $numAccount = $_POST['numDepositAccount'];
-                    $openingDate = $_POST['dateOfReceiptDepositAccount'];
-                    $amountMoney = $_POST['amountMoney'];
-                    $periodDeposit = $_POST['periodDepositAccount'];
-                    $interestRate = $_POST['interestRateDepositAccount'];
-                    if (isset($_POST['capitalizationDepositAccount']))
+                    $bankName = $_POST['data']['bankName'];
+                    $numAccount = $_POST['data']['numCardAccount'];
+                    $openingDate = $_POST['data']['openingDate'];
+                    $amountMoney = $_POST['data']['amountMoney'];
+                    $periodDeposit = $_POST['data']['periodDeposit'];
+                    $interestRate = $_POST['data']['interestRate'];
+                    if (isset($_POST['data']['capitalizationOfInterest']))
                         $capitalizationOfInterest = 'true';
                     else
                         $capitalizationOfInterest = 'false';
                     $isTotalBalance = 'true';
-                    $isArchive = $_POST['isArchive'];
-                    if (isset($_POST['addTransactionDepositAccount']))
+                    $isArchive = $_POST['data']['isArchive'];
+                    if (isset($_POST['data']['addTransaction']))
                         $addTransactionDepositAccount = true;
                     else
                         $addTransactionDepositAccount = false;
@@ -178,7 +178,6 @@
         /* Этот метод запроса используется для обновления информации на сервере */
         case "PUT":{
             $_PUT = json_decode(file_get_contents('php://input'), true);
-            print_r($_PUT);
             $typeAccount = $_PUT['typeAccount'];
             $userID = $_PUT['userid'];
             $accountID = $_PUT['accountID'];

@@ -1,6 +1,6 @@
 import React from 'react';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
-import ModalWindow from './ModalWindow/ModalWindow';
+import ModalWindowContainer from './ModalWindow/ModalWindowContainer';
 
 const deleteBtnOnClick = () => {
     return confirm('При удалении счета будут удалены фактические и планируемые транзакции по этому счету.\n\nЧтобы сохранить транзакции, но \'спрятать\' счет, измените статус счета на \'Закрытый\'.\n\nУдалить счет вместе с транзакциями?');
@@ -104,7 +104,7 @@ const Accounts = (props) => {
                 </div>
             </div>
             
-            <ModalWindow />
+            <ModalWindowContainer />
         </div>
 
     );
