@@ -5,10 +5,12 @@ const SET_EDIT_TRANSACTION = 'SET_EDIT_TRANSACTION';
 const SET_CATEGORIES = 'SET_CATEGORIES';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
+const SET_REPORT_CATEGORIES = 'SET_REPORT_CATEGORIES';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const SET_MESSAGE_ERROR ='SET_MESSAGE_ERROR'
 
 const initialState = {
+    reportCategories: [],
     transactions: [],
     editTransaction: {},
     categories: {
@@ -18,6 +20,7 @@ const initialState = {
     pageSize: 10,
     totalTransactionsCount: 0,
     currentPage: 1,
+    countReportCategories: 0,
     isFetching: false,
     messageError: null
 }
@@ -42,6 +45,11 @@ const transactionReducer = (state = initialState, action) => {
             return {...state, currentPage: action.currentPage}
         case SET_TOTAL_COUNT:
             return {...state, totalTransactionsCount: action.totalCount}
+        case SET_REPORT_CATEGORIES:
+            return {...state, 
+                reportCategories: action.reportCategories, 
+                countReportCategories: action.countReportCategories
+            }
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
         case SET_MESSAGE_ERROR:
@@ -55,6 +63,8 @@ const setTransactions = (transactions) => ({type:SET_TRANSACTIONS, transactions}
 const setEditTransaction = (editTransaction) => ({type:SET_EDIT_TRANSACTION, editTransaction})
 const setCategories = (categories, typeCategories) => ({type:SET_CATEGORIES, categories, typeCategories})
 const setTotalTransactionsCount = (totalCount) => ({type:SET_TOTAL_COUNT, totalCount})
+const setReportCategories = (reportCategories, countReportCategories) => ({type:SET_REPORT_CATEGORIES, 
+    reportCategories, countReportCategories})
 const setCurrentPage = (currentPage) => ({type:SET_CURRENT_PAGE, currentPage})
 const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 const setMessageError = (messageError) => ({type:SET_CURRENT_PAGE, messageError})
@@ -141,6 +151,17 @@ export const getCategories = (type) => {
         transactionsAPI.getCategories("outcome").then(data => {
             dispatch(setCategories(data.categories, 'outcome'));
         });
+        dispatch(toggleIsFetching(false));
+    }
+}
+
+export const getReportCategories = (userid) => {
+    return async (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        let response = await transactionsAPI.getReportCategories(userid);
+        if (response.resultCode===0) {
+            dispatch(setReportCategories(response.reportCategories, response.countReportCategories));
+        }
         dispatch(toggleIsFetching(false));
     }
 }

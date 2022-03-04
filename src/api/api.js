@@ -49,6 +49,11 @@ export const transactionsAPI = {
         .then(response => {
             return response.data;
         })
+    },
+    getReportCategories(userid) {
+        userid=1
+        return instance.get(`transactions/getReportCategories.php?userID=${userid}`)
+        .then (response => response.data)
     }
 }
 
