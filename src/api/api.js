@@ -85,6 +85,11 @@ export const accountsAPI = {
     deleteAccount(typeAccount, accountID, userid) {
         userid=1
         return instance.delete(`accounts/account.php?typeAccount=${typeAccount}&accountID=${accountID}&userID=${userid}`)
+    },
+    getBalanceForChart(userid) {
+        userid=1
+        return instance.get(`accounts/getBalanceForChart.php?userID=${userid}`)
+        .then( response => response.data)
     }
 }
 

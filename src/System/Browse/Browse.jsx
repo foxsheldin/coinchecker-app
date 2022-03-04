@@ -1,134 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import React from 'react';
 import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
 import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import { Link } from 'react-router-dom';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
-
-const BalanceChart = () => {
-    const [chartData, setChartData] = useState({});
-
-    const chart = () => {
-        setChartData({
-            labels:
-                ["23 Nov '21", "25 Nov '21", "26 Nov '21", "27 Nov '21", "28 Nov '21", "29 Nov '21", "30 Nov '21", "01 Dec '21", "02 Dec '21", "03 Dec '21", "04 Dec '21", "05 Dec '21", "06 Dec '21", "07 Dec '21", "08 Dec '21", "09 Dec '21", "10 Dec '21", "11 Dec '21", "12 Dec '21", "13 Dec '21", "14 Dec '21", "15 Dec '21", "16 Dec '21", "17 Dec '21", "18 Dec '21", "19 Dec '21", "20 Dec '21", "21 Dec '21", "22 Dec '21", "23 Dec '21", "24 Dec '21"],
-            datasets: [{
-                label: 'Фактический',
-                data:
-                    [1412001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001],
-                backgroundColor: 'blue',
-                borderColor: 'lightblue',
-                borderWidth: 3,
-            }]
-        }); 
-    }
-
-    useEffect(() => {
-        chart()
-    },[])
-
-    return (
-        <div>
-            <Line data={chartData} />
-        </div>
-    );
-}
+import BalanceChartContainer from './BalanceChart.js/BalanceChartContainer';
 
 
-export const balanceChartData = {
-    labels:
-        ["23 Nov '21", "25 Nov '21", "26 Nov '21", "27 Nov '21", "28 Nov '21", "29 Nov '21", "30 Nov '21", "01 Dec '21", "02 Dec '21", "03 Dec '21", "04 Dec '21", "05 Dec '21", "06 Dec '21", "07 Dec '21", "08 Dec '21", "09 Dec '21", "10 Dec '21", "11 Dec '21", "12 Dec '21", "13 Dec '21", "14 Dec '21", "15 Dec '21", "16 Dec '21", "17 Dec '21", "18 Dec '21", "19 Dec '21", "20 Dec '21", "21 Dec '21", "22 Dec '21", "23 Dec '21", "24 Dec '21"],
-    datasets: [{
-        label: 'Фактический',
-        data:
-            [1412001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001],
-        backgroundColor: 'blue',
-        borderColor: 'lightblue',
-        borderWidth: 3,
-    }]
-}
-
-export const balanceChartOptions = {
-    scales: {
-        y: {
-            beginAtZero: false
-        }
-    }
-}
-
-// const balanceChartForm = () => {
-//     let ctx = document.getElementById('balanceChart').getContext('2d');
-//     let balanceChart = new ChartJS(ctx, {
-//         type: 'line',
-//         data: {
-//             labels: /* Utils.days({count:60}), */
-//                 [
-//                     "23 Nov '21", "25 Nov '21", "26 Nov '21", "27 Nov '21", "28 Nov '21", "29 Nov '21", "30 Nov '21", "01 Dec '21", "02 Dec '21", "03 Dec '21", "04 Dec '21", "05 Dec '21", "06 Dec '21", "07 Dec '21", "08 Dec '21", "09 Dec '21", "10 Dec '21", "11 Dec '21", "12 Dec '21", "13 Dec '21", "14 Dec '21", "15 Dec '21", "16 Dec '21", "17 Dec '21", "18 Dec '21", "19 Dec '21", "20 Dec '21", "21 Dec '21", "22 Dec '21", "23 Dec '21", "24 Dec '21"],
-//             datasets: [{
-//                 label: 'Фактический',
-//                 data:
-//                     [
-//                         1412001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001, 1416001],
-//                 backgroundColor: 'blue',
-//                 borderColor: 'lightblue',
-//                 borderWidth: 3,
-//             }]
-//         },
-//         options: {
-//             scales: {
-//                 y: {
-//                     beginAtZero: false
-//                 }
-//             }
-//         }
-//     })
-//     return balanceChart;
-// }
-
-// const incomeOutcomeChartForm = () => {
-//     let gtx = document.getElementById('incomeOutcomeChart').getContext('2d');
-//     let incomeOutcomeChart = new ChartJS(gtx, {
-//         type: 'doughnut',
-//         data: {
-//             labels: /* Utils.days({count:60}), */
-//                 ["Доход", "Расход"],
-//             datasets: [{
-//                 data:
-//                     [0, 0],
-//                 backgroundColor: ['#198754', '#dc3545'],
-//                 borderAlign: 'inner',
-//             }]
-//         },
-//         options: {
-//             plugins: {
-//                 title: {
-//                     display: true,
-//                     text: 'Движение денег'
-//                 }
-//             }
-//         }
-//     })
-//     return incomeOutcomeChart;
-// }
 
 const Browse = (props) => {
     return (
@@ -171,9 +47,9 @@ const Browse = (props) => {
                 <div className="col-9">
                     <div className="graph">
                         <h3>Баланс</h3>
-                        {/* <canvas id="balanceChart" style={{ display: 'block', boxSizing: 'border-box', height: '483px', width: '966px' }} width="1932" height="966"></canvas> */}
-                        {/* <Line options={{balanceChartOptions}} data={{balanceChartData}} /> */}
-                        {/* <BalanceChart /> */}
+                        {/* <canvas id="balanceChart" style={{ display: 'block', boxSizing: 'border-box', height: '483px', width: '966px' }} width="1932" height="966"></canvas>
+                        <Line options={{balanceChartOptions}} data={{balanceChartData}} /> */}
+                        <BalanceChartContainer />
                     </div>
 
                     <div className="budgetMouth">

@@ -4,6 +4,7 @@ const ADD_ACCOUNT = "ADD_ACCOUNT";
 const SET_ACCOUNTS_INFO = "SET_ACCOUNTS_INFO";
 const SET_ACCOUNT_DATA = "SET_ACCOUNT_DATA";
 const SET_ALL_MONEY = "SET_ALL_MONEY";
+const SET_BALANCE_FOR_CHART = "SET_BALANCE_FOR_CHART";
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     },
     accountData: {},
     allMoney: 0,
+    balanceForChart: [],
     isFetching: false,
 }
 
@@ -75,6 +77,9 @@ const accountReducer = (state = initialState, action) => {
         
         case SET_ALL_MONEY:
             return {...state, allMoney: action.allMoney}
+        
+        case SET_BALANCE_FOR_CHART: 
+            return {...state, balanceForChart: action.balanceDatasets}
 
         case TOGGLE_IS_FETCHING:
             return { ...state, isFetching: action.isFetching }
@@ -87,6 +92,7 @@ const accountReducer = (state = initialState, action) => {
 const setAccountsInfo = (accountsInfo) => ({type: SET_ACCOUNTS_INFO, accountsInfo})
 const setAccountData = (accountData) => ({type: SET_ACCOUNT_DATA, accountData})
 const setAllMoney = (allMoney) => ({type: SET_ALL_MONEY, allMoney})
+const setBalanceForChart = (balanceDatasets) => ({type: SET_BALANCE_FOR_CHART, balanceDatasets})
 const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 
 
@@ -142,6 +148,16 @@ export const deleteAccount = (typeAccount, accountID, userid) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
         accountsAPI.deleteAccount(typeAccount, accountID, userid).then(data => {
+            dispatch(toggleIsFetching(false))
+        })
+    }
+}
+
+export const getBalanceForChart = (userid) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        accountsAPI.getBalanceForChart(userid).then(data => {
+            dispatch(setBalanceForChart(data.balanceDatasets))
             dispatch(toggleIsFetching(false))
         })
     }
