@@ -6,22 +6,15 @@ import BalanceChartContainer from './BalanceChart.js/BalanceChartContainer';
 import OutcomeCategoryContainer from './BudgetMouth/OutcomeCategoryContainer';
 import CashFlowContainer from './CashFlow/CashFlowContainer';
 
-
-
 const Browse = (props) => {
     return (
         <div className="container">
             <div className="actionBlock row my-2">
                 <div className="col-2">
-                    <Link to="../transaction" className='link'>
+                    <Link to="../transaction/1" className='link'>
                         Внести транзакции
                     </Link>
                 </div>
-                {/* <div className="col-3">
-                    <a href="reminder.html?addReminder" className="link">
-                        Добавить регулярный платеж(тест)
-                    </a>
-                </div> */}
             </div>
             <div className="row">
                 <div className="col-3" style={{ marginTop: '1.1em' }}>
@@ -49,8 +42,6 @@ const Browse = (props) => {
                 <div className="col-9">
                     <div className="graph">
                         <h3>Баланс</h3>
-                        {/* <canvas id="balanceChart" style={{ display: 'block', boxSizing: 'border-box', height: '483px', width: '966px' }} width="1932" height="966"></canvas>
-                        <Line options={{balanceChartOptions}} data={{balanceChartData}} /> */}
                         <BalanceChartContainer />
                     </div>
 
@@ -61,7 +52,6 @@ const Browse = (props) => {
                             <OutcomeCategoryContainer />
                             <div className="col-4">
                                 <CashFlowContainer />
-                                {/* <canvas id="incomeOutcomeChart" style={{ display: 'block', boxSizing: 'border-box', height: '306px', width: '306px' }} width="612" height="612"></canvas> */}
                             </div>
                         </div>
                     </div>
