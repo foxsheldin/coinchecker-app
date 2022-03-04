@@ -54,6 +54,11 @@ export const transactionsAPI = {
         userid=1
         return instance.get(`transactions/getReportCategories.php?userID=${userid}`)
         .then (response => response.data)
+    },
+    getCashFlowForDoughnut(userid) {
+        userid=1
+        return instance.get(`transactions/getCashFlowForDoughnut.php?userID=${userid}`)
+        .then (response => response.data)
     }
 }
 

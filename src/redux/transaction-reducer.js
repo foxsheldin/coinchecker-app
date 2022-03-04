@@ -6,12 +6,14 @@ const SET_CATEGORIES = 'SET_CATEGORIES';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SET_REPORT_CATEGORIES = 'SET_REPORT_CATEGORIES';
+const SET_DATA_CASH_FLOW = 'SET_DATA_CASH_FLOW';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const SET_MESSAGE_ERROR ='SET_MESSAGE_ERROR'
 
 const initialState = {
     reportCategories: [],
     transactions: [],
+    dataCashFlow: {},
     editTransaction: {},
     categories: {
         outcome: [],
@@ -52,6 +54,8 @@ const transactionReducer = (state = initialState, action) => {
             }
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
+        case SET_DATA_CASH_FLOW:
+            return {...state, dataCashFlow: action.dataCashFlow}
         case SET_MESSAGE_ERROR:
             return {...state, messageError: action.messageError}
         default:
@@ -65,6 +69,7 @@ const setCategories = (categories, typeCategories) => ({type:SET_CATEGORIES, cat
 const setTotalTransactionsCount = (totalCount) => ({type:SET_TOTAL_COUNT, totalCount})
 const setReportCategories = (reportCategories, countReportCategories) => ({type:SET_REPORT_CATEGORIES, 
     reportCategories, countReportCategories})
+const setDataCashFlow = (dataCashFlow) => ({type:SET_DATA_CASH_FLOW, dataCashFlow})
 const setCurrentPage = (currentPage) => ({type:SET_CURRENT_PAGE, currentPage})
 const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 const setMessageError = (messageError) => ({type:SET_CURRENT_PAGE, messageError})
@@ -161,6 +166,17 @@ export const getReportCategories = (userid) => {
         let response = await transactionsAPI.getReportCategories(userid);
         if (response.resultCode===0) {
             dispatch(setReportCategories(response.reportCategories, response.countReportCategories));
+        }
+        dispatch(toggleIsFetching(false));
+    }
+}
+
+export const getCashFlowForDoughnut = (userid) => {
+    return async (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        let response = await transactionsAPI.getCashFlowForDoughnut(userid);
+        if (response.resultCode===0) {
+            dispatch(setDataCashFlow({income: response.income, outcome: response.outcome}));
         }
         dispatch(toggleIsFetching(false));
     }

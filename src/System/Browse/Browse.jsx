@@ -4,6 +4,7 @@ import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
 import { Link } from 'react-router-dom';
 import BalanceChartContainer from './BalanceChart.js/BalanceChartContainer';
 import OutcomeCategoryContainer from './BudgetMouth/OutcomeCategoryContainer';
+import CashFlowContainer from './CashFlow/CashFlowContainer';
 
 
 
@@ -59,7 +60,7 @@ const Browse = (props) => {
                         <div className="row">
                             <OutcomeCategoryContainer />
                             <div className="col-4">
-                                График 
+                                <CashFlowContainer />
                                 {/* <canvas id="incomeOutcomeChart" style={{ display: 'block', boxSizing: 'border-box', height: '306px', width: '306px' }} width="612" height="612"></canvas> */}
                             </div>
                         </div>
