@@ -37,6 +37,16 @@ create table users_Card (
     userID bigint unsigned not null,
     name varchar(100) not null,
     bankName varchar(100),
+    /* Данные для грейс-периода */
+    isGracePeriod boolean not null,
+    dateBankStatement double,
+    countDaysGracePeriod double,
+    limitOverspendingCardAccount double,
+    countDaysOverspendingCardAccount double,
+    startDateGracePeriod date,
+    dateNotification date,
+    endDateGracePeriod date,
+    /* ------------------------ */
     creditLimit double not null,
     amountMoney double not null,
     isSavingsAccount boolean not null,
@@ -45,9 +55,9 @@ create table users_Card (
 );
 
 insert into users_Card values
-(1, 1, 'Карта 1', 'Банк 1', 0, 15000.00, false, true, false),
-(2, 2, 'Карта 1', 'Банк 1', 0, 400000.00, true, true, false),
-(3, 2, 'Карта 2', 'Банк 1', 0, 5000.00, false, true, false);
+(1, 1, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, 0, 15000.00, false, true, false),
+(2, 2, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, 0, 400000.00, true, true, false),
+(3, 2, 'Карта 2', 'Банк 1', false, null, null, null, null, null, null, null, 0, 5000.00, false, true, false);
 
 create table payments_Credit_Card (
     paymentID int unsigned not null auto_increment primary key,
@@ -241,7 +251,7 @@ create table user_notification (
     userID bigint unsigned not null,
     dateN date not null,
     headerN text not null,
-    textN text not null.
+    textN text not null,
     isViewed boolean not null
 );
 

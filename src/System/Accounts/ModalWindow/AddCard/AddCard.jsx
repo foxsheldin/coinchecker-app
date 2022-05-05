@@ -77,18 +77,15 @@ const AddCard = (props) => {
                     <Field
                       component="input"
                       type="checkbox"
-                      name="addGracePeriod"
+                      name="isGracePeriod"
                       className="form-check-input"
-                      id="addGracePeriod"
+                      id="isGracePeriod"
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="addGracePeriod"
-                    >
+                    <label className="form-check-label" htmlFor="isGracePeriod">
                       Беспроцентный период
                     </label>
                   </div>
-                  <Condition when="addGracePeriod" is={true}>
+                  <Condition when="isGracePeriod" is={true}>
                     <label htmlFor="dateBankStatement">
                       Дата банковской выписки
                     </label>
