@@ -256,9 +256,57 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             $countDaysGracePeriod = isset($_PUT['data']['countDaysGracePeriod']) ? $_PUT['data']['countDaysGracePeriod'] : 'NULL';
                             $limitOverspendingCardAccount = isset($_PUT['data']['limitOverspendingCardAccount']) ? $_PUT['data']['limitOverspendingCardAccount'] : 'NULL';
                             $countDaysOverspendingCardAccount = isset($_PUT['data']['countDaysOverspendingCardAccount']) ? $_PUT['data']['countDaysOverspendingCardAccount'] : 'NULL';
-                            $startDateGracePeriod = isset($_PUT['data']['startDateGracePeriod']) ? $_PUT['data']['startDateGracePeriod'] : 'NULL';
-                            $dateNotification = isset($_PUT['data']['dateNotification']) ? $_PUT['data']['dateNotification'] : 'NULL';
-                            $endDateGracePeriod = isset($_PUT['data']['endDateGracePeriod']) ? $_PUT['data']['endDateGracePeriod'] : 'NULL';
+                            if (isset($_PUT['data']['startDateGracePeriod'])) {
+                                $startDateGracePeriod = $_PUT['data']['startDateGracePeriod'];
+                                $tempDate = date_create($startDateGracePeriod);
+                                if (floatval(date_format($tempDate, "d")) >= $dateBankStatement) {
+                                    $tempDateBankStatement = date(
+                                        'Y-m-d',
+                                        mktime(
+                                            0,
+                                            0,
+                                            0,
+                                            date_format($tempDate, "m"),
+                                            $dateBankStatement,
+                                            date_format($tempDate, "Y")
+                                        )
+                                    );
+                                } else {
+                                    $tempDateBankStatement = date(
+                                        'Y-m-d',
+                                        mktime(
+                                            0,
+                                            0,
+                                            0,
+                                            date_format($tempDate, "m") - 1,
+                                            $dateBankStatement,
+                                            date_format($tempDate, "Y")
+                                        )
+                                    );
+                                }
+
+                                $diffDays = round((strtotime($startDateGracePeriod) - strtotime($tempDateBankStatement)) / (60 * 60 * 24));
+                                $countDiffDaysGracePeriod = $countDaysGracePeriod - floatval($diffDays);
+                                $countDiffDaysOverspendingCardAccount = 0;
+
+                                $dateNotification = date_create($startDateGracePeriod);
+                                if ($countDaysOverspendingCardAccount == 'NULL' || $countDaysOverspendingCardAccount <= 0) {
+                                    date_modify($dateNotification, "$countDiffDaysGracePeriod day");
+                                } else {
+                                    $countDiffDaysOverspendingCardAccount = $countDaysOverspendingCardAccount - $diffDays;
+                                    date_modify($dateNotification, "$countDiffDaysOverspendingCardAccount day");
+                                }
+
+                                $endDateGracePeriod = $tempDate;
+                                date_modify($endDateGracePeriod, "$countDiffDaysGracePeriod day");
+
+                                $dateNotification = date_format($dateNotification, 'Y-m-d');
+                                $endDateGracePeriod = date_format($endDateGracePeriod, 'Y-m-d');
+                            } else {
+                                $startDateGracePeriod = 'NULL';
+                                $dateNotification = 'NULL';
+                                $endDateGracePeriod = 'NULL';
+                            }
                         } else {
                             $dateBankStatement = 'NULL';
                             $countDaysGracePeriod = 'NULL';
