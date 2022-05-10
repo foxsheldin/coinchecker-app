@@ -147,3 +147,12 @@ export const authAPI = {
     return null;
   },
 };
+
+export const notifyAPI = {
+  getNotification(userid) {
+    userid = 1;
+    return instance
+      .get(`notification.php?userID=${userid}`)
+      .then((response) => response.data);
+  },
+};

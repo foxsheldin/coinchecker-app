@@ -26,8 +26,6 @@ function checkCardWithGracePeriod($connectDB, $accountCardID, $dateTranstaction,
     if ($isGracePeriod) {
         echo "GracePeriod";
         if ($result['amountMoney'] < 0) {
-            echo  " Money<0";
-            echo $startDateGracePeriod;
             if (!isset($startDateGracePeriod)) {
                 $startDateGracePeriod = $dateTranstaction;
                 $tempDate = date_create($startDateGracePeriod);
@@ -83,13 +81,13 @@ function checkCardWithGracePeriod($connectDB, $accountCardID, $dateTranstaction,
             }
             if (
                 isset($limitOverspendingCardAccount) &&
-                $limitOverspendingCardAccount <= 0 &&
-                $limitOverspendingCardAccount > $result['amountMoney']
+                $limitOverspendingCardAccount > 0 &&
+                $limitOverspendingCardAccount < abs($result['amountMoney'])
             ) {
                 $today = date("Y-m-d");
                 $query = "insert into user_notification values
                 (NULL, $userID, '$today', 'Предупреждение', 
-                'Произошел перерасход по карте $nameCard. Пожалуйста погасите долг досрочно',
+                'Произошел перерасход по карте \"$nameCard\". Пожалуйста погасите долг досрочно',
                 0)";
                 $result = mysqli_query($connectDB, $query);
             }
