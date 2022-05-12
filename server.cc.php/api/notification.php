@@ -7,7 +7,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "GET": {
             $userID = $_GET['userID'];
             $graceNotifyArray = array();
-            $notifyArray = array();
+            $overspendingNotifyArray = array();
 
             $query = "select userCardID, name, startDateGracePeriod, dateNotification, endDateGracePeriod from users_Card 
                 where isGracePeriod=true and startDateGracePeriod is not null and userID=$userID";
@@ -27,7 +27,24 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 }
             }
 
-            $query = "select notificationID, dateN, headerN, textN, isViewed from user_notification where userID=$userID";
+            $query = "select userCardID, name, startDateGracePeriod, dateNotification, endDateGracePeriod from users_Card where isLimitOverspending=true and userID=$userID";
+            $result = mysqli_query($connectDB, $query);
+            if (mysqli_num_rows($result)) {
+                while ($row = mysqli_fetch_array($result)) {
+                    $dateNotify = strtotime($row['dateNotification']);
+                    $today = strtotime(date("Y-m-d"));
+                    if ($dateNotify < $today) {
+                        $arr = array(
+                            'userCardID' => $row['userCardID'], 'name' => $row['name'],
+                            'startDateGracePeriod' => $row['startDateGracePeriod'],
+                            'dateNotification' => $row['dateNotification'], 'endDateGracePeriod' => $row['endDateGracePeriod']
+                        );
+                        array_push($overspendingNotifyArray, $arr);
+                    }
+                }
+            }
+
+            /* $query = "select notificationID, dateN, headerN, textN, isViewed from user_notification where userID=$userID";
             $result = mysqli_query($connectDB, $query);
             if (mysqli_num_rows($result)) {
                 while ($row = mysqli_fetch_array($result)) {
@@ -37,9 +54,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     );
                     array_push($notifyArray, $arr);
                 }
-            }
+            } */
 
-            $arr = array('grace' => $graceNotifyArray, 'default' => $notifyArray);
+            $arr = array('grace' => $graceNotifyArray, 'overspending' => $overspendingNotifyArray);
             $arr = array('notify' => $arr, 'resultCode' => 0);
             echo json_encode($arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
         };

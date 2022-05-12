@@ -147,7 +147,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             $dateNotification = 'NULL';
                             $endDateGracePeriod = 'NULL';
                         }
-
+                        $isLimitOverspending = 'false';
                         /* ------------------------ */
                         $isArchive = $_POST['data']['isArchive'];
                         $isSavingsAccount = 'false';
@@ -157,7 +157,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             "insert into users_Card value (NULL, $userID, '$nameAccount', '$bankName', 
                                 $isGracePeriod, $dateBankStatement, $countDaysGracePeriod, $limitOverspendingCardAccount, 
                                 $countDaysOverspendingCardAccount, $startDateGracePeriod, $dateNotification, $endDateGracePeriod,
-                                $creditLimit, $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)"
+                                $isLimitOverspending, $creditLimit, $amountMoney, $isSavingsAccount, $isTotalBalance, $isArchive)"
                         );
                     };
                     break;
@@ -250,6 +250,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         $bankName = $_PUT['data']['bankName'];
                         /* $numAccount = $_PUT['data']['numCardAccount']; */
                         /* Данные для грейс-периода */
+                        $isLimitOverspending = 'false';
                         $isGracePeriod = isset($_PUT['data']['isGracePeriod']) ? $_PUT['data']['isGracePeriod'] : 'false';
                         if ($isGracePeriod) {
                             $dateBankStatement = isset($_PUT['data']['dateBankStatement']) ? $_PUT['data']['dateBankStatement'] : 'NULL';
@@ -302,6 +303,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                                 $dateNotification = date_format($dateNotification, 'Y-m-d');
                                 $endDateGracePeriod = date_format($endDateGracePeriod, 'Y-m-d');
+
+                                if (
+                                    isset($_PUT['data']['limitOverspendingCardAccount']) &&
+                                    $limitOverspendingCardAccount > 0 &&
+                                    $limitOverspendingCardAccount < abs($result['amountMoney'])
+                                ) {
+                                    $isLimitOverspending = 'true';
+                                }
                             } else {
                                 $startDateGracePeriod = 'NULL';
                                 $dateNotification = 'NULL';
@@ -324,8 +333,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         $result = mysqli_query($connectDB, "update users_Card set name='$nameAccount', bankName='$bankName',
                             isGracePeriod=$isGracePeriod, dateBankStatement=$dateBankStatement, countDaysGracePeriod=$countDaysGracePeriod,
                             limitOverspendingCardAccount=$limitOverspendingCardAccount, countDaysOverspendingCardAccount=$countDaysOverspendingCardAccount, 
-                            startDateGracePeriod=$startDateGracePeriod, dateNotification=$dateNotification, endDateGracePeriod=$endDateGracePeriod, 
-                            creditLimit=$creditLimit, amountMoney=$amountMoney, isSavingsAccount=$isSavingsAccount, isTotalBalance=$isTotalBalance, isArchive=$isArchive where userCardID=$accountID");
+                            startDateGracePeriod=$startDateGracePeriod, dateNotification=$dateNotification, endDateGracePeriod=$endDateGracePeriod,
+                            isLimitOverspending=$isLimitOverspending, creditLimit=$creditLimit, amountMoney=$amountMoney, isSavingsAccount=$isSavingsAccount, 
+                            isTotalBalance=$isTotalBalance, isArchive=$isArchive where userCardID=$accountID");
                     };
                     break;
                 case "creditCard": {

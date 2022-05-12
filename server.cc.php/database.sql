@@ -46,6 +46,7 @@ create table users_Card (
     startDateGracePeriod date,
     dateNotification date,
     endDateGracePeriod date,
+    isLimitOverspending boolean not null,
     /* ------------------------ */
     creditLimit double not null,
     amountMoney double not null,
@@ -55,9 +56,9 @@ create table users_Card (
 );
 
 insert into users_Card values
-(1, 1, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, 0, 15000.00, false, true, false),
-(2, 2, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, 0, 400000.00, true, true, false),
-(3, 2, 'Карта 2', 'Банк 1', false, null, null, null, null, null, null, null, 0, 5000.00, false, true, false);
+(1, 1, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, false, 0, 15000.00, false, true, false),
+(2, 2, 'Карта 1', 'Банк 1', false, null, null, null, null, null, null, null, false, 0, 400000.00, true, true, false),
+(3, 2, 'Карта 2', 'Банк 1', false, null, null, null, null, null, null, null, false, 0, 5000.00, false, true, false);
 
 create table payments_Credit_Card (
     paymentID int unsigned not null auto_increment primary key,
@@ -211,40 +212,40 @@ create table users_transaction (
 );
 
 insert into users_transaction values
-(1, 1, 1, 1, null, null, -1000.00, 6, '2021-10-01', '', null, true, 1, false, true, false),
-(2, 1, 1, 1, null, null, -2000.00, 8, '2021-10-02', 'АЗС', 1, true, 1, false, true, false),
-(3, 2, 1, 1, null, null, -3000.00, 6, '2021-10-02', '', 2, true, 1, false, true, false),
-(4, 1, 1, 1, null, null, 4000.00, 4, '2021-10-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
-(5, 1, 1, 1, null, null, 5000.00, 4, '2021-10-10', 'Фриланс', 4, true, 1, true, false, false),
-(6, 1, 1, 1, null, null, -6000.00, 9, '2021-10-11', 'Курсы 1С', 5, true, 1, false, true, false),
-(7, 1, 1, 1, 1, 2, 10000.00, 6, '2021-10-15', null, null, true, 1, false, false, true),
+(1, 1, 1, 1, null, null, -1000.00, 6, '2022-04-01', '', null, true, 1, false, true, false),
+(2, 1, 1, 1, null, null, -2000.00, 8, '2022-04-02', 'АЗС', 1, true, 1, false, true, false),
+(3, 2, 1, 1, null, null, -3000.00, 6, '2022-04-02', '', 2, true, 1, false, true, false),
+(4, 1, 1, 1, null, null, 4000.00, 4, '2022-04-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
+(5, 1, 1, 1, null, null, 5000.00, 4, '2022-04-10', 'Фриланс', 4, true, 1, true, false, false),
+(6, 1, 1, 1, null, null, -6000.00, 9, '2022-04-11', 'Курсы 1С', 5, true, 1, false, true, false),
+(7, 1, 1, 1, 1, 2, 10000.00, 6, '2022-04-15', null, null, true, 1, false, false, true),
 
-(8, 2, 2, 3, null, null, -300.00, 13, '2021-11-11', '', null, true, 1, false, true, false),
-(9, 2, 2, 3, null, null, -2000.00, 8, '2021-11-12', 'АЗС', null, true, 1, false, true, false),
-(10, 2, 2, 1, 2, 3, 15000.00, 1, '2021-11-13', '', null, true, 1, false, false, true),
-(11, 2, 2, 3, null, null, -300.00, 6, '2021-11-14', '', null, true, 1, false, true, false),
-(12, 2, 2, 3, null, null, -2800.00, 13, '2021-11-15', '', null, true, 1, false, true, false),
-(13, 2, 5, 2, null, null, 5000.00, 4, '2021-11-16', '', null, true, 1, true, false, false),
-(14, 2, 1, 3, null, null, -300.00, 6, '2021-11-18', '', null, true, 1, false, true, false),
-(15, 2, 1, 3, null, null, -200.00, 6, '2021-11-19', '', null, true, 1, false, true, false),
-(16, 2, 2, 3, null, null, -1500.00, 8, '2021-11-24', 'АЗС', null, true, 1, false, true, false),
-(17, 2, 2, 3, null, null, 4000.00, 4, '2021-11-25', '', null, true, 1, true, false, false),
+(8, 2, 2, 3, null, null, -300.00, 13, '2022-05-11', '', null, true, 1, false, true, false),
+(9, 2, 2, 3, null, null, -2000.00, 8, '2022-05-12', 'АЗС', null, true, 1, false, true, false),
+(10, 2, 2, 1, 2, 3, 15000.00, 1, '2022-05-13', '', null, true, 1, false, false, true),
+(11, 2, 2, 3, null, null, -300.00, 6, '2022-05-14', '', null, true, 1, false, true, false),
+(12, 2, 2, 3, null, null, -2800.00, 13, '2022-05-15', '', null, true, 1, false, true, false),
+(13, 2, 5, 2, null, null, 5000.00, 4, '2022-05-16', '', null, true, 1, true, false, false),
+(14, 2, 1, 3, null, null, -300.00, 6, '2022-05-18', '', null, true, 1, false, true, false),
+(15, 2, 1, 3, null, null, -200.00, 6, '2022-05-19', '', null, true, 1, false, true, false),
+(16, 2, 2, 3, null, null, -1500.00, 8, '2022-05-24', 'АЗС', null, true, 1, false, true, false),
+(17, 2, 2, 3, null, null, 4000.00, 4, '2022-05-25', '', null, true, 1, true, false, false),
 
-(18, 1, 1, 1, null, null, -900.00, 6, '2021-10-01', '', null, true, 1, false, true, false),
-(19, 1, 1, 1, null, null, -2100.00, 8, '2021-10-02', 'АЗС', 1, true, 1, false, true, false),
-(20, 2, 1, 1, null, null, -4000.00, 6, '2021-10-02', '', 2, true, 1, false, true, false),
-(21, 1, 1, 1, null, null, 5000.00, 4, '2021-10-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
-(22, 1, 1, 1, null, null, 5000.00, 4, '2021-10-10', 'Фриланс', 4, true, 1, true, false, false),
-(23, 1, 1, 1, null, null, -5000.00, 9, '2021-10-11', 'Курсы 1С', 5, true, 1, false, true, false),
-(24, 1, 1, 1, 1, 2, 10000.00, 6, '2021-10-15', null, null, true, 1, false, false, true),
+(18, 1, 1, 1, null, null, -900.00, 6, '2022-04-01', '', null, true, 1, false, true, false),
+(19, 1, 1, 1, null, null, -2100.00, 8, '2022-04-02', 'АЗС', 1, true, 1, false, true, false),
+(20, 2, 1, 1, null, null, -4000.00, 6, '2022-04-02', '', 2, true, 1, false, true, false),
+(21, 1, 1, 1, null, null, 5000.00, 4, '2022-04-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
+(22, 1, 1, 1, null, null, 5000.00, 4, '2022-04-10', 'Фриланс', 4, true, 1, true, false, false),
+(23, 1, 1, 1, null, null, -5000.00, 9, '2022-04-11', 'Курсы 1С', 5, true, 1, false, true, false),
+(24, 1, 1, 1, 1, 2, 10000.00, 6, '2022-04-15', null, null, true, 1, false, false, true),
 
-(25, 1, 1, 1, null, null, -1000.00, 6, '2021-11-01', '', null, true, 1, false, true, false),
-(26, 1, 1, 1, null, null, -2000.00, 8, '2021-11-02', 'АЗС', 1, true, 1, false, true, false),
-(27, 2, 1, 1, null, null, -3000.00, 6, '2021-11-02', '', 2, true, 1, false, true, false),
-(28, 1, 1, 1, null, null, 4000.00, 4, '2021-11-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
-(29, 1, 1, 1, null, null, 5000.00, 4, '2021-07-10', 'Фриланс', 4, true, 1, true, false, false),
-(30, 1, 1, 1, null, null, -6000.00, 9, '2021-07-11', 'Курсы 1С', 5, true, 1, false, true, false),
-(31, 1, 1, 1, 1, 2, 10000.00, 6, '2021-07-15', null, null, true, 1, false, false, true);
+(25, 1, 1, 1, null, null, -1000.00, 6, '2022-05-01', '', null, true, 1, false, true, false),
+(26, 1, 1, 1, null, null, -2000.00, 8, '2022-05-02', 'АЗС', 1, true, 1, false, true, false),
+(27, 2, 1, 1, null, null, -3000.00, 6, '2022-05-02', '', 2, true, 1, false, true, false),
+(28, 1, 1, 1, null, null, 4000.00, 4, '2022-05-05', 'МГУ им. Н.П. Огарева', 3, true, 1, true, false, false),
+(29, 1, 1, 1, null, null, 5000.00, 4, '2022-07-10', 'Фриланс', 4, true, 1, true, false, false),
+(30, 1, 1, 1, null, null, -6000.00, 9, '2022-07-11', 'Курсы 1С', 5, true, 1, false, true, false),
+(31, 1, 1, 1, 1, 2, 10000.00, 6, '2022-07-15', null, null, true, 1, false, false, true);
 
 create table user_notification (
     notificationID bigint unsigned not null auto_increment primary key,
@@ -255,9 +256,9 @@ create table user_notification (
     isViewed boolean not null
 );
 
-insert into user_notification values
-(1, 1, '2021-11-19', 'Заголовок', 'Текст уведомления', false),
-(2, 2, '2021-11-19', 'Заголовок', 'Текст уведомления', false);
+/* insert into user_notification values
+(1, 1, '2022-05-19', 'Заголовок', 'Текст уведомления', false),
+(2, 2, '2022-05-19', 'Заголовок', 'Текст уведомления', false); */
 
 /* Вывод всех средств, которые пользователь решил включить в общий счет */
 select sum(sum) as 'total' from (

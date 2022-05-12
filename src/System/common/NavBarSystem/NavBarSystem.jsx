@@ -15,27 +15,33 @@ const NavBarSystem = (props) => {
 
   useEffect(() => {
     console.log(props.notification);
-    props.notification?.default?.forEach((element) => {
-      toast(`🦄 ${element.headerN}! ${element.textN}`, {
-        position: "bottom-center",
-        autoClose: 30000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+    props.notification?.overspending?.forEach((element) => {
+      toast.warn(
+        `Предупреждение! Произошел перерасход по карте "${element.name}". Рекомендуем не тратить средства на карте и погасить долг досрочно!`,
+        {
+          position: "bottom-center",
+          autoClose: 30000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     });
     props.notification?.grace?.forEach((element) => {
-      toast(`🦄 Настало время погасить долг по карте "${element.name}"`, {
-        position: "bottom-center",
-        autoClose: 30000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.info(
+        `Пользовательское уведомление! Настало время погасить долг по карте "${element.name}".`,
+        {
+          position: "bottom-center",
+          autoClose: 30000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     });
   }, [props.notification]);
 

@@ -8,7 +8,7 @@ function checkCardWithGracePeriod($connectDB, $accountCardID, $dateTranstaction,
         $connectDB,
         "select name, bankName, isGracePeriod, dateBankStatement, countDaysGracePeriod, 
         limitOverspendingCardAccount, countDaysOverspendingCardAccount, startDateGracePeriod, 
-        dateNotification, endDateGracePeriod, creditLimit, amountMoney, isSavingsAccount,
+        dateNotification, endDateGracePeriod, isLimitOverspending, creditLimit, amountMoney, isSavingsAccount,
         isTotalBalance, isArchive from users_Card where userCardID=$accountCardID and userID=" . $userID
     );
     $result = mysqli_fetch_array($result);
@@ -21,10 +21,10 @@ function checkCardWithGracePeriod($connectDB, $accountCardID, $dateTranstaction,
     $startDateGracePeriod = $result['startDateGracePeriod'];
     $dateNotification = $result['dateNotification'];
     $endDateGracePeriod = $result['endDateGracePeriod'];
+    $isLimitOverspending = $result['isLimitOverspending'];
     $nameCard = $result['name'];
 
     if ($isGracePeriod) {
-        echo "GracePeriod";
         if ($result['amountMoney'] < 0) {
             if (!isset($startDateGracePeriod)) {
                 $startDateGracePeriod = $dateTranstaction;
@@ -84,17 +84,24 @@ function checkCardWithGracePeriod($connectDB, $accountCardID, $dateTranstaction,
                 $limitOverspendingCardAccount > 0 &&
                 $limitOverspendingCardAccount < abs($result['amountMoney'])
             ) {
-                $today = date("Y-m-d");
+                /* $today = date("Y-m-d");
                 $query = "insert into user_notification values
                 (NULL, $userID, '$today', 'Предупреждение', 
                 'Произошел перерасход по карте \"$nameCard\". Пожалуйста погасите долг досрочно',
-                0)";
+                0)"; */
+                $query = "update users_Card set 
+                isLimitOverspending=true where userCardID=$accountCardID";
+                $result = mysqli_query($connectDB, $query);
+            } else {
+                $query = "update users_Card set 
+                isLimitOverspending=false where userCardID=$accountCardID";
                 $result = mysqli_query($connectDB, $query);
             }
         } else {
             $query = "update users_Card set 
             startDateGracePeriod=NULL, 
-            dateNotification=NULL, endDateGracePeriod=NULL
+            dateNotification=NULL, endDateGracePeriod=NULL, 
+            isLimitOverspending=false
             where userCardID=$accountCardID";
             $result = mysqli_query($connectDB, $query);
         }
@@ -545,6 +552,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                 if ($transaction) {
                     $oldAmountMoney = $oldTransaction['amountMoney'];
+                    if ($firstTypeAccountID == 2)
+                        checkCardWithGracePeriod($connectDB, $firstAccountID, $date, $userID);
+                    if ($secondTypeAccountID == 2)
+                        checkCardWithGracePeriod($connectDB, $secondAccountID, $date, $userID);
 
                     if ($typeTransaction == 'income' || $typeTransaction == 'outcome') {
                         if ($firstTypeAccountID == $oldTransaction['firstTypeAccountID'] && $firstAccountID == $oldTransaction['firstAccountID']) {
