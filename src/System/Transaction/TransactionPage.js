@@ -1,50 +1,55 @@
-import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import AllMoneyComponent from '../common/AllMoney/AllMoneyComponent';
-import BalanceFormContainer from '../common/BalanceForm/BalanceFormContainer';
-import ModalWindowContainer from './ModalWindow/ModalWindowContainer';
-import TransactionsBlockContainer from './TransactionsBlock/TransactionsBlockContainer';
+import React from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import AllMoneyComponent from "../common/AllMoney/AllMoneyComponent";
+import BalanceFormContainer from "../common/BalanceForm/BalanceFormContainer";
+import ModalWindowContainer from "./ModalWindow/ModalWindowContainer";
+import TransactionsBlockContainer from "./TransactionsBlock/TransactionsBlockContainer";
 
 const TransactionPage = (props) => {
-
-    return (
-        <div>
-            <div className="container">
-                <div className="headerBlock row my-2">
-                    <h2>Наличные транзакции</h2>
-                </div>
-                <div className="row">
-                    {/* <!--Transaction block--> */}
-                    <div className="col-8">
-                        <div className="transactionForm row border border-primary p-2">
-                            <div className="col">
-                                Добавить <a className="link" data-bs-toggle="modal" data-bs-target="#addTransaction">одну транзакцию</a>
-                            </div>
-                            {/* <!-- <div className="col">
+  return (
+    <div>
+      <div className="container">
+        <div className="headerBlock row my-2">
+          <h2>Наличные транзакции</h2>
+        </div>
+        <div className="row">
+          {/* <!--Transaction block--> */}
+          <div className="col-lg-8 order-2 order-lg-1">
+            <div className="transactionForm row border border-primary p-2">
+              <div className="col">
+                Добавить{" "}
+                <a
+                  className="link"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addTransaction"
+                >
+                  одну транзакцию
+                </a>
+              </div>
+              {/* <!-- <div className="col">
                                 Добавить <a href="#">одну транзакцию</a> или <a href="#">несколько транзакций</a>
                             </div> --> */}
-                            {/* <!-- <div className="col" style="display: none;">
+              {/* <!-- <div className="col" style="display: none;">
                                 <a href="#">Актуализировать счета</a>
                             </div> --> */}
-                        </div>
-                        <TransactionsBlockContainer />
-                    </div>
+            </div>
+            <TransactionsBlockContainer />
+          </div>
 
-                    <div className="col-4">
-                        <div className="accountForm row my-2 p-3">
-                            <div className="allMoney border-start border-end">
-                                <div className="text mx-2">
-                                    Всего средств
-                                </div>
-                                <div className="money mx-2">
-                                    <h4><AllMoneyComponent /></h4>
-                                </div>
-                            </div>
+          <div className="col-lg-4 order-1 order-lg-2">
+            <div className="accountForm row my-2 p-3">
+              <div className="allMoney border-start border-end">
+                <div className="text mx-2">Всего средств</div>
+                <div className="money mx-2">
+                  <h4>
+                    <AllMoneyComponent />
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <BalanceFormContainer />
 
-                        </div>
-                        <BalanceFormContainer />
-
-                        {/* <!-- <div class="row my-2" id="forecastForm">
+            {/* <!-- <div class="row my-2" id="forecastForm">
                             <div class="forecastHeader my-1">
                                 <div class="btn-group" style="width: 45%;">
                                     <a href="#" class="btn btn-sm btn-outline-primary active">Расход</a>
@@ -163,12 +168,12 @@ const TransactionPage = (props) => {
                             </table>
 
                         </div> --> */}
-                    </div>
-                </div>
-            </div>
-            <ModalWindowContainer />
+          </div>
         </div>
-    );
-}
+      </div>
+      <ModalWindowContainer />
+    </div>
+  );
+};
 
 export default TransactionPage;
