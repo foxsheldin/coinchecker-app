@@ -48,15 +48,15 @@ const Auth = (props) => {
 
   useEffect(() => {
     if (props.auth.isAuth) {
-      setCookie("userID", props.auth.userid, { path: "/", maxAge: 3600 });
-      setCookie("email", props.auth.email, { path: "/", maxAge: 3600 });
+      setCookie("userID", props.auth.userid, { path: "/", maxAge: 600 });
+      setCookie("email", props.auth.email, { path: "/", maxAge: 600 });
       navigate("/system/transaction/1");
     }
   }, [props.auth]);
 
   if (cookies["userID"] && cookies["email"]) {
-    setCookie("userID", cookies["userID"], { path: "/", maxAge: 3600 });
-    setCookie("email", cookies["email"], { path: "/", maxAge: 3600 });
+    setCookie("userID", cookies["userID"], { path: "/", maxAge: 600 });
+    setCookie("email", cookies["email"], { path: "/", maxAge: 600 });
     props.setAuthUserData(cookies["userID"], cookies["email"], true);
   }
 
