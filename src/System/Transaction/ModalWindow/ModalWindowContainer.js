@@ -25,7 +25,7 @@ const ModalWindowContainer = (props) => {
 
   useEffect(() => {
     props.getCategories();
-    props.getAccounts();
+    props.getAccounts(props.userid);
   }, []);
 
   const handleSubmit = (formData) => {

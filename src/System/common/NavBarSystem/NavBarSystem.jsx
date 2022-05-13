@@ -7,14 +7,16 @@ import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
 import { logout } from "../../../redux/auth-reducer";
 import { getNotification } from "../../../redux/notification-reducer";
 import "react-toastify/dist/ReactToastify.css";
+import { useCookies } from "react-cookie";
 
 const NavBarSystem = (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["userID", "email"]);
+
   useEffect(() => {
     props.getNotification(props.userid);
   }, []);
 
   useEffect(() => {
-    console.log(props.notification);
     props.notification?.overspending?.forEach((element) => {
       toast.warn(
         `Предупреждение! Произошел перерасход по карте "${element.name}". Рекомендуем не тратить средства на карте и погасить долг досрочно!`,
@@ -44,6 +46,12 @@ const NavBarSystem = (props) => {
       );
     });
   }, [props.notification]);
+
+  const handleLogoutClick = () => {
+    removeCookie("userID");
+    removeCookie("email");
+    props.logout();
+  };
 
   return (
     <>
@@ -116,15 +124,15 @@ const NavBarSystem = (props) => {
                 </li> --> */}
             </ul>
             <form className="d-flex">
-              <a href="notification.php" className="nav-link">
+              {/* <a href="notification.php" className="nav-link">
                 Уведомления
               </a>
               <a href="settings.php" className="nav-link">
                 Настройки (т)
-              </a>
-              <span className="nav-link" onClick={props.logout}>
+              </a> */}
+              <a className="nav-link" onClick={handleLogoutClick}>
                 Выйти
-              </span>
+              </a>
             </form>
           </div>
         </div>

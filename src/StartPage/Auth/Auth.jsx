@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/Auth.css";
 import "./css/notification.css"; /* 
 import "./js/auth"; */
 import "./js/notification";
 import { Field, Form } from "react-final-form";
 import { connect } from "react-redux";
-import { login } from "../../redux/auth-reducer";
+import { login, setAuthUserData } from "../../redux/auth-reducer";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useCookies } from "react-cookie";
 
 const AuthForm = (props) => {
   return (
@@ -44,9 +47,22 @@ const AuthForm = (props) => {
 
 const Auth = (props) => {
   let navigate = useNavigate();
-  if (props.isAuth) {
-    navigate("/system/transaction/1");
+  const [cookies, setCookie, removeCookie] = useCookies(["userID", "email"]);
+
+  useEffect(() => {
+    if (props.auth.isAuth) {
+      setCookie("userID", props.auth.userid, { path: "/", maxAge: 3600 });
+      setCookie("email", props.auth.email, { path: "/", maxAge: 3600 });
+      navigate("/system/transaction/1");
+    }
+  }, [props.auth]);
+
+  if (cookies["userID"] && cookies["email"]) {
+    setCookie("userID", cookies["userID"], { path: "/", maxAge: 3600 });
+    setCookie("email", cookies["email"], { path: "/", maxAge: 3600 });
+    props.setAuthUserData(cookies["userID"], cookies["email"], true);
   }
+
   const onSubmit = (formData) => {
     props.login(formData.email, formData.password);
   };
@@ -76,12 +92,23 @@ const Auth = (props) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={30000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { login })(Auth);
+export default connect(mapStateToProps, { login, setAuthUserData })(Auth);

@@ -8,7 +8,6 @@ const instance = axios.create({
 
 export const transactionsAPI = {
   getEditTransaction(transactionid, userid) {
-    userid = 1;
     return instance
       .get(
         `transactions/transaction.php?userID=${userid}&transactionid=${transactionid}`
@@ -31,7 +30,6 @@ export const transactionsAPI = {
     typeAccount = null,
     accountID = null
   ) {
-    userid = 1;
     if (typeAccount && accountID) {
       return instance
         .get(
@@ -58,7 +56,6 @@ export const transactionsAPI = {
       });
   },
   deleteTransaction(transactionid, userid) {
-    userid = 1;
     return instance.delete(
       `transactions/transaction.php?userID=${userid}&transactionid=${transactionid}`
     );
@@ -71,13 +68,11 @@ export const transactionsAPI = {
       });
   },
   getReportCategories(userid) {
-    userid = 1;
     return instance
       .get(`transactions/getReportCategories.php?userID=${userid}`)
       .then((response) => response.data);
   },
   getCashFlowForDoughnut(userid) {
-    userid = 1;
     return instance
       .get(`transactions/getCashFlowForDoughnut.php?userID=${userid}`)
       .then((response) => response.data);
@@ -86,7 +81,6 @@ export const transactionsAPI = {
 
 export const accountsAPI = {
   getAccounts(userid) {
-    userid = 1;
     return instance
       .get(`accounts/getAccounts.php?userID=${userid}`)
       .then((response) => {
@@ -94,7 +88,6 @@ export const accountsAPI = {
       });
   },
   getAllMoney(userid) {
-    userid = 1;
     return instance
       .get(`accounts/getAllMoney.php?userID=${userid}`)
       .then((response) => {
@@ -102,7 +95,6 @@ export const accountsAPI = {
       });
   },
   getAccount(typeAccount, accountID, userid) {
-    userid = 1;
     return instance
       .get(
         `accounts/account.php?typeAccount=${typeAccount}&changeID=${accountID}&userID=${userid}`
@@ -110,25 +102,21 @@ export const accountsAPI = {
       .then((response) => response.data);
   },
   addAccount(data, userid) {
-    userid = 1;
     return instance
       .post(`accounts/account.php`, { data, userid })
       .then((response) => response.data);
   },
   updateAccount(data, typeAccount, accountID, userid) {
-    userid = 1;
     return instance
       .put(`accounts/account.php`, { data, typeAccount, accountID, userid })
       .then((response) => response.data);
   },
   deleteAccount(typeAccount, accountID, userid) {
-    userid = 1;
     return instance.delete(
       `accounts/account.php?typeAccount=${typeAccount}&accountID=${accountID}&userID=${userid}`
     );
   },
   getBalanceForChart(userid) {
-    userid = 1;
     return instance
       .get(`accounts/getBalanceForChart.php?userID=${userid}`)
       .then((response) => response.data);
@@ -150,7 +138,6 @@ export const authAPI = {
 
 export const notifyAPI = {
   getNotification(userid) {
-    userid = 1;
     return instance
       .get(`notification.php?userID=${userid}`)
       .then((response) => response.data);

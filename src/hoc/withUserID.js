@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 export const withUserID = (Component) => {
   const IntegratedComponent = (props) => {
-    /* let navigate = useNavigate();
-        if (props.userid==null) navigate("/auth"); */
+    let navigate = useNavigate();
+    if (props.userid == null) navigate("/auth");
     return <Component {...props} userid={props.userid} />;
   };
 

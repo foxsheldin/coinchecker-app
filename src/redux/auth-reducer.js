@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { authAPI } from "../api/api";
 
 const SET_USER_DATA = "SET_USER_DATA";
@@ -27,6 +28,17 @@ export const login = (email, password) => (dispatch) => {
     if (response.resultCode === 0) {
       let { userid, email } = response.data;
       dispatch(setAuthUserData(parseInt(userid), email, true));
+    } else {
+      toast.error("Неправильный email или пароль", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+      });
     }
   });
 };
