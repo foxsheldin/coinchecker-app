@@ -7,16 +7,16 @@ import AddDeposit from "./AddDeposit/AddDeposit";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
 
 const ModalWindow = (props) => {
-    return (
-        <div>
-            <AddCash {...props} />
-            <AddCard {...props} />
-            <AddCredit {...props} />
-            <AddBankAccount {...props} />
-            <AddDeposit {...props} />
-            <DeleteAccount {...props} />
-        </div>
-    );
-}
+  return (
+    <div>
+      <AddCash {...props} />
+      <AddCard {...props} />
+      <AddCredit {...props} />
+      <AddBankAccount {...props} />
+      <AddDeposit {...props} />
+      <DeleteAccount {...props} />
+    </div>
+  );
+};
 
 export default ModalWindow;

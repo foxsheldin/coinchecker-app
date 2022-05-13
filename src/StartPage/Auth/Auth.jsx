@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import "./css/Auth.css";
-import "./css/notification.css"; /* 
-import "./js/auth"; */
-import "./js/notification";
 import { Field, Form } from "react-final-form";
 import { connect } from "react-redux";
 import { login, setAuthUserData } from "../../redux/auth-reducer";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCookies } from "react-cookie";
 

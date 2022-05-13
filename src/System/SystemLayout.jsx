@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 import { Outlet } from "react-router-dom";
 
-import $ from 'jquery';
+import $ from "jquery";
 
-import './css/coinchecker-style.css'
+import "./css/coinchecker-style.css";
 
-import NavBarSystem from './common/NavBarSystem/NavBarSystem';
+import NavBarSystem from "./common/NavBarSystem/NavBarSystem";
 
 const SystemLayout = () => {
-    return (
-        <div>
-            <NavBarSystem />
-            <Outlet />
-        </div>
-    );
-}
+  return (
+    <div>
+      <NavBarSystem />
+      <Outlet />
+    </div>
+  );
+};
 
 export default SystemLayout;
