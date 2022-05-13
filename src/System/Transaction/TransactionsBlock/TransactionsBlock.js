@@ -8,9 +8,10 @@ const TransactionsBlock = React.memo((props) => {
   for (let i = 1; i <= pagesCount; i++) {
     paginator.push(i);
   }
-  const transactionElements = props.transactions.map((t) => (
+  const transactionElements = props.transactions?.map((t) => (
     <TransactionItem
       {...t}
+      key={t.transactionID}
       onDeleteTransactionClick={props.onDeleteTransactionClick}
     />
   ));
@@ -31,7 +32,11 @@ const TransactionsBlock = React.memo((props) => {
             stylePaginator = "fs-6 link-dark";
           }
           return (
-            <Link to={`${linkPagination}/${p}`} className={stylePaginator}>
+            <Link
+              to={`${linkPagination}/${p}`}
+              className={stylePaginator}
+              key={"page_" + p}
+            >
               &nbsp;{p}&nbsp;
             </Link>
           );

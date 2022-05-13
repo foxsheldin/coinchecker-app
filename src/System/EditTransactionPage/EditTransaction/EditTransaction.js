@@ -6,7 +6,10 @@ const numberWithSpaces = (number) => {
 };
 const accountElements = (nameAccount) => {
   return nameAccount.map((each) => (
-    <option value={each.typeAccount + ", " + each.id}>
+    <option
+      value={each.typeAccount + ", " + each.id}
+      key={each.typeAccount + "," + each.id}
+    >
       {each.name} - {numberWithSpaces(each.amountMoney)}&nbsp;руб.
     </option>
   ));
@@ -22,8 +25,8 @@ const TransferForm = (props) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <div class="modal-body">
-            <label for="date">Дата транзакции</label>
+          <div className="modal-body">
+            <label htmlFor="date">Дата транзакции</label>
             <Field
               className="form-control"
               name="dateTransaction"
@@ -31,7 +34,7 @@ const TransferForm = (props) => {
               type="date"
               placeholder="Дата транзакции"
             />
-            <label for="money">Сумма перевода</label>
+            <label htmlFor="money">Сумма перевода</label>
             <Field
               className="form-control"
               name="amountMoney"
@@ -42,7 +45,7 @@ const TransferForm = (props) => {
               step="any"
             />
             <div className="formaddTransfer">
-              <label for="firstAccountSelect">Со счета</label>
+              <label htmlFor="firstAccountSelect">Со счета</label>
               <Field
                 className="form-control my-2"
                 name="firstAccountSelect"
@@ -74,7 +77,7 @@ const TransferForm = (props) => {
                   </optgroup>
                 ) : null}
               </Field>
-              <label for="secondAccountSelect">На счет</label>
+              <label htmlFor="secondAccountSelect">На счет</label>
               <Field
                 className="form-control my-2"
                 name="secondAccountSelect"
@@ -106,7 +109,7 @@ const TransferForm = (props) => {
                   </optgroup>
                 ) : null}
               </Field>
-              <label for="comment">Комментарий</label>
+              <label htmlFor="comment">Комментарий</label>
               <Field
                 className="form-control my-2"
                 name="comment"
@@ -116,15 +119,15 @@ const TransferForm = (props) => {
               />
             </div>
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               onClick={props.onCancel}
             >
               Отменить
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Изменить
             </button>
           </div>
@@ -150,7 +153,7 @@ const IncomeOutcomeForm = (props) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <label for="date">Дата транзакции</label>
+          <label htmlFor="date">Дата транзакции</label>
           <Field
             className="form-control"
             name="dateTransaction"
@@ -158,7 +161,7 @@ const IncomeOutcomeForm = (props) => {
             type="date"
             placeholder="Дата транзакции"
           />
-          <label for="money">
+          <label htmlFor="money">
             {props.initialValues.isIncome ? "Получено" : "Потрачено"}
           </label>
           <Field
@@ -170,8 +173,8 @@ const IncomeOutcomeForm = (props) => {
             min="0"
             step="any"
           />
-          <div class="formadd">
-            <label for="category">Категория</label>
+          <div className="formadd">
+            <label htmlFor="category">Категория</label>
             <Field
               className="form-control my-2"
               name="categoryID"
@@ -183,7 +186,7 @@ const IncomeOutcomeForm = (props) => {
                   : props.categories.outcome
               )}
             </Field>
-            <label for="firstAccountSelect">Счет</label>
+            <label htmlFor="firstAccountSelect">Счет</label>
             <Field
               className="form-control my-2"
               name="firstAccountSelect"
@@ -215,7 +218,7 @@ const IncomeOutcomeForm = (props) => {
                 </optgroup>
               ) : null}
             </Field>
-            <label for="payer">Плательщик</label>
+            <label htmlFor="payer">Плательщик</label>
             <Field
               className="form-control my-2"
               name="payer"
@@ -223,7 +226,7 @@ const IncomeOutcomeForm = (props) => {
               type="text"
               placeholder="Плательщик"
             />
-            <label for="comment">Комментарий</label>
+            <label htmlFor="comment">Комментарий</label>
             <Field
               className="form-control my-2"
               name="comment"
@@ -232,15 +235,15 @@ const IncomeOutcomeForm = (props) => {
               placeholder="Комментарий"
             />
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               onClick={props.onCancel}
             >
               Отменить
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Изменить
             </button>
           </div>
@@ -252,12 +255,12 @@ const IncomeOutcomeForm = (props) => {
 
 const EditTransaction = (props) => {
   return (
-    <div class="container">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addIncomeLabel">
+    <div className="container">
+      <div className="modal-header">
+        <h5 className="modal-title" id="addIncomeLabel">
           Изменение транзакции
         </h5>
-        <a class="btn-close" onClick={props.onCancel}></a>
+        <a className="btn-close" onClick={props.onCancel}></a>
       </div>
       {props.transaction.isTransfer ? (
         <TransferForm

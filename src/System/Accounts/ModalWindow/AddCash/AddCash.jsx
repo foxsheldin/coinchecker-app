@@ -31,7 +31,7 @@ const AddCash = (props) => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <label for="name">Название счета</label>
+                  <label htmlFor="name">Название счета</label>
                   <Field
                     component="input"
                     type="text"
@@ -39,7 +39,7 @@ const AddCash = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="amountMoney">Начальный остаток</label>
+                  <label htmlFor="amountMoney">Начальный остаток</label>
                   <Field
                     component="input"
                     type="number"
@@ -48,7 +48,7 @@ const AddCash = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="isArchive">Статус счета</label>
+                  <label htmlFor="isArchive">Статус счета</label>
                   <Field
                     component="select"
                     name="isArchive"

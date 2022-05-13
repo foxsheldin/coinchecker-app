@@ -40,7 +40,7 @@ const AddCard = (props) => {
             {(props) => (
               <form onSubmit={props.handleSubmit}>
                 <div className="modal-body">
-                  <label for="name">Название счета</label>
+                  <label htmlFor="name">Название счета</label>
                   <Field
                     component="input"
                     type="text"
@@ -48,7 +48,7 @@ const AddCard = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="isArchive">Статус счета</label>
+                  <label htmlFor="isArchive">Статус счета</label>
                   <Field
                     component="select"
                     name="isArchive"
@@ -58,14 +58,14 @@ const AddCard = (props) => {
                     <option value="1">Закрытый</option>
                   </Field>
                   <hr />
-                  <label for="bankName">Банк</label>
+                  <label htmlFor="bankName">Банк</label>
                   <Field
                     component="input"
                     type="text"
                     name="bankName"
                     className="form-control"
                   />
-                  <label for="numCardAccount">Номер счета/карты</label>
+                  <label htmlFor="numCardAccount">Номер счета/карты</label>
                   <Field
                     component="input"
                     type="text"
@@ -168,7 +168,7 @@ const AddCard = (props) => {
                       </div>
                     </div>
                   </Condition>
-                  <label for="creditLimit">Кредитный лимит</label>
+                  <label htmlFor="creditLimit">Кредитный лимит</label>
                   <Field
                     component="input"
                     type="number"
@@ -177,7 +177,7 @@ const AddCard = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="amountMoney">Начальный остаток</label>
+                  <label htmlFor="amountMoney">Начальный остаток</label>
                   <Field
                     component="input"
                     type="number"

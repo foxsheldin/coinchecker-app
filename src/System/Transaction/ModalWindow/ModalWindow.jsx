@@ -6,7 +6,10 @@ const numberWithSpaces = (number) => {
 };
 const accountElements = (nameAccount) => {
   return nameAccount.map((each) => (
-    <option value={each.typeAccount + ", " + each.id}>
+    <option
+      value={each.typeAccount + ", " + each.id}
+      key={each.typeAccount + "," + each.id}
+    >
       {each.name} - {numberWithSpaces(each.amountMoney)}&nbsp;руб.
     </option>
   ));
@@ -14,7 +17,9 @@ const accountElements = (nameAccount) => {
 
 const categoriesElement = (categories) =>
   categories.map((each) => (
-    <option value={each.id}>{each.nameCategory}</option>
+    <option value={each.id} key={each.nameCategory}>
+      {each.nameCategory}
+    </option>
   ));
 
 const Condition = ({ when, is, children }) => (
@@ -31,7 +36,7 @@ const selectAccount = (accounts, name) => {
       name={name}
       required="required"
     >
-      <option selected="selected" />
+      <option defaultValue />
       {accounts?.cashData.length ? (
         <optgroup label="Наличные">
           {accountElements(accounts.cashData)}

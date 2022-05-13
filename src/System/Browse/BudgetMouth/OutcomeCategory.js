@@ -26,8 +26,8 @@ const OutcomeCategoryItem = (props) => {
 };
 
 const OutcomeCategory = (props) => {
-  const outcomeCategoryElement = props.reportCategories.map((each) => (
-    <OutcomeCategoryItem {...each} />
+  const outcomeCategoryElement = props.reportCategories.map((each, index) => (
+    <OutcomeCategoryItem {...each} key={index} />
   ));
 
   return (

@@ -49,6 +49,7 @@ const BalanceForm = React.memo((props) => {
   const accountElements = (nameAccount) => {
     return nameAccount?.map((each) => (
       <AccountItem
+        key={each.id}
         name={each.name}
         amountMoney={each.amountMoney}
         typeAccount={each.typeAccount}

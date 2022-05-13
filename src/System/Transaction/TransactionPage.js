@@ -49,119 +49,119 @@ const TransactionPage = (props) => {
             </div>
             <BalanceFormContainer />
 
-            {/* <!-- <div class="row my-2" id="forecastForm">
-                            <div class="forecastHeader my-1">
-                                <div class="btn-group" style="width: 45%;">
-                                    <a href="#" class="btn btn-sm btn-outline-primary active">Расход</a>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Доход</a>
+            {/* <!-- <div className="row my-2" id="forecastForm">
+                            <div className="forecastHeader my-1">
+                                <div className="btn-group" style="width: 45%;">
+                                    <a href="#" className="btn btn-sm btn-outline-primary active">Расход</a>
+                                    <a href="#" className="btn btn-sm btn-outline-primary">Доход</a>
                                 </div>
-                                <div class="fst-italic" style="display: inline-block; width: 52%; text-align: end;">
+                                <div className="fst-italic" style="display: inline-block; width: 52%; text-align: end;">
                                     Прогноз баланса
                                 </div>
                             </div>
-                            <div class="forecast-progress">
-                                <div class="mounth my-1">
-                                    <div class="progress"> -->
+                            <div className="forecast-progress">
+                                <div className="mounth my-1">
+                                    <div className="progress"> -->
                                         <!-- Вычисление процентов:
                                         2ой процент(серое значение) вычисляемый из средн.знач.в месяц/прогноз баланса*100
                                         1ый процент(цветное значение) вычисляется из ("потраченных/заработанных" средств/сред.знач.в месяц*100)*2ой процент/100
                                 распределение процентов = от 2ого процента вычитаем 1ый -->
-                                        <!-- <div class="progress-bar bg-warning" role="progressbar" style="width: 32.38%"
+                                        <!-- <div className="progress-bar bg-warning" role="progressbar" style="width: 32.38%"
                                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 33.43%"
+                                        <div className="progress-bar bg-secondary" role="progressbar" style="width: 33.43%"
                                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <span class="amount-type">
-                                            <span class="amount">16&#160;420&#160;</span>
-                                            <span class="total">
-                                                из&#160;<span class="total_amount">33&#160;373</span>
+                                        <span className="amount-type">
+                                            <span className="amount">16&#160;420&#160;</span>
+                                            <span className="total">
+                                                из&#160;<span className="total_amount">33&#160;373</span>
                                             </span>
-                                            <span class="desc">за&#160;месяц</span>
+                                            <span className="desc">за&#160;месяц</span>
                                         </span>
-                                        <span class="balance-completed">
-                                            <span class="amount">50&#160;707&#160;</span> р.
+                                        <span className="balance-completed">
+                                            <span className="amount">50&#160;707&#160;</span> р.
                                         </span>
                                     </div> -->
-                                    <!-- <div class="row">
-                                        <div class="title col-7">
-                                            <span class="amount">16&#160;420&#160;</span>за&#160;месяц
+                                    <!-- <div className="row">
+                                        <div className="title col-7">
+                                            <span className="amount">16&#160;420&#160;</span>за&#160;месяц
                                         </div>
-                                        <div class="balance col">
-                                            <span class="">50&#160;707&#160;р.</span>
+                                        <div className="balance col">
+                                            <span className="">50&#160;707&#160;р.</span>
                                         </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info row" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div className="progress">
+                                        <div className="progress-bar bg-info row" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div> -->
                                     <!-- </div>
-                                <div class="week my-1">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 3%"
+                                <div className="week my-1">
+                                    <div className="progress">
+                                        <div className="progress-bar bg-warning" role="progressbar" style="width: 3%"
                                             aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 15.2%"
+                                        <div className="progress-bar bg-secondary" role="progressbar" style="width: 15.2%"
                                             aria-valuenow="15.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <span class="amount-type">
-                                            <span class="amount">1&#160;420&#160;</span>
-                                            <span class="total">
-                                                из&#160;<span class="total_amount">8&#160;055</span>
+                                        <span className="amount-type">
+                                            <span className="amount">1&#160;420&#160;</span>
+                                            <span className="total">
+                                                из&#160;<span className="total_amount">8&#160;055</span>
                                             </span>
-                                            <span class="desc">за&#160;неделю</span>
+                                            <span className="desc">за&#160;неделю</span>
                                         </span>
-                                        <span class="balance-completed">
-                                            <span class="amount">44&#160;180&#160;</span> р.
+                                        <span className="balance-completed">
+                                            <span className="amount">44&#160;180&#160;</span> р.
                                         </span>
                                     </div>
                                 </div>
-                                <div class="day my-1">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"
+                                <div className="day my-1">
+                                    <div className="progress">
+                                        <div className="progress-bar bg-warning" role="progressbar" style="width: 0%"
                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 4.2%"
+                                        <div className="progress-bar bg-secondary" role="progressbar" style="width: 4.2%"
                                             aria-valuenow="4.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <span class="amount-type">
-                                            <span class="amount">0&#160;</span>
-                                            <span class="total">
-                                                из&#160;<span class="total_amount">800</span>
+                                        <span className="amount-type">
+                                            <span className="amount">0&#160;</span>
+                                            <span className="total">
+                                                из&#160;<span className="total_amount">800</span>
                                             </span>
-                                            <span class="desc">за&#160;день</span>
+                                            <span className="desc">за&#160;день</span>
                                         </span>
-                                        <span class="balance-completed">
-                                            <span class="amount">33&#160;737&#160;</span> р.
+                                        <span className="balance-completed">
+                                            <span className="amount">33&#160;737&#160;</span> р.
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="periodForm row my-3 visually-hidden">
-                            <div class="row fw-bold">За сегодня</div>
-                            <div class="row">
-                                <div class="col-7">
+                        <div className="periodForm row my-3 visually-hidden">
+                            <div className="row fw-bold">За сегодня</div>
+                            <div className="row">
+                                <div className="col-7">
                                     Доход
                                 </div>
-                                <div class="col-5">
+                                <div className="col-5">
                                     0&#160;руб.
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-7">
+                            <div className="row">
+                                <div className="col-7">
                                     Расход
                                 </div>
-                                <div class="col-5">
+                                <div className="col-5">
                                     0&#160;руб.
                                 </div>
                             </div>
                         </div>
-                        <div class="currentAccountDetails row my-4">
-                            <table class="table table-borderless">
+                        <div className="currentAccountDetails row my-4">
+                            <table className="table table-borderless">
                                 <tbody>
                                     <tr>
                                         <td width="49%">
-                                            <span class="income" style="float:right">54&thinsp;500</span>
+                                            <span className="income" style="float:right">54&thinsp;500</span>
                                             <span>Доход&nbsp;</span>
                                         </td>
                                         <td width="2%"><span>&nbsp;|&nbsp;</span></td>
                                         <td width="49%">
                                             <span style="float:right">&nbsp;Расход</span>
-                                            <span class="outcome">32&thinsp;173</span>
+                                            <span className="outcome">32&thinsp;173</span>
                                         </td>
                                     </tr>
                                 </tbody>

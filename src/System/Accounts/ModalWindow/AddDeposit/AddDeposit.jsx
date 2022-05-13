@@ -31,7 +31,7 @@ const AddDeposit = (props) => {
             {(props) => (
               <form onSubmit={props.handleSubmit}>
                 <div className="modal-body">
-                  <label for="name">Название счета</label>
+                  <label htmlFor="name">Название счета</label>
                   <Field
                     component="input"
                     type="text"
@@ -39,7 +39,7 @@ const AddDeposit = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="isArchive">Статус счета</label>
+                  <label htmlFor="isArchive">Статус счета</label>
                   <Field
                     component="select"
                     name="isArchive"
@@ -49,14 +49,14 @@ const AddDeposit = (props) => {
                     <option value="1">Закрытый</option>
                   </Field>
                   <hr />
-                  <label for="bankName">Банк</label>
+                  <label htmlFor="bankName">Банк</label>
                   <Field
                     component="input"
                     type="text"
                     name="bankName"
                     className="form-control"
                   />
-                  <label for="numCreditAccount">Номер счета/карты</label>
+                  <label htmlFor="numCreditAccount">Номер счета/карты</label>
                   <Field
                     component="input"
                     type="text"
@@ -64,7 +64,7 @@ const AddDeposit = (props) => {
                     className="form-control"
                   />
                   <hr />
-                  <label for="openingDate">Дата получения</label>
+                  <label htmlFor="openingDate">Дата получения</label>
                   <Field
                     component="input"
                     type="date"
@@ -72,7 +72,7 @@ const AddDeposit = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="amountMoney">Сумма взноса</label>
+                  <label htmlFor="amountMoney">Сумма взноса</label>
                   <Field
                     component="input"
                     type="number"
@@ -81,7 +81,7 @@ const AddDeposit = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <label for="periodDeposit">Срок размещения</label>
+                  <label htmlFor="periodDeposit">Срок размещения</label>
                   <Field
                     component="input"
                     type="date"
@@ -89,9 +89,9 @@ const AddDeposit = (props) => {
                     className="form-control"
                     required="required"
                   />
-                  <div class="row">
-                    <div class="col-11">
-                      <label for="interestRate">Процентная ставка</label>
+                  <div className="row">
+                    <div className="col-11">
+                      <label htmlFor="interestRate">Процентная ставка</label>
                       <Field
                         component="input"
                         type="number"
@@ -101,12 +101,12 @@ const AddDeposit = (props) => {
                         required="required"
                       />
                     </div>
-                    <div class="col-1">
-                      <label for="clear">&nbsp;</label>%
+                    <div className="col-1">
+                      <label htmlFor="clear">&nbsp;</label>%
                     </div>
                   </div>
                   <hr />
-                  <div class="form-check">
+                  <div className="form-check">
                     <Field
                       component="input"
                       type="checkbox"
@@ -114,8 +114,8 @@ const AddDeposit = (props) => {
                       className="form-check-input"
                     />
                     <label
-                      class="form-check-label"
-                      for="capitalizationOfInterest"
+                      className="form-check-label"
+                      htmlFor="capitalizationOfInterest"
                     >
                       Проценты прибавляются к сумме депозита (капитализируются)
                     </label>

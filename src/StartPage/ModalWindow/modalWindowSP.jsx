@@ -25,7 +25,7 @@ const ModalWindowSP = () => {
             </div>
             <form action="php/registration.php" method="POST">
               <div className="modal-body">
-                <label for="username">Ваше имя:</label>
+                <label htmlFor="username">Ваше имя:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -33,7 +33,7 @@ const ModalWindowSP = () => {
                   placeholder="Имя"
                   required
                 />
-                <label for="email">Электронная почта:</label>
+                <label htmlFor="email">Электронная почта:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -41,7 +41,7 @@ const ModalWindowSP = () => {
                   placeholder="E-mail"
                   required
                 />
-                <label for="password">Пароль:</label>
+                <label htmlFor="password">Пароль:</label>
                 <input
                   type="password"
                   className="form-control"
@@ -49,7 +49,7 @@ const ModalWindowSP = () => {
                   placeholder="Пароль"
                   required
                 />
-                <label for="re-password">Подтверждение пароля:</label>
+                <label htmlFor="re-password">Подтверждение пароля:</label>
                 <input
                   type="password"
                   className="form-control"
