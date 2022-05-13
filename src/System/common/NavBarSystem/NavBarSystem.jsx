@@ -8,6 +8,7 @@ import { logout } from "../../../redux/auth-reducer";
 import { getNotification } from "../../../redux/notification-reducer";
 import "react-toastify/dist/ReactToastify.css";
 import { useCookies } from "react-cookie";
+import { withUserID } from "../../../hoc/withUserID";
 
 const NavBarSystem = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userID", "email"]);
@@ -159,5 +160,6 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   connect(mapStateToProps, { getNotification, logout }),
-  withAuthRedirect
+  withAuthRedirect,
+  withUserID
 )(NavBarSystem);
