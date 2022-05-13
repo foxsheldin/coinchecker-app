@@ -17,7 +17,7 @@ $sub = mysqli_query(
     $connectDB,
     "select sum(amountMoney) from users_transaction 
         where (dateTransaction between SUBDATE(curdate(), interval 29 day) 
-            and curdate()) and (isOutcome=true or isIncome=true)"
+            and curdate()) and (isOutcome=true or isIncome=true) and userID=$userid"
 );
 $sub = mysqli_fetch_array($sub);
 $sub = $sub[0];
