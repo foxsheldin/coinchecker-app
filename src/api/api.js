@@ -134,6 +134,14 @@ export const authAPI = {
   logout(userid, email) {
     return null;
   },
+  registration({ username, email, password, repassword }) {
+    return instance.post("auth/registration.php", {
+      username,
+      email,
+      password,
+      repassword,
+    });
+  },
 };
 
 export const notifyAPI = {
